@@ -511,13 +511,17 @@
   body[data-theme="who"] .modal { background: linear-gradient(120deg, #4a4e8f, #5a5fa8); border-color: #a5794f; }
 
   /* ---------- Viererkette ---------- */
-  body[data-theme="four"] {
-    --bg: #2c3a32; --bg-dark: #121915; --muted: #b6c6bc;
-    --panel: #e2104c; --panel-card: #a30a36; --panel-shadow: #0b100d; --title: #f4c80f;
-    --bar: #e2104c; --bar-dark: #990a33; --seg-text: #ffc6d6;
+  body[data-theme="four"], body[data-theme="fourgame"] {
+    --bg: #5a2538; --bg-dark: #33111e; --muted: #e2bccb;
+    --panel: #93405a; --panel-card: #6c2a42; --panel-shadow: #1c0710; --title: #ecd39c;
+    --bar: #93405a; --bar-dark: #5c2237; --seg-text: #f3cbd8;
   }
+  body[data-theme="fourgame"] { --bg: #2c3a32; --bg-dark: #121915; --muted: #b6c6bc; }
   body[data-theme="four"] .pv { background: #1f2a24; }
-  body[data-theme="four"] .modal { background: linear-gradient(120deg, #e2104c, #f0386a); border-color: #3a4580; }
+  body[data-theme^="four"] .title { text-shadow: 0 5px 0 #1c0a12, 0 6px 12px rgba(0,0,0,.25); }
+  body[data-theme^="four"] .modal { background: linear-gradient(120deg, #93405a, #a9536f); border-color: #6c2a42; }
+  body[data-theme^="four"] .modal .big:empty { display: none; }
+  body[data-theme^="four"] .modal h2 { font-size: 34px; margin-bottom: 18px; }
   .c4status { display: flex; align-items: center; justify-content: center; gap: 8px; }
   .c4dot { width: 16px; height: 16px; border-radius: 50%; flex: 0 0 16px; box-shadow: inset 0 -2px 3px rgba(0,0,0,.25); }
   .c4dot.r { background: #e2104c; }
@@ -529,27 +533,34 @@
   .c4board {
     position: absolute; inset: 0; border-radius: 8px; pointer-events: none;
     background: linear-gradient(160deg, rgba(64,76,140,.95), rgba(44,54,108,.95));
-    -webkit-mask: radial-gradient(circle, transparent 0 37%, #000 38.5%) 0 0 / calc(100% / 7) calc(100% / 6);
-    mask: radial-gradient(circle, transparent 0 37%, #000 38.5%) 0 0 / calc(100% / 7) calc(100% / 6);
+    -webkit-mask: radial-gradient(circle, transparent 0 44%, #000 45.5%) 0 0 / calc(100% / 7) calc(100% / 6);
+    mask: radial-gradient(circle, transparent 0 44%, #000 45.5%) 0 0 / calc(100% / 7) calc(100% / 6);
   }
-  .c4chip {
-    position: absolute; inset: 12%; border-radius: 50%;
-    box-shadow: inset 0 0 0 4px rgba(0,0,0,.12), inset 0 -4px 7px rgba(0,0,0,.25);
+  /* Spielchip: flache Scheibe mit kleinerem Innenkreis */
+  .c4chip { position: absolute; inset: 7%; border-radius: 50%; box-shadow: inset 0 -3px 0 rgba(0,0,0,.18); }
+  .c4chip::before {
+    content: ''; position: absolute; inset: 21%; border-radius: 50%;
+    box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 1px 0 rgba(255,255,255,.3);
   }
-  .c4chip.r { background: radial-gradient(circle at 35% 30%, #ff5d87, #e2104c 55%, #a40a37); }
-  .c4chip.y { background: radial-gradient(circle at 35% 30%, #ffe46c, #f4c80f 55%, #b88f08); }
+  .c4chip.r { background: #e2104c; }
+  .c4chip.r::before { background: #c80c42; }
+  .c4chip.y { background: #f4c80f; }
+  .c4chip.y::before { background: #dcb10a; }
   .c4chip.drop { animation: c4drop calc(.2s + var(--fall) * .07s) cubic-bezier(.5, 0, .9, .55) both; }
   @keyframes c4drop {
-    0% { transform: translateY(calc(var(--fall) * -131%)); }
+    0% { transform: translateY(calc(var(--fall) * -116%)); }
     78% { transform: translateY(0); }
     89% { transform: translateY(-10%); }
     100% { transform: translateY(0); }
   }
+  /* Gewinner-Chips blinken ca. 2 Sekunden, danach bleibt ein weißer Ring */
   .c4chip.win::after {
-    content: ''; position: absolute; inset: -9%; border-radius: 50%; border: 3px solid #fff;
-    animation: c4pulse 1s ease-in-out infinite;
+    content: ''; position: absolute; inset: -4%; border-radius: 50%; border: 3px solid #fff;
+    background: rgba(255,255,255,.55);
+    animation: c4blink .25s ease-in-out .45s 8 alternate both;
   }
-  @keyframes c4pulse { 0%, 100% { opacity: .35; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.04); } }
+  @keyframes c4blink { from { opacity: 1; } to { opacity: 0; } }
+  .c4chip.win.done::after { animation: none; background: transparent; opacity: 1; }
   .c4cols { grid-template-rows: 1fr; top: -40px; pointer-events: none; z-index: 2; }
   .c4cols.active { pointer-events: auto; }
   .c4cols div { cursor: pointer; border-radius: 10px; }
@@ -629,7 +640,7 @@
           <path d="M136 43 L146 54" stroke="#f6efea" stroke-width="5" stroke-linecap="round"/>
         </svg>
       </button>
-      <button class="toy" id="toyFour" aria-label="Viererkette" style="animation-delay:-2.3s">
+      <button class="toy" id="toyFour" aria-label="Vierer König" style="animation-delay:-2.3s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="118" rx="66" ry="8" fill="rgba(0,0,0,.28)"/>
           <rect x="10" y="100" width="140" height="14" rx="3" fill="#c8976e"/>
@@ -1034,7 +1045,8 @@
   function show(screen) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
-    document.body.dataset.theme = screen === 'sHome' ? '' : MODES[mode].theme;
+    // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     window.scrollTo(0, 0);
@@ -1988,6 +2000,7 @@
   }
 
   let c4Shown = 0;     // wie viele Chips schon gezeichnet (für Fall-Animation)
+  let c4BlinkUntil = 0; // bis wann die Gewinner-Chips blinken
   let c4CpuTimer = null;
   function c4State() {
     const f = F, seq = c4Seq(f), { grid, pos } = c4Board(seq), win = c4Winner(grid);
@@ -2012,17 +2025,20 @@
       if (v !== undefined) {
         const idx = st.pos.findIndex(([pc, pr]) => pc === c && pr === r);
         const isNew = idx >= c4Shown;
-        chip = chipHTML(v, (isNew ? 'drop' : '') + (winSet.has(c + ',' + r) ? ' win' : ''), isNew ? top + 1 : 0);
+        const winCls = winSet.has(c + ',' + r) ? (Date.now() < c4BlinkUntil || !f.finished ? ' win' : ' win done') : '';
+        chip = chipHTML(v, (isNew ? 'drop' : '') + winCls, isNew ? top + 1 : 0);
       }
       h += `<div class="c4cell">${chip}</div>`;
     }
+    // Während des Blinkens nicht neu zeichnen, sonst startet die Animation von vorn
+    if (st.win && Date.now() < c4BlinkUntil && st.seq.length === c4Shown) { updateOpp(); return; }
     $('c4Chips').innerHTML = h;
     c4Shown = st.seq.length;
     // Status
     const o = f.code ? c4Opp() : null;
     let txt, turn = false;
-    if (st.win) txt = st.win.v === st.myV ? 'Gewonnen! Vier in einer Reihe.' : (f.code ? 'Verloren – dein Gegner hat vier.' : 'Verloren – der Computer hat vier.');
-    else if (st.full) txt = 'Unentschieden – das Brett ist voll.';
+    if (st.win) txt = st.win.v === st.myV ? 'Gewonnen!' : 'Verloren';
+    else if (st.full) txt = 'Unentschieden';
     else if (f.code && !o) txt = connected ? `Warte auf Gegner … (Raum ${f.code})` : 'Verbinde …';
     else if (st.myTurn) { txt = 'Du bist dran'; turn = true; }
     else txt = f.code ? 'Gegner ist dran …' : 'Computer überlegt …';
@@ -2065,12 +2081,14 @@
       f.endShown = true;
       profile.playedFour = (profile.playedFour || 0) + 1; save(LS_PROFILE, profile);
       persist();
+      // erst die Gewinner-Chips ca. 2 s blinken lassen, dann das Ergebnis zeigen
+      const wait = st.win ? 2500 : 700;
+      c4BlinkUntil = Date.now() + wait;
       setTimeout(() => {
-        if (mode !== 'four') return;
-        const t = { win: 'Gewonnen! 🏆', lose: 'Verloren', draw: 'Unentschieden' }[f.result];
-        const sub = { win: 'Vier in einer Reihe – stark!', lose: f.code ? 'Dein Gegner war schneller.' : 'Der Computer war schneller.', draw: 'Das Brett ist voll.' }[f.result];
-        modal(t, f.result === 'win' ? '🔴🟡' : f.result === 'draw' ? '🤝' : '😅', sub, 'Weiter');
-      }, 900);
+        if (mode !== 'four' || F !== f) return;
+        $('c4Chips').querySelectorAll('.c4chip.win').forEach(el => el.classList.add('done'));
+        modal({ win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[f.result], '', '', 'Weiter');
+      }, wait);
     } else persist();
   }
   function fourSync() { if (mode === 'four' && F) renderFour(); }
@@ -2142,7 +2160,7 @@
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
     },
     four: {
-      title: 'Viererkette', playedKey: 'playedFour',
+      title: 'Vierer König', playedKey: 'playedFour',
       desc: ['Rot gegen Gelb! Lass deine Chips abwechselnd in die Spalten fallen und bilde als Erster eine Reihe aus vier – waagerecht, senkrecht oder schräg.',
         'Solo spielst du gegen den Computer, im 1v1 gegen deinen Gegner. Wer anfängt, spielt Rot – und nach jedem Spiel wird gewechselt.'],
     },
