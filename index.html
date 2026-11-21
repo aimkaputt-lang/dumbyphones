@@ -189,6 +189,7 @@
   .vs .name { font-size: 15px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .vs .pts { font-size: 44px; font-weight: 700; }
   .verdict { font-size: 26px; font-weight: 700; text-align: center; margin: 18px 0 4px; }
+  .verdict:empty { display: none; }
   .hint { font-size: 13px; color: var(--muted); text-align: center; margin-top: 8px; }
   table.rounds { width: 100%; border-collapse: collapse; font-size: 15px; margin-bottom: 4px; }
   table.rounds th, table.rounds td { padding: 6px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.08); }
@@ -373,7 +374,7 @@
         </div>
       </div>
       <div class="desc">
-        <p>Klappe zu, Punkte weg! Würfle mit zwei Würfeln und klappe Plättchen um, die zusammen genau deine Augenzahl ergeben – einzeln oder kombiniert.</p>
+        <p>Klappe zu, Punkte weg! Würfle mit zwei Würfeln und klappe Plättchen um, die zusammen genau deine Augenzahl ergeben – ein einzelnes oder zwei zusammen.</p>
         <p>Geht keine Kombination mehr, ist die Runde vorbei und alle stehenden Zahlen landen als Strafpunkte auf deinem Konto. Nach 10 Runden gewinnt, wer die wenigsten Punkte hat.</p>
       </div>
       <button class="resume" id="btnResume" style="display:none"></button>
@@ -544,31 +545,28 @@
   const selSum = () => S.selected.reduce((a, b) => a + b, 0);
   const highShut = () => [7, 8, 9, 10, 11, 12].every(n => !S.open[n - 1]);
 
-  function canMake(target) {
-    const nums = [];
-    S.open.forEach((o, i) => { if (o) nums.push(i + 1); });
-    const n = nums.length;
-    for (let m = 1; m < (1 << n); m++) {
-      let s = 0;
-      for (let j = 0; j < n; j++) if (m & (1 << j)) { s += nums[j]; if (s > target) break; }
-      if (s === target) return true;
+  // Regel: pro Wurf genau 1 oder 2 Plättchen, deren Summe der Augenzahl entspricht
+  const MAX_PICK = 2;
+  // Bestes Paar/Einzelplättchen für eine Summe (oder null). Bevorzugt ein einzelnes Plättchen.
+  function findCombo(open, target) {
+    if (target >= 1 && target <= open.length && open[target - 1]) return [target];
+    let best = null;
+    for (let a = 1; a <= open.length; a++) {
+      const b = target - a;
+      if (b <= a || b > open.length) continue;
+      if (open[a - 1] && open[b - 1]) best = [a, b]; // letzte Treffer = größtes b
     }
-    return false;
+    return best;
   }
-  // Is there a valid completion using currently selected + additional open tiles?
+  function canMake(target) { return !!findCombo(S.open, target); }
+  // Kann die aktuelle Auswahl noch zu einem gültigen Zug ergänzt werden?
   function canComplete(selected, target) {
+    if (selected.length > MAX_PICK) return false;
     const rest = target - selected.reduce((a, b) => a + b, 0);
     if (rest === 0) return true;
-    if (rest < 0) return false;
-    const nums = [];
-    S.open.forEach((o, i) => { if (o && !selected.includes(i + 1)) nums.push(i + 1); });
-    const n = nums.length;
-    for (let m = 1; m < (1 << n); m++) {
-      let s = 0;
-      for (let j = 0; j < n; j++) if (m & (1 << j)) s += nums[j];
-      if (s === rest) return true;
-    }
-    return false;
+    if (rest < 0 || selected.length >= MAX_PICK) return false;
+    if (selected.length === 1) return rest <= S.open.length && S.open[rest - 1] && !selected.includes(rest);
+    return canMake(target);
   }
 
   function toast(msg) {
@@ -753,7 +751,7 @@
 
     let verdict = '', hint = '';
     if (solo) {
-      verdict = S.total === 0 ? 'Perfekt! 0 Punkte 🎉' : `${S.total} Punkte`;
+      verdict = '';
       hint = 'Weniger Punkte ist besser.';
     } else if (!sameGame) {
       $('endOppName').textContent = o ? o.name : 'Gegner';
@@ -942,16 +940,7 @@
     $('pvTiles').innerHTML = pv.open.map((o, i) =>
       `<div class="tile${!o ? ' shut' : sel && sel.includes(i + 1) ? ' sel' : ''}">${i + 1}</div>`).join('');
   }
-  function pvCombo(t) {
-    const nums = []; pv.open.forEach((o, i) => o && nums.push(i + 1));
-    let best = null;
-    for (let m = 1; m < (1 << nums.length); m++) {
-      let s = 0; const pick = [];
-      for (let j = 0; j < nums.length; j++) if (m & (1 << j)) { s += nums[j]; pick.push(nums[j]); }
-      if (s === t && (!best || pick.length < best.length || (pick.length === best.length && Math.max(...pick) > Math.max(...best)))) best = pick;
-    }
-    return best;
-  }
+  function pvCombo(t) { return findCombo(pv.open, t); }
   function pvLater(fn, ms) { pv.timer = setTimeout(() => pv.running && fn(), ms); }
   function pvReset() {
     pv.open = Array(TILES).fill(true);
