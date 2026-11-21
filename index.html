@@ -650,6 +650,63 @@
   .bsboard.mini { grid-template-columns: 1fr; grid-template-rows: auto; width: 74%; margin: 0 auto; }
   .bsboard.mini .bsgrid { grid-column: 1; grid-row: 1; }
 
+  /* ---------- Flotter Dreier ---------- */
+  body[data-theme="cs"], body[data-theme="csgame"] {
+    --bg: #862240; --bg-dark: #4e1024; --muted: #f0c4d1;
+    --panel: #9c2c4e; --panel-card: #6a1631; --panel-shadow: #1e0610; --title: #a6e8e3;
+    --bar: #a7b3bf; --bar-dark: #707c88; --seg-text: #f4f7fa;
+  }
+  body[data-theme="csgame"] { --bg: #6a4a38; --bg-dark: #2b1d15; --muted: #e8d2c2; --panel-card: #3e2a20; }
+  body[data-theme^="cs"] .title { text-shadow: 0 5px 0 #14050b, 0 6px 12px rgba(0,0,0,.25); }
+  body[data-theme="cs"] .pv { background: radial-gradient(ellipse at 50% 30%, #6e4c3a, #3b281e); }
+  body[data-theme^="cs"] .modal { background: linear-gradient(120deg, #2b2a6e, #3b3a8e); border-color: #9c2c4e; }
+  body[data-theme^="cs"] .modal .big:empty { display: none; }
+  body[data-theme^="cs"] .modal h2 { font-size: 34px; margin-bottom: 18px; }
+  body[data-theme="cs"] .seg button { color: #3b4550; }
+  body[data-theme="cs"] .seg .knob { background: #fff; }
+  body[data-theme="cs"] .seg:not(.v1) button[data-mode="solo"], body[data-theme="cs"] .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
+  #sCs .topbar { margin-bottom: 8px; }
+  .csboardwrap, #pvcBoard { width: 100%; }
+  .csboard {
+    width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 3px;
+    background: linear-gradient(160deg, #2e2d78, #24235e); border-radius: 18px; padding: 16px 8px 10px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.08);
+  }
+  .cscol { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 9px; }
+  .cscell {
+    position: relative; width: 66%; aspect-ratio: 1; max-width: 20px; transform: rotate(45deg);
+    background: #3b4a8a; border-radius: 3px; box-shadow: inset 0 -2px 0 rgba(0,0,0,.25), 0 2px 3px rgba(0,0,0,.25);
+  }
+  .cscell.ownme { background: #8fe3d8; }
+  .cscell.ownop { background: #e2104c; }
+  .mk { position: absolute; border-radius: 3px; }
+  .mk.me { inset: 0; background: #8fe3d8; box-shadow: 0 0 6px rgba(143,227,216,.7); }
+  .mk.op { inset: 22%; background: #e2104c; border-radius: 50%; }
+  .mk.run { inset: -4px; border-radius: 5px; border: 3px solid #fff; box-shadow: 0 0 8px rgba(255,255,255,.8); animation: csglow 1s ease-in-out infinite alternate; }
+  .mk.run.op { border-color: #ffd0dc; }
+  @keyframes csglow { from { opacity: .7; } to { opacity: 1; } }
+  .cslab { margin-top: 4px; font-size: 13px; font-weight: 700; color: #f1f2ff; }
+  .csgoal { text-align: center; font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+  .csbottom { width: 100%; display: flex; gap: 12px; align-items: stretch; margin-top: auto; padding-top: 12px; }
+  .cstray { flex: 0 0 150px; background: linear-gradient(160deg, #4a4d54, #2e3035); border-radius: 18px; padding: 8px 9px 10px; box-shadow: 0 6px 14px rgba(0,0,0,.4); }
+  .cspawns { display: flex; justify-content: center; gap: 8px; margin-bottom: 7px; }
+  .cspawn { width: 16px; height: 20px; border-radius: 8px 8px 4px 4px; background: #8fe3d8; box-shadow: inset 0 -3px 0 rgba(0,0,0,.25); transition: opacity .3s; }
+  .cspawn.op { background: #e2104c; }
+  .cspawn.used { opacity: .2; }
+  .csfelt { background: linear-gradient(#6fa9c0, #4f8aa3); border-radius: 10px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; justify-items: center; }
+  .die.pink { width: 48px; height: 48px; padding: 7px; border-radius: 10px; background: #d8456a; box-shadow: 0 4px 0 #9c2443, 0 6px 10px rgba(0,0,0,.3); }
+  .die.pink .pip { background: #fff; width: 8px; height: 8px; }
+  .die.pink.empty { background: rgba(255,255,255,.12); box-shadow: none; border: 2px dashed rgba(255,255,255,.35); }
+  .csactions { flex: 1; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+  .csactions button { margin: 0; padding: 12px 8px; font-size: 18px; }
+  .csactions .csopt { background: #a6e8e3; color: #173a3a; box-shadow: 0 5px 0 #5fa8a2; font-size: 20px; }
+  .csalt { background: #2b2a6e; color: #fff; box-shadow: 0 6px 0 #17164a; }
+  .csalt:active:not(:disabled) { box-shadow: 0 1px 0 #17164a; }
+  #pvcBoard .csboard { padding: 10px 6px 6px; }
+  .csboard.mini .cscol { gap: 5px; }
+  .csboard.mini .cscell { max-width: 12px; }
+  .csboard.mini .cslab { font-size: 10px; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -754,6 +811,32 @@
           <circle cx="120" cy="30" r="5.5" fill="#f1f1f1"/><circle cx="120" cy="30" r="3" fill="#d6d6d6"/>
         </svg>
       </button>
+      <button class="toy" id="toyCs" aria-label="Flotter Dreier" style="animation-delay:-3.4s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="62" ry="8" fill="rgba(0,0,0,.28)"/>
+          <rect x="30" y="16" width="100" height="100" rx="10" fill="#2b2a6e" transform="rotate(-6 80 66)"/>
+          <g transform="rotate(-6 80 66)">
+            <g fill="#3c4a8a">
+              <rect x="44" y="72" width="11" height="11" rx="2" transform="rotate(45 49.5 77.5)"/>
+              <rect x="44" y="56" width="11" height="11" rx="2" transform="rotate(45 49.5 61.5)"/>
+              <rect x="62" y="80" width="11" height="11" rx="2" transform="rotate(45 67.5 85.5)"/>
+              <rect x="62" y="48" width="11" height="11" rx="2" transform="rotate(45 67.5 53.5)"/>
+              <rect x="80" y="84" width="11" height="11" rx="2" transform="rotate(45 85.5 89.5)"/>
+              <rect x="98" y="80" width="11" height="11" rx="2" transform="rotate(45 103.5 85.5)"/>
+              <rect x="98" y="64" width="11" height="11" rx="2" transform="rotate(45 103.5 69.5)"/>
+              <rect x="98" y="48" width="11" height="11" rx="2" transform="rotate(45 103.5 53.5)"/>
+            </g>
+            <g fill="#8fe3d8">
+              <rect x="62" y="64" width="11" height="11" rx="2" transform="rotate(45 67.5 69.5)"/>
+              <rect x="80" y="68" width="11" height="11" rx="2" transform="rotate(45 85.5 73.5)"/>
+              <rect x="80" y="52" width="11" height="11" rx="2" transform="rotate(45 85.5 57.5)"/>
+              <rect x="80" y="36" width="11" height="11" rx="2" transform="rotate(45 85.5 41.5)"/>
+            </g>
+          </g>
+          <g transform="rotate(-14 34 96)"><rect x="18" y="80" width="30" height="30" rx="7" fill="#d8456a"/><rect x="18" y="104" width="30" height="6" rx="3" fill="#9c2443"/><circle cx="26" cy="88" r="3" fill="#fff"/><circle cx="40" cy="88" r="3" fill="#fff"/><circle cx="26" cy="100" r="3" fill="#fff"/><circle cx="40" cy="100" r="3" fill="#fff"/></g>
+          <g transform="rotate(10 132 100)"><rect x="118" y="86" width="26" height="26" rx="6" fill="#d8456a"/><rect x="118" y="107" width="26" height="5" rx="2.5" fill="#9c2443"/><circle cx="131" cy="98" r="3" fill="#fff"/></g>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -792,6 +875,9 @@
         </div>
         <div class="pv" id="pvSeaBox" style="display:none">
           <div class="bsboard mini" id="pvsBoard"></div>
+        </div>
+        <div class="pv" id="pvCsBox" style="display:none">
+          <div id="pvcBoard"></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -984,6 +1070,32 @@
     </div>
   </section>
 
+  <!-- FLOTTER DREIER -->
+  <section class="screen" id="sCs">
+    <div class="topbar">
+      <button class="menubtn" id="btnCMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="csStatus"></div>
+    <div class="csboardwrap" id="csBoard"></div>
+    <div class="csgoal" id="csGoal"></div>
+    <div class="csbottom">
+      <div class="cstray">
+        <div class="cspawns" id="csPawns"></div>
+        <div class="csfelt" id="csDice"></div>
+      </div>
+      <div class="csactions" id="csActions"></div>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1117,13 +1229,15 @@
     who:   { topic: 'dumbyphones/dumbydetektiv/v1/', lsKey: 'wi_state_v1', screen: 'sWho', theme: 'who' },
     four:  { topic: 'dumbyphones/viererkette/v1/', lsKey: 'vk_state_v1', screen: 'sFour', theme: 'four' },
     sea:   { topic: 'dumbyphones/schiffe/v1/', lsKey: 'sv_state_v1', screen: 'sSea', theme: 'sea' },
+    cs:    { topic: 'dumbyphones/flotterdreier/v1/', lsKey: 'fd_state_v1', screen: 'sCs', theme: 'cs' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
   let W = load(MODES.who.lsKey, null); // Wixer-finden-Spielstand
   let F = load(MODES.four.lsKey, null); // Viererkette-Spielstand
   let B = load(MODES.sea.lsKey, null); // Schiffe-versenken-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : S);
+  let C = load(MODES.cs.lsKey, null); // Flotter-Dreier-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1178,7 +1292,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1222,6 +1336,7 @@
         if (mode === 'who') whoSync();
         if (mode === 'four') fourSync();
         if (mode === 'sea') seaSync();
+        if (mode === 'cs') csSync();
       } catch {}
     });
   }
@@ -1244,6 +1359,8 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'cs') {
+      Object.assign(data, { host: g.host, prog: g.prog, turns: g.turns, live: g.live });
     } else if (mode === 'sea') {
       Object.assign(data, { host: g.host, ready: g.ready, shots: g.shots, res: g.res });
       if (g.finished) data.ships = g.ships; // Aufstellung erst nach Spielende zeigen
@@ -1281,6 +1398,11 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'cs') {
+      q('.ototal').textContent = CS_COLS.filter(c => (o.prog || {})[c] >= CS_H[c]).length;
+      q('.oround').textContent = '/ 3 Spalten';
       return;
     }
     if (mode === 'sea') {
@@ -2814,6 +2936,277 @@
   }
 
   // =====================================================================
+  //  FLOTTER DREIER (Würfeln, Paare bilden, Spalten erklimmen)
+  // =====================================================================
+  const CS_COLS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const CS_H = { 2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 11, 9: 9, 10: 7, 11: 5, 12: 3 };
+  const CS_WIN = 3, CS_RUNNERS = 3;
+  const csZero = () => Object.fromEntries(CS_COLS.map(c => [c, 0]));
+  function freshCs(code, gameNo, host) {
+    return {
+      code, gameNo: gameNo || 1, host: !!host, meStarts: code ? null : true,
+      prog: csZero(), turns: 0, live: null,
+      cpu: code ? null : { prog: csZero(), turns: 0, live: null },
+      finished: false, result: null, endShown: false, round: 1, total: 0,
+    };
+  }
+  const csOpp = () => { const o = currentOpp(); return o && C && o.gameNo === C.gameNo ? o : null; };
+  function csSides() {
+    const g = C;
+    if (!g.code) return { myProg: g.prog, myTurns: g.turns, oppProg: g.cpu.prog, oppTurns: g.cpu.turns, oppLive: g.cpu.live, oppHere: true, meStarts: g.meStarts };
+    const o = csOpp();
+    return { myProg: g.prog, myTurns: g.turns, oppProg: (o && o.prog) || csZero(), oppTurns: (o && o.turns) || 0,
+      oppLive: o && o.live, oppHere: !!o, meStarts: (g.gameNo % 2 === 1) === g.host };
+  }
+  const csClaims = sd => ({ me: CS_COLS.filter(c => sd.myProg[c] >= CS_H[c]), op: CS_COLS.filter(c => sd.oppProg[c] >= CS_H[c]) });
+  const csBlocked = sd => { const cl = csClaims(sd); return new Set([...cl.me, ...cl.op]); };
+  function csPhase() {
+    const g = C;
+    if (g.finished) return 'end';
+    const sd = csSides();
+    if (g.code && !sd.oppHere) return 'noopp';
+    const cl = csClaims(sd);
+    if (cl.me.length >= CS_WIN) return 'won';
+    if (cl.op.length >= CS_WIN) return 'lost';
+    const mine = sd.meStarts ? sd.myTurns <= sd.oppTurns : sd.myTurns < sd.oppTurns;
+    return mine ? 'me' : 'opp';
+  }
+  // Summen nacheinander anwenden (Läufer setzen/vorrücken). Gibt neue Läufer zurück oder null, wenn nicht möglich.
+  function csApply(seq, prog, runners, blocked) {
+    const r = { ...runners };
+    for (const s of seq) {
+      if (blocked.has(s)) return null;
+      if (r[s] === undefined) { if (Object.keys(r).length >= CS_RUNNERS) return null; r[s] = prog[s]; }
+      if (r[s] >= CS_H[s]) return null;
+      r[s]++;
+    }
+    return r;
+  }
+  // Alle Zugmöglichkeiten aus 4 Würfeln: beide Summen eines Paares, sonst einzeln
+  function csOptions(dice, prog, runners, blocked) {
+    const pairs = [[0, 1, 2, 3], [0, 2, 1, 3], [0, 3, 1, 2]].map(([a, b, c, d]) => [dice[a] + dice[b], dice[c] + dice[d]]);
+    const out = [], seen = new Set();
+    const add = seq => { const k = [...seq].sort((x, y) => x - y).join('+'); if (!seen.has(k)) { seen.add(k); out.push([...seq].sort((x, y) => x - y)); } };
+    pairs.forEach(([a, b]) => {
+      if (csApply([a, b], prog, runners, blocked)) add([a, b]);
+      else {
+        if (csApply([a], prog, runners, blocked)) add([a]);
+        if (csApply([b], prog, runners, blocked)) add([b]);
+      }
+    });
+    return out;
+  }
+  // Computer wählt: lieber Spalten mit Läufer, lieber Mitte, lieber zwei Schritte
+  function csCpuChoose(opts, prog, runners) {
+    let best = opts[0], bs = -1e9;
+    opts.forEach(o => {
+      let s = o.length * 4;
+      o.forEach(c => { s += (runners[c] !== undefined ? 5 : 0) + (6 - Math.abs(7 - c)) * .6 + (prog[c] / CS_H[c]) * 3; });
+      s += Math.random();
+      if (s > bs) { bs = s; best = o; }
+    });
+    return best;
+  }
+  function csCpuStop(live, prog) {
+    const n = Object.keys(live.runners).length;
+    const topped = Object.entries(live.runners).some(([c, p]) => p >= CS_H[c]);
+    if (topped) return true;
+    if (n >= CS_RUNNERS) return live.steps >= 3 + Math.floor(Math.random() * 3);
+    return live.steps >= 7;
+  }
+
+  let csAnimating = false, csCpuTimer = null, csBustTimer = null;
+
+  function csBoardHTML(sd, runners, runMine, mini) {
+    return `<div class="csboard${mini ? ' mini' : ''}">${CS_COLS.map(c => {
+      const H = CS_H[c], ownMe = sd.myProg[c] >= H, ownOp = sd.oppProg[c] >= H;
+      let cells = '';
+      for (let i = H; i >= 1; i--) {
+        const m = !ownMe && !ownOp && sd.myProg[c] === i, o = !ownMe && !ownOp && sd.oppProg[c] === i;
+        const run = runners && runners[c] === i;
+        cells += `<div class="cscell${ownMe ? ' ownme' : ownOp ? ' ownop' : ''}">${m ? '<i class="mk me"></i>' : ''}${o ? '<i class="mk op"></i>' : ''}${run ? `<i class="mk run ${runMine ? 'me' : 'op'}"></i>` : ''}</div>`;
+      }
+      return `<div class="cscol">${cells}<div class="cslab">${c}</div></div>`;
+    }).join('')}</div>`;
+  }
+  const csDiceHTML = dice => (dice || [0, 0, 0, 0]).map(v => (v ? dieHTML(v).replace('class="die"', 'class="die pink"') : '<div class="die pink empty"></div>')).join('');
+
+  function renderCs() {
+    const g = C, ph = csPhase(), sd = csSides();
+    const myTurn = ph === 'me';
+    const live = myTurn ? g.live : (ph === 'opp' ? sd.oppLive : null);
+    // Brett
+    $('csBoard').innerHTML = csBoardHTML(sd, live && live.runners, myTurn);
+    // Würfel
+    if (!csAnimating) $('csDice').innerHTML = csDiceHTML(live && live.dice);
+    // Läufer-Anzeige (3 Figuren)
+    const used = live ? Object.keys(live.runners).length : 0;
+    $('csPawns').innerHTML = [...Array(CS_RUNNERS)].map((_, i) => `<i class="cspawn${i < CS_RUNNERS - used ? '' : ' used'} ${myTurn || ph !== 'opp' ? 'me' : 'op'}"></i>`).join('');
+    // Status
+    const bust = live && live.bust;
+    let st;
+    if (ph === 'won' || (ph === 'end' && g.result === 'win')) st = 'Gewonnen!';
+    else if (ph === 'lost' || ph === 'end') st = 'Verloren';
+    else if (ph === 'noopp') st = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
+    else if (bust) st = myTurn ? 'Pech gehabt! Der Fortschritt ist weg.' : (g.code ? 'Gegner hat Pech gehabt!' : 'Computer hat Pech gehabt!');
+    else if (myTurn) st = !live || !live.dice ? 'Du bist dran – würfle!' : live.opts ? 'Wähle deine Würfelpaare' : 'Weiterwürfeln oder stoppen?';
+    else st = g.code ? 'Gegner ist dran …' : 'Computer würfelt …';
+    $('csStatus').textContent = st;
+    $('csStatus').classList.toggle('turn', myTurn && !bust);
+    const left = Math.max(0, CS_WIN - csClaims(sd).me.length);
+    $('csGoal').textContent = left === 0 ? '' : left === 1 ? 'Noch 1 Spalte zum Sieg' : `Noch ${left} Spalten zum Sieg`;
+    // Aktionen
+    const over = ['won', 'lost', 'end'].includes(ph);
+    const act = $('csActions');
+    if (over) {
+      act.innerHTML = '<button id="btnCsAgain">Nochmal</button><button id="btnCsMenu" class="csalt">Menü</button>';
+      $('btnCsAgain').onclick = csRematch;
+      $('btnCsMenu').onclick = () => { disconnect(); openMode('cs'); };
+    } else if (myTurn && live && live.opts && !csAnimating && !bust) {
+      act.innerHTML = live.opts.map((o, i) => `<button class="csopt" data-i="${i}">${o.length === 2 ? o[0] + ' &nbsp;+&nbsp; ' + o[1] : 'nur ' + o[0]}</button>`).join('');
+      act.querySelectorAll('.csopt').forEach(b => b.onclick = () => csChoose(+b.dataset.i));
+    } else {
+      const canStop = myTurn && live && Object.keys(live.runners).length > 0 && !live.opts && !bust;
+      act.innerHTML = `<button id="btnCsRoll"${myTurn && !csAnimating && !bust && !(live && live.opts) ? '' : ' disabled'}>Würfeln</button><button id="btnCsStop" class="csalt"${canStop && !csAnimating ? '' : ' disabled'}>Stopp</button>`;
+      $('btnCsRoll').onclick = csRoll;
+      $('btnCsStop').onclick = csStop;
+    }
+    updateOpp();
+    if ((ph === 'won' || ph === 'lost') && !g.finished) csFinish(ph === 'won' ? 'win' : 'lose');
+    if (!g.code && ph === 'opp' && !csCpuTimer && !csAnimating) csCpuTimer = setTimeout(csCpuStep, 900);
+  }
+
+  function csRoll() {
+    const g = C;
+    if (csPhase() !== 'me' || csAnimating) return;
+    if (g.live && (g.live.opts || g.live.bust)) return;
+    g.live = g.live || { runners: {}, dice: null, opts: null, steps: 0 };
+    const dice = [d6(), d6(), d6(), d6()];
+    g.live.dice = dice;
+    g.live.opts = csOptions(dice, g.prog, g.live.runners, csBlocked(csSides()));
+    if (!g.live.opts.length) { g.live.opts = null; g.live.bust = true; }
+    persist();
+    csAnimating = true;
+    renderCs();
+    $('csDice').innerHTML = csDiceHTML([1, 1, 1, 1]);
+    rollEls([...$('csDice').children], dice, ROLL_MS, () => {
+      csAnimating = false;
+      renderCs();
+      if (g.live && g.live.bust) { clearTimeout(csBustTimer); csBustTimer = setTimeout(() => csEndTurn(true), 1800); }
+    });
+  }
+  function csChoose(i) {
+    const g = C, o = g.live && g.live.opts && g.live.opts[i];
+    if (!o) return;
+    g.live.runners = csApply(o, g.prog, g.live.runners, csBlocked(csSides()));
+    g.live.steps += o.length;
+    g.live.opts = null;
+    persist();
+    renderCs();
+  }
+  function csStop() { if (csPhase() === 'me' && C.live && !C.live.opts) csEndTurn(false); }
+  function csEndTurn(bust) {
+    const g = C;
+    if (!g.live) return;
+    if (!bust) Object.entries(g.live.runners).forEach(([c, p]) => { g.prog[c] = p; });
+    g.turns++; g.round = g.turns + 1; g.total = csClaims(csSides()).me.length;
+    g.live = null;
+    persist();
+    renderCs();
+  }
+  // Computer spielt seinen Zug Schritt für Schritt
+  function csCpuStep() {
+    csCpuTimer = null;
+    const g = C;
+    if (mode !== 'cs' || !g || g.code || csPhase() !== 'opp') return;
+    const cpu = g.cpu;
+    cpu.live = cpu.live || { runners: {}, dice: null, opts: null, steps: 0 };
+    const dice = [d6(), d6(), d6(), d6()];
+    cpu.live.dice = dice;
+    const opts = csOptions(dice, cpu.prog, cpu.live.runners, csBlocked(csSides()));
+    csAnimating = true;
+    renderCs();
+    $('csDice').innerHTML = csDiceHTML([1, 1, 1, 1]);
+    rollEls([...$('csDice').children], dice, ROLL_MS, () => {
+      csAnimating = false;
+      if (!opts.length) {
+        cpu.live.bust = true; renderCs();
+        csCpuTimer = setTimeout(() => { cpu.live = null; cpu.turns++; csCpuTimer = null; persist(); renderCs(); }, 1600);
+        return;
+      }
+      csCpuTimer = setTimeout(() => {
+        const o = csCpuChoose(opts, cpu.prog, cpu.live.runners);
+        cpu.live.runners = csApply(o, cpu.prog, cpu.live.runners, csBlocked(csSides()));
+        cpu.live.steps += o.length;
+        renderCs();
+        csCpuTimer = setTimeout(() => {
+          if (csCpuStop(cpu.live, cpu.prog)) {
+            Object.entries(cpu.live.runners).forEach(([c, p]) => { cpu.prog[c] = p; });
+            cpu.live = null; cpu.turns++;
+            csCpuTimer = null; persist(); renderCs();
+          } else csCpuStep();
+        }, 900);
+      }, 700);
+    });
+  }
+  function csFinish(result) {
+    const g = C;
+    g.finished = true; g.result = result;
+    clearTimeout(csCpuTimer); csCpuTimer = null;
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedCs = (profile.playedCs || 0) + 1; save(LS_PROFILE, profile);
+      persist();
+      setTimeout(() => { if (mode === 'cs' && C === g) modal(result === 'win' ? 'Gewonnen!' : 'Verloren', '', '', 'Weiter'); }, 900);
+    } else persist();
+    renderCs();
+  }
+  function csSync() { if (mode === 'cs' && C) renderCs(); }
+  function csRematch() {
+    const g = C;
+    clearTimeout(csCpuTimer); csCpuTimer = null; clearTimeout(csBustTimer);
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    C = freshCs(g.code, n, g.host);
+    if (!g.code) C.meStarts = !g.meStarts;
+    csAnimating = false;
+    persist();
+    renderCs();
+  }
+  $('btnCMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Flotter Dreier ----------
+  const pvc = { running: false, timer: null };
+  function pvcLater(fn, ms) { pvc.timer = setTimeout(() => pvc.running && fn(), ms); }
+  function pvcStart() {
+    const A = { prog: csZero() }, Bp = { prog: csZero() };
+    let turnA = true, live = null;
+    const sd = () => ({ myProg: A.prog, oppProg: Bp.prog });
+    const draw = () => { $('pvcBoard').innerHTML = csBoardHTML(sd(), live && live.runners, turnA, true); };
+    const step = () => {
+      const p = turnA ? A : Bp;
+      live = live || { runners: {}, steps: 0 };
+      const cl = csClaims(sd());
+      const opts = csOptions([d6(), d6(), d6(), d6()], p.prog, live.runners, new Set([...cl.me, ...cl.op]));
+      if (!opts.length) { live = null; turnA = !turnA; draw(); pvcLater(step, 700); return; }
+      const o = csCpuChoose(opts, p.prog, live.runners);
+      live.runners = csApply(o, p.prog, live.runners, new Set([...cl.me, ...cl.op]));
+      live.steps += o.length;
+      draw();
+      if (csCpuStop(live, p.prog)) {
+        Object.entries(live.runners).forEach(([c, v]) => { p.prog[c] = v; });
+        live = null; turnA = !turnA;
+        const c2 = csClaims(sd());
+        if (c2.me.length >= CS_WIN || c2.op.length >= CS_WIN) { draw(); pvcLater(pvcStart, 2500); return; }
+      }
+      pvcLater(step, 450);
+    };
+    draw();
+    pvcLater(step, 600);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -2826,6 +3219,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    cs: {
+      title: 'Flotter Dreier', playedKey: 'playedCs',
+      desc: ['Wirf vier Würfel und kombiniere sie zu zwei Paaren. Die Summen bestimmen, in welchen Spalten deine Läufer nach oben klettern – aber pro Zug hast du nur drei davon.',
+        'Nach jedem Wurf entscheidest du: weiterwürfeln oder stoppen und den Fortschritt sichern. Passt keine Kombination mehr, ist alles aus diesem Zug weg. Wer zuerst drei Spalten bis ganz oben schafft, gewinnt.'],
     },
     sea: {
       title: 'Schiffe versenken', playedKey: 'playedSea',
@@ -2843,12 +3241,13 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
-    else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; } else S = v;
+    else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
+    else if (mode === 'cs') { C = v; csAnimating = false; clearTimeout(csCpuTimer); csCpuTimer = null; } else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -2867,6 +3266,7 @@
     $('pvWhoBox').style.display = mode === 'who' ? '' : 'none';
     $('pvFourBox').style.display = mode === 'four' ? '' : 'none';
     $('pvSeaBox').style.display = mode === 'sea' ? '' : 'none';
+    $('pvCsBox').style.display = mode === 'cs' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -2876,14 +3276,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = mode === 'four' || mode === 'sea'
+      r.textContent = ['four', 'sea', 'cs'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -2891,6 +3291,7 @@
   $('toyWho').onclick = () => openMode('who');
   $('toyFour').onclick = () => openMode('four');
   $('toySea').onclick = () => openMode('sea');
+  $('toyCs').onclick = () => openMode('cs');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -3043,6 +3444,7 @@
     else if (mode === 'who') { pvw.running = true; pvwStart(); }
     else if (mode === 'four') { pvf.running = true; pvfStart(); }
     else if (mode === 'sea') { pvs.running = true; pvsStart(); }
+    else if (mode === 'cs') { pvc.running = true; pvcStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -3051,6 +3453,7 @@
     pvw.running = false; clearTimeout(pvw.timer);
     pvf.running = false; clearTimeout(pvf.timer);
     pvs.running = false; clearTimeout(pvs.timer);
+    pvc.running = false; clearTimeout(pvc.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -3065,7 +3468,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'sea'
+      const txt = mode === 'cs'
+        ? 'Teile diesen Code mit deinem Gegner. Du würfelst zuerst.'
+        : mode === 'sea'
         ? 'Teile diesen Code mit deinem Gegner. Stell inzwischen deine Flotte auf – du schießt zuerst.'
         : mode === 'four'
         ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
@@ -3083,6 +3488,7 @@
     if (mode === 'who') { show('sWho'); guessMode = false; whoSync(); return; }
     if (mode === 'four') { show('sFour'); c4Shown = 0; renderFour(); return; }
     if (mode === 'sea') { show('sSea'); bsLastTurn = null; seaSync(); return; }
+    if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
     if (mode === 'dice') { renderDice(); return; }
@@ -3147,7 +3553,8 @@
     $('overlay').classList.remove('show');
     if (mode === 'who') { whoRematch(); return; }
     if (mode === 'four') { fourRematch(); return; }
-    if (mode === 'sea') { seaRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'sea') { seaRematch(); return; }
+    if (mode === 'cs') { csRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -3165,7 +3572,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -3174,6 +3581,7 @@
   else if (W && !W.finished) { mode = 'who'; resumeGame(); }
   else if (F && !F.finished) { mode = 'four'; resumeGame(); }
   else if (B && !B.finished) { mode = 'sea'; resumeGame(); }
+  else if (C && !C.finished) { mode = 'cs'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
