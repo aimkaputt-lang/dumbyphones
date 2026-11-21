@@ -413,6 +413,23 @@
   .ddbox.mini .die.held { box-shadow: 0 0 0 3px #d9c65c, 0 4px 0 #b89d6e; }
   #pvdBadge { font-size: 30px; text-align: center; line-height: 1.15; }
 
+  /* Vollbild-Screens fixieren, nur der Inhalt darf scrollen */
+  html.lock, html.lock body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+  html.lock body { position: fixed; inset: 0; width: 100%; }
+  .modebody { overscroll-behavior: contain; }
+  .bottombar { flex: 0 0 auto; touch-action: none; }
+
+  /* Hauptmenü-Logo */
+  .brand {
+    position: absolute; top: calc(env(safe-area-inset-top) + 18px); left: 0; right: 0; text-align: center;
+    font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: .5px; pointer-events: none;
+    transform: rotate(-4deg);
+  }
+  .brand span { display: inline-block; text-shadow: 0 4px 0 rgba(0,0,0,.35), 0 8px 14px rgba(0,0,0,.25); }
+  .brand .b1 { color: #d4304f; }
+  .brand .b2 { color: #f6efea; margin-left: 10px; transform: translateY(-6px) rotate(-3deg); }
+  #sHome .iconbtn { top: calc(env(safe-area-inset-top) + 76px); }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -423,6 +440,7 @@
 
   <!-- START -->
   <section class="screen fixed" id="sHome">
+    <div class="brand"><span class="b1">Dumby</span><span class="b2">Phonez</span></div>
     <button class="iconbtn" id="btnSettings" aria-label="Einstellungen">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="3.6" stroke-dasharray="3.34 3.34"/><circle cx="12" cy="12" r="6.6" fill="currentColor"/><circle cx="12" cy="12" r="2.6" fill="var(--btn)"/></svg>
     </button>
@@ -614,6 +632,15 @@
     <button id="btnJoinGo">Beitreten</button>
   </div>
 </div>
+<div class="overlay dlg" id="dlgConfirm">
+  <div class="modal">
+    <h2>Pausiertes Spiel beenden?</h2>
+    <p id="confText"></p>
+    <button id="btnConfYes">Neues Spiel starten</button>
+    <div class="gap"></div>
+    <button id="btnConfNo" class="secondary">Abbrechen</button>
+  </div>
+</div>
 <div class="overlay dlg" id="dlgSettings">
   <div class="modal">
     <h2>Einstellungen</h2>
@@ -733,6 +760,9 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     document.body.dataset.theme = screen === 'sHome' ? '' : MODES[mode].theme;
+    // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
+    document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
+    window.scrollTo(0, 0);
   }
   function persist() { save(MODES[mode].lsKey, G()); publish(); }
 
@@ -1448,9 +1478,25 @@
     renderGame();
   }
 
-  $('btnCreate').onclick = () => ensureName(() => startGame(newCode()));
-  $('btnJoin').onclick = () => ensureName(openJoin);
-  $('btnSolo').onclick = () => ensureName(() => startGame(null));
+  // Vor einem neuen Spiel warnen, wenn in diesem Modus noch ein pausiertes Spiel läuft
+  let afterConfirm = null;
+  function confirmNew(cb) {
+    const g = G();
+    if (!g || g.finished) { cb(); return; }
+    $('confText').textContent = `Du hast noch ein pausiertes Spiel (${g.code ? 'Raum ' + g.code : 'Solo'}, Runde ${g.round}). Wenn du ein neues startest, wird es beendet.`;
+    afterConfirm = cb;
+    openDlg('dlgConfirm');
+  }
+  $('btnConfYes').onclick = () => {
+    closeDlg('dlgConfirm');
+    const cb = afterConfirm; afterConfirm = null;
+    if (cb) cb();
+  };
+  $('btnConfNo').onclick = () => { afterConfirm = null; closeDlg('dlgConfirm'); };
+
+  $('btnCreate').onclick = () => ensureName(() => confirmNew(() => startGame(newCode())));
+  $('btnJoin').onclick = () => ensureName(() => confirmNew(openJoin));
+  $('btnSolo').onclick = () => ensureName(() => confirmNew(() => startGame(null)));
   $('btnResume').onclick = resumeGame;
   $('btnRoll').onclick = () => roll(2);
   $('btnRoll1').onclick = () => roll(1);
