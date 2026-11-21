@@ -577,6 +577,63 @@
   .c4end .c4menu { background: var(--bar); color: #fff; box-shadow: 0 6px 0 var(--bar-dark); }
   .c4wrap.mini { width: 86%; margin: 4px auto; }
 
+  /* ---------- Schiffe versenken ---------- */
+  body[data-theme="sea"] {
+    --bg: #33426a; --bg-dark: #161d33; --muted: #b8c6e6;
+    --panel: #3d5688; --panel-card: #26385e; --panel-shadow: #0a0f1d; --title: #c9f2e3;
+    --bar: #3d5688; --bar-dark: #223458; --seg-text: #cfe0ff;
+  }
+  body[data-theme="sea"] .pv { background: radial-gradient(ellipse at 50% 25%, #46557f, #26304f); }
+  body[data-theme="sea"] .modal { background: linear-gradient(120deg, #3d5688, #4e69a0); border-color: #26385e; }
+  body[data-theme="sea"] .modal .big:empty { display: none; }
+  body[data-theme="sea"] .modal h2 { font-size: 34px; margin-bottom: 18px; }
+  #sSea .topbar { margin-bottom: 8px; }
+  .bstitle { margin: 10px 0 4px; font-size: 22px; font-weight: 700; color: var(--title); text-shadow: 0 3px 0 rgba(0,0,0,.35); }
+  .bsboard { width: 100%; display: grid; grid-template-columns: 20px 1fr; grid-template-rows: 20px auto; gap: 3px; }
+  .bscorner { grid-column: 1; grid-row: 1; }
+  .bscols { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: repeat(10, 1fr); }
+  .bsrows { grid-column: 1; grid-row: 2; display: grid; grid-template-rows: repeat(10, 1fr); }
+  .bslab { display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #f1f4ff; }
+  .bsgrid {
+    grid-column: 2; grid-row: 2; position: relative; aspect-ratio: 1;
+    display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr);
+  }
+  .bscell { position: relative; }
+  .bscell::before { content: ''; position: absolute; inset: 5%; border-radius: 3px; background: rgba(255,255,255,.08); }
+  .bsboard.target .bscell { cursor: pointer; }
+  .bsboard.target .bscell:active::before { background: rgba(201,242,227,.35); }
+  .bsship { position: absolute; padding: .6%; pointer-events: none; }
+  .bsship svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 2px rgba(0,0,0,.35)); }
+  .bsship.sel { outline: 2px dashed var(--title); outline-offset: -1px; border-radius: 6px; }
+  .bsship.ghost { opacity: .4; }
+  .bschip { position: absolute; width: 10%; height: 10%; pointer-events: none; }
+  .bschip::before { content: ''; position: absolute; inset: 18%; border-radius: 50%; box-shadow: inset 0 -2px 0 rgba(0,0,0,.18), 0 2px 3px rgba(0,0,0,.3); }
+  .bschip::after { content: ''; position: absolute; inset: 34%; border-radius: 50%; box-shadow: inset 0 1.5px 0 rgba(0,0,0,.2); }
+  .bschip.h::before { background: #e2104c; } .bschip.h::after { background: #c80c42; }
+  .bschip.m::before { background: #f1f1f1; } .bschip.m::after { background: #d6d6d6; }
+  .bschip.w::before { background: #f1f1f1; opacity: .55; } .bschip.w::after { background: #d6d6d6; opacity: .55; }
+  .bschip.pop::before, .bschip.pop::after { animation: bspop .35s cubic-bezier(.3,1.6,.5,1); }
+  @keyframes bspop { from { transform: scale(0); } to { transform: scale(1); } }
+  .bssetup, .bsbattle { width: 100%; margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+  .bstrays { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .bstray {
+    width: auto; margin: 0; padding: 5px 9px; font-size: 12px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 1px;
+    background: var(--panel-card); color: var(--text); box-shadow: 0 3px 0 rgba(0,0,0,.35); line-height: 1.1;
+  }
+  .bstray i { font-style: normal; font-size: 8px; letter-spacing: 1px; color: var(--title); }
+  .bstray.sel { background: var(--title); color: #1d2a44; }
+  .bstray.sel i { color: #1d2a44; }
+  .bstray.placed { opacity: .45; }
+  .bsbtns button, .bsend button { margin: 0; font-size: 17px; padding: 13px 8px; }
+  .bsalt { background: var(--panel); color: #fff; box-shadow: 0 6px 0 var(--bar-dark); }
+  .bsalt:active:not(:disabled) { box-shadow: 0 1px 0 var(--bar-dark); }
+  #btnBsView { margin: 0; }
+  .bslog { text-align: center; font-size: 14px; line-height: 1.5; min-height: 42px; color: var(--muted); }
+  .bslog div:first-child { color: var(--text); font-weight: 600; }
+  .bsscore { text-align: center; font-size: 13px; color: var(--muted); }
+  .bsboard.mini { grid-template-columns: 1fr; grid-template-rows: auto; width: 74%; margin: 0 auto; }
+  .bsboard.mini .bsgrid { grid-column: 1; grid-row: 1; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -661,6 +718,26 @@
           <circle cx="104" cy="12" r="9" fill="#f4c80f"/><circle cx="104" cy="12" r="5.5" fill="none" stroke="#c9a10a" stroke-width="1.6"/>
         </svg>
       </button>
+      <button class="toy" id="toySea" aria-label="Schiffe versenken" style="animation-delay:-2.9s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="62" ry="8" fill="rgba(0,0,0,.28)"/>
+          <rect x="26" y="14" width="108" height="100" rx="8" fill="#2b3a5e"/>
+          <g fill="rgba(255,255,255,.12)">
+            <rect x="32" y="20" width="20" height="20" rx="3"/><rect x="58" y="20" width="20" height="20" rx="3"/><rect x="84" y="20" width="20" height="20" rx="3"/><rect x="110" y="20" width="18" height="20" rx="3"/>
+            <rect x="32" y="46" width="20" height="20" rx="3"/><rect x="84" y="46" width="20" height="20" rx="3"/><rect x="110" y="46" width="18" height="20" rx="3"/>
+            <rect x="32" y="72" width="20" height="20" rx="3"/><rect x="84" y="72" width="20" height="20" rx="3"/><rect x="110" y="72" width="18" height="20" rx="3"/>
+            <rect x="32" y="96" width="20" height="13" rx="3"/><rect x="110" y="96" width="18" height="13" rx="3"/>
+          </g>
+          <path d="M60 44 Q60 40 64 40 L72 40 Q76 40 76 44 L76 96 L68 110 L60 96 Z" fill="#4b4652"/>
+          <rect x="62" y="44" width="12" height="9" fill="#1a1a1a"/><rect x="62" y="47" width="12" height="3" fill="#d8262c"/><rect x="62" y="50" width="12" height="3" fill="#f2c418"/>
+          <circle cx="68" cy="70" r="4" fill="#c99a3a"/><circle cx="68" cy="86" r="4" fill="#2a2a2a"/>
+          <rect x="86" y="74" width="16" height="32" rx="7" fill="#9a7a2a"/>
+          <circle cx="94" cy="82" r="5.5" fill="#e2104c"/><circle cx="94" cy="82" r="3" fill="#c80c42"/>
+          <circle cx="42" cy="30" r="5.5" fill="#f1f1f1"/><circle cx="42" cy="30" r="3" fill="#d6d6d6"/>
+          <circle cx="94" cy="56" r="5.5" fill="#f1f1f1"/><circle cx="94" cy="56" r="3" fill="#d6d6d6"/>
+          <circle cx="120" cy="30" r="5.5" fill="#f1f1f1"/><circle cx="120" cy="30" r="3" fill="#d6d6d6"/>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -696,6 +773,9 @@
         </div>
         <div class="pv" id="pvFourBox" style="display:none">
           <div class="c4wrap mini"><div class="c4chips" id="pvfChips"></div><div class="c4board"></div></div>
+        </div>
+        <div class="pv" id="pvSeaBox" style="display:none">
+          <div class="bsboard mini" id="pvsBoard"></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -854,6 +934,42 @@
     </div>
   </section>
 
+  <!-- SCHIFFE VERSENKEN -->
+  <section class="screen" id="sSea">
+    <div class="topbar">
+      <button class="menubtn" id="btnSMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="bsStatus"></div>
+    <h2 class="bstitle" id="bsTitle">Meine Flotte</h2>
+    <div class="bsboard" id="bsBoard"></div>
+    <div id="bsSetup" class="bssetup">
+      <div class="bstrays" id="bsTray"></div>
+      <div class="row bsbtns">
+        <button id="btnBsRot" class="bsalt">Drehen ↔</button>
+        <button id="btnBsRand" class="bsalt">Zufällig</button>
+        <button id="btnBsReady">Bereit</button>
+      </div>
+    </div>
+    <div id="bsBattle" class="bsbattle" style="display:none">
+      <div class="bslog" id="bsLog"></div>
+      <div class="bsscore" id="bsScore"></div>
+      <button id="btnBsView" class="bsalt">Gegner-Feld</button>
+      <div class="row bsend" id="bsEnd" style="display:none">
+        <button id="btnBsAgain">Nochmal</button>
+        <button id="btnBsMenu" class="bsalt">Menü</button>
+      </div>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -986,12 +1102,14 @@
     dice:  { topic: 'dumbyphones/dumbydices/v1/', lsKey: 'dd_state_v1', screen: 'sDice', theme: 'dice' },
     who:   { topic: 'dumbyphones/dumbydetektiv/v1/', lsKey: 'wi_state_v1', screen: 'sWho', theme: 'who' },
     four:  { topic: 'dumbyphones/viererkette/v1/', lsKey: 'vk_state_v1', screen: 'sFour', theme: 'four' },
+    sea:   { topic: 'dumbyphones/schiffe/v1/', lsKey: 'sv_state_v1', screen: 'sSea', theme: 'sea' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
   let W = load(MODES.who.lsKey, null); // Wixer-finden-Spielstand
   let F = load(MODES.four.lsKey, null); // Viererkette-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : S);
+  let B = load(MODES.sea.lsKey, null); // Schiffe-versenken-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1088,6 +1206,7 @@
         if (G() && G().finished && $('sEnd').classList.contains('active')) renderEnd();
         if (mode === 'who') whoSync();
         if (mode === 'four') fourSync();
+        if (mode === 'sea') seaSync();
       } catch {}
     });
   }
@@ -1110,6 +1229,9 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'sea') {
+      Object.assign(data, { host: g.host, ready: g.ready, shots: g.shots, res: g.res });
+      if (g.finished) data.ships = g.ships; // Aufstellung erst nach Spielende zeigen
     } else if (mode === 'four') {
       Object.assign(data, { host: g.host, moves: g.moves });
     } else data.scores = g.scores;
@@ -1144,6 +1266,11 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'sea') {
+      q('.ototal').textContent = o.ready ? bsSunkCount(o.res || []) : '–';
+      q('.oround').textContent = o.ready ? '/ 11 versenkt' : 'platziert …';
       return;
     }
     if (mode === 'four') {
@@ -2146,6 +2273,424 @@
   }
 
   // =====================================================================
+  //  SCHIFFE VERSENKEN
+  // =====================================================================
+  const BS = 10, ROWS_L = 'ABCDEFGHIJ';
+  const FLEET = [
+    { id: 'de', len: 5, name: 'Deutschland', kind: 'war', hull: '#4b4652', flag: { dir: 'h', c: ['#1a1a1a', '#d8262c', '#f2c418'] } },
+    { id: 'es', len: 4, name: 'Spanien', kind: 'war', hull: '#55222f', flag: { dir: 'h', c: ['#c8102e', '#f4c400', '#f4c400', '#c8102e'] } },
+    { id: 'fr', len: 4, name: 'Frankreich', kind: 'war', hull: '#5d5d64', flag: { dir: 'v', c: ['#1e3a8a', '#f4f4f4', '#d8262c'] } },
+    { id: 's1', len: 3, name: 'Steg', kind: 'steg' },
+    { id: 's2', len: 3, name: 'Steg', kind: 'steg' },
+    { id: 's3', len: 3, name: 'Steg', kind: 'steg' },
+    { id: 'it', len: 2, name: 'Italien', kind: 'boat', hull: '#c9cbcf', flag: { dir: 'v', c: ['#1e8e3e', '#f4f4f4', '#d8262c'] } },
+    { id: 'jp', len: 2, name: 'Japan', kind: 'boat', hull: '#5f8183', flag: { dir: 'jp' } },
+    { id: 'nl', len: 2, name: 'Niederlande', kind: 'boat', hull: '#9a7a2a', flag: { dir: 'h', c: ['#c8102e', '#f4f4f4', '#1e3a8a'] } },
+    { id: 'us', len: 2, name: 'USA', kind: 'boat', hull: '#56606e', flag: { dir: 'us' } },
+    { id: 'row', len: 1, name: 'Ruderboot', kind: 'row' },
+  ];
+  const fleetById = id => FLEET.find(f => f.id === id);
+  const bsKey = (r, c) => r + ',' + c;
+  const bsName = (r, c) => ROWS_L[r] + (c + 1);
+  function bsCells(s) { const o = []; for (let i = 0; i < s.len; i++) o.push(s.h ? [s.r, s.c + i] : [s.r + i, s.c]); return o; }
+  // Prüft Platzierung: im Feld, keine Überlappung, ein Feld Abstand (auch diagonal)
+  function bsFits(ships, s) {
+    const cells = bsCells(s);
+    if (cells.some(([r, c]) => r < 0 || c < 0 || r >= BS || c >= BS)) return 'Das Schiff passt hier nicht aufs Feld.';
+    const near = new Set();
+    ships.forEach(o => {
+      if (o.id === s.id || o.r === null || o.r === undefined) return;
+      bsCells(o).forEach(([r, c]) => { for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) near.add(bsKey(r + a, c + b)); });
+    });
+    if (cells.some(([r, c]) => near.has(bsKey(r, c)))) return 'Schiffe dürfen sich nicht berühren – lass ein Feld Abstand.';
+    return null;
+  }
+  const bsBlank = () => FLEET.map(f => ({ id: f.id, len: f.len, r: null, c: null, h: false }));
+  function bsRandomFleet() {
+    for (let attempt = 0; attempt < 400; attempt++) {
+      const ships = bsBlank();
+      let ok = true;
+      for (const s of [...ships].sort((a, b) => b.len - a.len)) {
+        let placed = false;
+        for (let t = 0; t < 200 && !placed; t++) {
+          s.h = Math.random() < .5;
+          s.r = Math.floor(Math.random() * (s.h ? BS : BS - s.len + 1));
+          s.c = Math.floor(Math.random() * (s.h ? BS - s.len + 1 : BS));
+          if (!bsFits(ships, s)) placed = true; else { s.r = null; s.c = null; }
+        }
+        if (!placed) { ok = false; break; }
+      }
+      if (ok) return ships;
+    }
+    return null;
+  }
+  // Ergebnis eines Schusses (shots enthält den aktuellen Schuss schon)
+  function bsResolve(ships, shots, r, c) {
+    const s = ships.find(o => o.r !== null && bsCells(o).some(([a, b]) => a === r && b === c));
+    if (!s) return { k: 'm' };
+    const hit = new Set(shots.map(([a, b]) => bsKey(a, b)));
+    return bsCells(s).every(([a, b]) => hit.has(bsKey(a, b))) ? { k: 's', id: s.id, r: s.r, c: s.c, h: s.h, len: s.len } : { k: 'h' };
+  }
+  // Was man über ein Feld weiß: Treffer (h), Wasser (m), automatisch Wasser um versenkte Schiffe (w)
+  function bsKnown(shots, res) {
+    const chips = {}, sunk = [];
+    shots.forEach(([r, c], i) => { const x = res[i]; if (!x) return; chips[bsKey(r, c)] = x.k === 'm' ? 'm' : 'h'; if (x.k === 's') sunk.push(x); });
+    sunk.forEach(s => bsCells(s).forEach(([r, c]) => {
+      for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) {
+        const rr = r + a, cc = c + b;
+        if (rr >= 0 && cc >= 0 && rr < BS && cc < BS && !chips[bsKey(rr, cc)]) chips[bsKey(rr, cc)] = 'w';
+      }
+    }));
+    return { chips, sunk };
+  }
+  const bsSunkCount = res => res.filter(x => x && x.k === 's').length;
+
+  // Schiff als SVG (Draufsicht, Bug unten bzw. rechts)
+  function shipSVG(s) {
+    const f = fleetById(s.id), L = s.len, H = L * 100;
+    let g = '';
+    const flag = (x, y, w, hh) => {
+      const fl = f.flag; if (!fl) return '';
+      let o = `<rect x="${x - 1.5}" y="${y - 1.5}" width="${w + 3}" height="${hh + 3}" rx="2" fill="rgba(0,0,0,.35)"/>`;
+      if (fl.dir === 'jp') return o + `<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="#f4f4f4"/><circle cx="${x + w / 2}" cy="${y + hh / 2}" r="${hh * .3}" fill="#c8102e"/>`;
+      if (fl.dir === 'us') {
+        for (let i = 0; i < 6; i++) o += `<rect x="${x}" y="${y + i * hh / 6}" width="${w}" height="${hh / 6}" fill="${i % 2 ? '#f4f4f4' : '#c8102e'}"/>`;
+        return o + `<rect x="${x}" y="${y}" width="${w * .45}" height="${hh / 2}" fill="#1e3a8a"/>`;
+      }
+      fl.c.forEach((col, i) => {
+        o += fl.dir === 'h'
+          ? `<rect x="${x}" y="${y + i * hh / fl.c.length}" width="${w}" height="${hh / fl.c.length + .3}" fill="${col}"/>`
+          : `<rect x="${x + i * w / fl.c.length}" y="${y}" width="${w / fl.c.length + .3}" height="${hh}" fill="${col}"/>`;
+      });
+      return o;
+    };
+    if (f.kind === 'war') {
+      g += `<path d="M14 12 Q14 4 24 4 L76 4 Q86 4 86 12 L86 ${H - 70} L50 ${H - 4} L14 ${H - 70} Z" fill="${f.hull}"/>`;
+      g += `<path d="M14 12 Q14 4 24 4 L76 4 Q86 4 86 12 L86 ${H - 70} L80 ${H - 66} L80 14 Q80 10 74 10 L26 10 Q20 10 20 14 L20 ${H - 66} L14 ${H - 70} Z" fill="rgba(255,255,255,.08)"/>`;
+      g += `<path d="M50 70 L50 ${H - 40}" stroke="rgba(0,0,0,.35)" stroke-width="3"/>`;
+      for (let k = 1; k < L - 1; k++) g += `<circle cx="50" cy="${k * 100 + 50}" r="15" fill="rgba(0,0,0,.35)"/><circle cx="50" cy="${k * 100 + 50}" r="8" fill="${k % 2 ? '#c99a3a' : '#2a2a2a'}"/>`;
+      g += flag(24, 20, 52, 34);
+    } else if (f.kind === 'boat') {
+      g += `<rect x="16" y="6" width="68" height="${H - 12}" rx="30" fill="${f.hull}"/>`;
+      g += `<rect x="16" y="6" width="68" height="${H - 12}" rx="30" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="5"/>`;
+      g += `<rect x="40" y="${H - 80}" width="20" height="10" rx="3" fill="rgba(0,0,0,.3)"/><rect x="44" y="${H - 60}" width="12" height="22" rx="3" fill="rgba(0,0,0,.3)"/>`;
+      g += flag(30, 24, 40, 28);
+    } else if (f.kind === 'steg') {
+      g += `<rect x="8" y="4" width="84" height="${H - 8}" rx="4" fill="#a88b5c"/>`;
+      for (let y = 22; y < H - 8; y += 18) g += `<path d="M8 ${y} L92 ${y}" stroke="#7d6640" stroke-width="3"/>`;
+      g += `<path d="M36 4 L36 ${H - 4} M64 4 L64 ${H - 4}" stroke="rgba(0,0,0,.12)" stroke-width="2"/>`;
+      [[10, 8], [90, 8], [10, H - 8], [90, H - 8], [10, H / 2], [90, H / 2]].forEach(([x, y]) => { g += `<circle cx="${x}" cy="${y}" r="7" fill="#6f5636"/>`; });
+    } else {
+      g += `<path d="M50 8 Q86 30 82 60 Q78 92 50 94 Q22 92 18 60 Q14 30 50 8Z" fill="#7a4e2c"/>`;
+      g += `<path d="M50 18 Q76 36 72 60 Q68 84 50 86 Q32 84 28 60 Q24 36 50 18Z" fill="#b07a48"/>`;
+      g += `<rect x="28" y="50" width="44" height="9" rx="2" fill="#7a4e2c"/>`;
+      g += `<path d="M8 40 L36 58 M92 40 L64 58" stroke="#d8c6a0" stroke-width="4" stroke-linecap="round"/>`;
+    }
+    const vb = s.h ? `0 0 ${H} 100` : `0 0 100 ${H}`;
+    return `<svg viewBox="${vb}" preserveAspectRatio="none" aria-hidden="true">${s.h ? `<g transform="matrix(0 -1 1 0 0 100)">${g}</g>` : g}</svg>`;
+  }
+
+  // Spielfeld zeichnen: ships = sichtbare Schiffe, chips = Markierungen, ghosts = aufgedeckte Schiffe nach Spielende
+  function bsBoardHTML({ ships = [], chips = {}, ghosts = [], sel = null, labels = true, popKey = null }) {
+    let h = '';
+    if (labels) {
+      h += '<div class="bscorner"></div><div class="bscols">' + [...Array(BS)].map((_, c) => `<div class="bslab">${c + 1}</div>`).join('') + '</div>';
+    }
+    let grid = '';
+    for (let r = 0; r < BS; r++) for (let c = 0; c < BS; c++) grid += `<div class="bscell" data-r="${r}" data-c="${c}"></div>`;
+    const place = s => `left:${s.c * 10}%;top:${s.r * 10}%;width:${(s.h ? s.len : 1) * 10}%;height:${(s.h ? 1 : s.len) * 10}%`;
+    ghosts.forEach(s => { grid += `<div class="bsship ghost" style="${place(s)}">${shipSVG(s)}</div>`; });
+    ships.forEach(s => { if (s.r !== null) grid += `<div class="bsship${sel === s.id ? ' sel' : ''}" style="${place(s)}">${shipSVG(s)}</div>`; });
+    Object.entries(chips).forEach(([k, v]) => {
+      const [r, c] = k.split(',').map(Number);
+      grid += `<div class="bschip ${v}${k === popKey ? ' pop' : ''}" style="left:${c * 10}%;top:${r * 10}%"></div>`;
+    });
+    if (labels) {
+      h += `<div class="bsrows">${[...ROWS_L].map(l => `<div class="bslab">${l}</div>`).join('')}</div>`;
+    }
+    h += `<div class="bsgrid">${grid}</div>`;
+    return h;
+  }
+
+  function freshSea(code, gameNo, host, prevShips) {
+    return {
+      code, gameNo: gameNo || 1, host: !!host, meStarts: code ? null : true,
+      ships: prevShips ? prevShips.map(s => ({ ...s })) : bsBlank(),
+      ready: false, shots: [], res: [], myRes: [], cpuShips: null, cpuShots: [],
+      finished: false, result: null, endShown: false, view: 'me', round: 1, total: 0,
+    };
+  }
+  let bsSel = null;          // ausgewähltes Schiff beim Platzieren
+  let bsRot = false;         // Ausrichtung für das nächste Schiff (true = waagerecht)
+  let bsLastTurn = null, bsViewTimer = null, bsCpuTimer = null, bsPop = null;
+  const bsOpp = () => { const o = currentOpp(); return o && B && o.gameNo === B.gameNo ? o : null; };
+  function bsSides() {
+    const b = B;
+    if (!b.code) return { myShots: b.shots, myShotRes: b.myRes, oppShots: b.cpuShots, oppShotRes: b.res, oppReady: true, oppHere: true, meStarts: b.meStarts, oppShips: b.cpuShips };
+    const o = bsOpp();
+    return { myShots: b.shots, myShotRes: (o && o.res) || [], oppShots: (o && o.shots) || [], oppShotRes: b.res,
+      oppReady: !!(o && o.ready), oppHere: !!o, meStarts: (b.gameNo % 2 === 1) === b.host, oppShips: o && o.ships };
+  }
+  // Wer ist dran? Treffer = nochmal schießen
+  function bsTurn(sd) {
+    let cur = sd.meStarts ? 'me' : 'opp', i = 0, j = 0;
+    for (let g = 0; g < 400; g++) {
+      if (cur === 'me') {
+        if (i >= sd.myShots.length) return 'me';
+        const x = sd.myShotRes[i]; if (!x) return 'waitres';
+        i++; if (x.k === 'm') cur = 'opp';
+      } else {
+        if (j >= sd.oppShots.length) return 'opp';
+        const x = sd.oppShotRes[j]; if (!x) return 'opp';
+        j++; if (x.k === 'm') cur = 'me';
+      }
+    }
+    return 'me';
+  }
+  function bsPhase() {
+    const b = B;
+    if (b.finished) return 'end';
+    if (!b.ready) return 'setup';
+    const sd = bsSides();
+    if (b.code && !sd.oppHere) return 'noopp';
+    if (!sd.oppReady) return 'oppsetup';
+    if (bsSunkCount(sd.myShotRes) >= FLEET.length) return 'won';
+    if (bsSunkCount(sd.oppShotRes) >= FLEET.length) return 'lost';
+    return bsTurn(sd);
+  }
+
+  // Schüsse des Gegners auswerten (1v1)
+  function seaSync() {
+    if (mode !== 'sea' || !B) return;
+    const b = B, o = bsOpp();
+    if (b.code && o && b.ready && o.shots && o.shots.length > b.res.length) {
+      for (let j = b.res.length; j < o.shots.length; j++) {
+        const [r, c] = o.shots[j];
+        b.res[j] = bsResolve(b.ships, o.shots.slice(0, j + 1), r, c);
+      }
+      persist();
+    }
+    renderSea();
+  }
+
+  function bsFire(r, c) {
+    const b = B;
+    if (bsPhase() !== 'me' || b.view !== 'enemy') return;
+    const sd = bsSides();
+    const known = bsKnown(sd.myShots, sd.myShotRes).chips;
+    if (known[bsKey(r, c)]) return;
+    b.shots.push([r, c]);
+    if (!b.code) b.myRes.push(bsResolve(b.cpuShips, b.shots, r, c));
+    b.total = b.shots.length; b.round = b.shots.length + 1;
+    bsPop = 'me' + b.shots.length;
+    try { navigator.vibrate && navigator.vibrate(20); } catch {}
+    persist();
+    renderSea();
+  }
+
+  // Computer zielt: angeschossene Schiffe zu Ende versenken, sonst zufällig (ohne bekannte Wasserfelder)
+  function bsCpuPick(shots, res) {
+    const { chips } = bsKnown(shots, res);
+    const sunkCells = new Set();
+    res.forEach(x => { if (x && x.k === 's') bsCells(x).forEach(([r, c]) => sunkCells.add(bsKey(r, c))); });
+    const open = [];
+    shots.forEach(([r, c], i) => { const x = res[i]; if (x && x.k === 'h' && !sunkCells.has(bsKey(r, c))) open.push([r, c]); });
+    const diag = new Set();
+    open.forEach(([r, c]) => [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([a, b2]) => diag.add(bsKey(r + a, c + b2))));
+    const ok = (r, c) => r >= 0 && c >= 0 && r < BS && c < BS && !chips[bsKey(r, c)] && !diag.has(bsKey(r, c));
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+    if (open.length) {
+      let cands = [];
+      if (open.length >= 2) {
+        if (open.every(([r]) => r === open[0][0])) { const cs = open.map(x => x[1]); cands = [[open[0][0], Math.min(...cs) - 1], [open[0][0], Math.max(...cs) + 1]]; }
+        else if (open.every(([, c]) => c === open[0][1])) { const rs = open.map(x => x[0]); cands = [[Math.min(...rs) - 1, open[0][1]], [Math.max(...rs) + 1, open[0][1]]]; }
+      }
+      cands = cands.filter(([r, c]) => ok(r, c));
+      if (!cands.length) open.forEach(([r, c]) => [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([a, b2]) => { if (ok(r + a, c + b2)) cands.push([r + a, c + b2]); }));
+      if (cands.length) return pick(cands);
+    }
+    const all = [];
+    for (let r = 0; r < BS; r++) for (let c = 0; c < BS; c++) if (ok(r, c)) all.push([r, c]);
+    return all.length ? pick(all) : [0, 0];
+  }
+
+  function bsLastText(shots, res, who) {
+    for (let i = shots.length - 1; i >= 0; i--) {
+      const x = res[i]; if (!x) continue;
+      const t = x.k === 'm' ? 'Wasser' : x.k === 'h' ? 'Treffer!' : `Versenkt: ${fleetById(x.id).name}!`;
+      return `${who}: ${bsName(...shots[i])} – ${t}`;
+    }
+    return '';
+  }
+
+  function renderSea() {
+    const b = B, ph = bsPhase(), sd = bsSides();
+    const setup = ph === 'setup';
+    // Ansicht wechselt automatisch mit dem Zug, kann aber per Button umgeschaltet werden
+    if (setup) b.view = 'me';
+    else if (['me', 'opp', 'waitres'].includes(ph)) {
+      const t = ph === 'me' ? 'me' : 'opp';
+      if (t !== bsLastTurn) {
+        const first = bsLastTurn === null;
+        bsLastTurn = t;
+        clearTimeout(bsViewTimer);
+        const target = t === 'me' ? 'enemy' : 'me';
+        if (first) b.view = target;
+        else bsViewTimer = setTimeout(() => { if (mode === 'sea' && B === b && !b.finished) { b.view = target; renderSea(); } }, t === 'me' ? 1400 : 700);
+      }
+    }
+    const enemy = b.view === 'enemy';
+    $('bsTitle').textContent = enemy ? 'Gegnerische Flotte' : 'Meine Flotte';
+    // Brett
+    let html;
+    if (enemy) {
+      const k = bsKnown(sd.myShots, sd.myShotRes);
+      const ghosts = (b.finished && sd.oppShips) ? sd.oppShips.filter(s => !k.sunk.some(x => x.id === s.id)) : [];
+      html = bsBoardHTML({ ships: k.sunk, chips: k.chips, ghosts, popKey: bsPop === 'me' + sd.myShots.length && sd.myShots.length ? bsKey(...sd.myShots[sd.myShots.length - 1]) : null });
+    } else {
+      const k = bsKnown(sd.oppShots, sd.oppShotRes);
+      html = bsBoardHTML({ ships: b.ships, chips: setup ? {} : k.chips, sel: setup ? bsSel : null });
+    }
+    $('bsBoard').innerHTML = html;
+    $('bsBoard').classList.toggle('target', enemy && ph === 'me');
+    $('bsBoard').querySelectorAll('.bscell').forEach(el => el.onclick = () => bsTap(+el.dataset.r, +el.dataset.c));
+    // Status
+    const st = {
+      setup: b.ships.every(s => s.r !== null) ? 'Alle Schiffe platziert – tippe auf Bereit' : 'Platziere deine Schiffe',
+      noopp: connected ? `Warte auf Gegner … (Raum ${b.code})` : 'Verbinde …',
+      oppsetup: 'Gegner platziert seine Schiffe …',
+      me: 'Du bist dran – wähle ein Feld',
+      opp: b.code ? 'Gegner ist dran …' : 'Computer zielt …',
+      waitres: 'Warte auf Ergebnis …',
+      won: 'Gewonnen!', lost: 'Verloren', end: b.result === 'win' ? 'Gewonnen!' : 'Verloren',
+    }[ph];
+    $('bsStatus').textContent = st;
+    $('bsStatus').classList.toggle('turn', ph === 'me' || setup);
+    // Unterer Bereich
+    $('bsSetup').style.display = setup ? '' : 'none';
+    $('bsBattle').style.display = setup ? 'none' : '';
+    if (setup) renderSeaTray();
+    else {
+      $('bsLog').innerHTML = [bsLastText(sd.myShots, sd.myShotRes, 'Du'), bsLastText(sd.oppShots, sd.oppShotRes, b.code ? 'Gegner' : 'Computer')]
+        .filter(Boolean).map(t => `<div>${esc(t)}</div>`).join('');
+      $('bsScore').textContent = `Versenkt: ${bsSunkCount(sd.myShotRes)} / ${FLEET.length}  ·  Verloren: ${bsSunkCount(sd.oppShotRes)} / ${FLEET.length}`;
+      $('btnBsView').textContent = enemy ? 'Meine Flotte' : 'Gegner-Feld';
+      const over = ph === 'won' || ph === 'lost' || ph === 'end';
+      $('bsEnd').style.display = over ? '' : 'none';
+      $('btnBsView').style.display = over && !b.finished ? 'none' : '';
+    }
+    updateOpp();
+    if ((ph === 'won' || ph === 'lost') && !b.finished) bsFinish(ph === 'won' ? 'win' : 'lose');
+    // Solo: Computer schießt
+    if (!b.code && ph === 'opp' && !bsCpuTimer) {
+      bsCpuTimer = setTimeout(() => {
+        bsCpuTimer = null;
+        if (mode !== 'sea' || !B || B.code || bsPhase() !== 'opp') return;
+        const [r, c] = bsCpuPick(B.cpuShots, B.res);
+        B.cpuShots.push([r, c]);
+        B.res.push(bsResolve(B.ships, B.cpuShots, r, c));
+        persist();
+        renderSea();
+      }, B.view === 'me' ? 900 : 1500);
+    }
+  }
+  function renderSeaTray() {
+    const b = B;
+    $('bsTray').innerHTML = b.ships.map(s => {
+      const f = fleetById(s.id);
+      const cls = (s.r !== null ? ' placed' : '') + (bsSel === s.id ? ' sel' : '');
+      return `<button class="bstray${cls}" data-id="${s.id}"><span>${f.name}</span><i>${'■'.repeat(s.len)}</i></button>`;
+    }).join('');
+    $('bsTray').querySelectorAll('button').forEach(btn => btn.onclick = () => {
+      const s = b.ships.find(x => x.id === btn.dataset.id);
+      if (s.r !== null) { s.r = null; s.c = null; }
+      bsSel = s.id; bsRot = s.h;
+      save(MODES.sea.lsKey, b);
+      renderSea();
+    });
+    $('btnBsRot').textContent = bsRot ? 'Drehen ↕' : 'Drehen ↔';
+    $('btnBsReady').disabled = !b.ships.every(s => s.r !== null);
+  }
+  function bsTap(r, c) {
+    const b = B, ph = bsPhase();
+    if (ph !== 'setup') { bsFire(r, c); return; }
+    // Platziertes Schiff antippen = wieder aufnehmen
+    const hitShip = b.ships.find(s => s.r !== null && bsCells(s).some(([a, x]) => a === r && x === c));
+    if (hitShip) { hitShip.r = null; hitShip.c = null; bsSel = hitShip.id; bsRot = hitShip.h; save(MODES.sea.lsKey, b); renderSea(); return; }
+    if (!bsSel) { bsSel = (b.ships.find(s => s.r === null) || {}).id || null; if (!bsSel) return; }
+    const s = b.ships.find(x => x.id === bsSel);
+    const cand = { ...s, r, c, h: bsRot };
+    const err = bsFits(b.ships, cand);
+    if (err) { toast(err); return; }
+    Object.assign(s, cand);
+    bsSel = (b.ships.find(x => x.r === null) || {}).id || null;
+    if (bsSel) bsRot = b.ships.find(x => x.id === bsSel).h;
+    save(MODES.sea.lsKey, b);
+    renderSea();
+  }
+  $('btnBsRot').onclick = () => { bsRot = !bsRot; renderSeaTray(); };
+  $('btnBsRand').onclick = () => { const f = bsRandomFleet(); if (f) { B.ships = f; bsSel = null; save(MODES.sea.lsKey, B); renderSea(); } };
+  $('btnBsReady').onclick = () => {
+    const b = B;
+    if (!b.ships.every(s => s.r !== null)) return;
+    b.ready = true;
+    if (!b.code) b.cpuShips = bsRandomFleet();
+    bsLastTurn = null;
+    persist();
+    seaSync();
+  };
+  $('btnBsView').onclick = () => { B.view = B.view === 'enemy' ? 'me' : 'enemy'; clearTimeout(bsViewTimer); renderSea(); };
+  $('btnBsAgain').onclick = () => seaRematch();
+  $('btnBsMenu').onclick = () => { disconnect(); openMode('sea'); };
+  $('btnSMenu').onclick = () => openPause();
+
+  function bsFinish(result) {
+    const b = B;
+    b.finished = true; b.result = result;
+    clearTimeout(bsViewTimer);
+    b.view = 'enemy';
+    if (!b.endShown) {
+      b.endShown = true;
+      profile.playedSea = (profile.playedSea || 0) + 1; save(LS_PROFILE, profile);
+      persist();
+      setTimeout(() => { if (mode === 'sea' && B === b) modal(result === 'win' ? 'Gewonnen!' : 'Verloren', '', '', 'Weiter'); }, 1200);
+    } else persist();
+    renderSea();
+  }
+  function seaRematch() {
+    const b = B;
+    clearTimeout(bsCpuTimer); bsCpuTimer = null; clearTimeout(bsViewTimer);
+    let g = (b.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((x, y) => y.gameNo - x.gameNo)[0];
+    if (b.code && o && o.gameNo > g) g = o.gameNo;
+    B = freshSea(b.code, g, b.host, b.ships); // letzte Aufstellung als Vorschlag behalten
+    if (!b.code) B.meStarts = !b.meStarts;
+    bsSel = null; bsLastTurn = null; bsPop = null;
+    persist();
+    renderSea();
+  }
+
+  // ---------- Mini-Vorschau Schiffe versenken ----------
+  const pvs = { running: false, timer: null };
+  function pvsLater(fn, ms) { pvs.timer = setTimeout(() => pvs.running && fn(), ms); }
+  function pvsStart() {
+    const ships = bsRandomFleet(), shots = [], res = [];
+    const draw = () => {
+      const k = bsKnown(shots, res);
+      $('pvsBoard').innerHTML = bsBoardHTML({ ships: k.sunk, chips: k.chips, labels: false, popKey: shots.length ? bsKey(...shots[shots.length - 1]) : null });
+    };
+    draw();
+    const step = () => {
+      const [r, c] = bsCpuPick(shots, res);
+      shots.push([r, c]); res.push(bsResolve(ships, shots, r, c));
+      draw();
+      if (bsSunkCount(res) >= 4 || shots.length > 60) pvsLater(pvsStart, 2200);
+      else pvsLater(step, 380);
+    };
+    pvsLater(step, 600);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -2159,6 +2704,11 @@
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
     },
+    sea: {
+      title: 'Schiffe versenken', playedKey: 'playedSea',
+      desc: ['Stell deine Flotte auf: ein Kriegsschiff (5), zwei Fregatten (4), drei Stege (3), vier Boote (2) und ein Ruderboot. Zwischen allen Schiffen muss ein Feld Abstand bleiben – auch schräg.',
+        'Dann schießt ihr abwechselnd auf das Feld des Gegners. Treffer werden rot markiert, und du darfst nochmal. Ist ein Schiff versenkt, wird das Wasser drumherum automatisch weiß markiert. Wer zuerst alle Schiffe versenkt, gewinnt.'],
+    },
     four: {
       title: 'Vierer König', playedKey: 'playedFour',
       desc: ['Rot gegen Gelb! Lass deine Chips abwechselnd in die Spalten fallen und bilde als Erster eine Reihe aus vier – waagerecht, senkrecht oder schräg.',
@@ -2170,9 +2720,12 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : freshGame(code, gameNo));
-  function setG(v) { if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; } else S = v; }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else renderGame(); }
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : freshGame(code, gameNo));
+  function setG(v) {
+    if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
+    else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; } else S = v;
+  }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -2190,6 +2743,7 @@
     $('pvDiceBox').style.display = mode === 'dice' ? '' : 'none';
     $('pvWhoBox').style.display = mode === 'who' ? '' : 'none';
     $('pvFourBox').style.display = mode === 'four' ? '' : 'none';
+    $('pvSeaBox').style.display = mode === 'sea' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -2199,20 +2753,21 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = mode === 'four'
+      r.textContent = mode === 'four' || mode === 'sea'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = mode === 'who' || mode === 'four' ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
   $('toyDice').onclick = () => openMode('dice');
   $('toyWho').onclick = () => openMode('who');
   $('toyFour').onclick = () => openMode('four');
+  $('toySea').onclick = () => openMode('sea');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -2364,6 +2919,7 @@
     if (mode === 'dice') { pvd.running = true; pvdStart(); }
     else if (mode === 'who') { pvw.running = true; pvwStart(); }
     else if (mode === 'four') { pvf.running = true; pvfStart(); }
+    else if (mode === 'sea') { pvs.running = true; pvsStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -2371,6 +2927,7 @@
     pvd.running = false; clearTimeout(pvd.timer);
     pvw.running = false; clearTimeout(pvw.timer);
     pvf.running = false; clearTimeout(pvf.timer);
+    pvs.running = false; clearTimeout(pvs.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -2385,7 +2942,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'four'
+      const txt = mode === 'sea'
+        ? 'Teile diesen Code mit deinem Gegner. Stell inzwischen deine Flotte auf – du schießt zuerst.'
+        : mode === 'four'
         ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
         : mode === 'who'
         ? 'Teile diesen Code mit deinem Gegner. Danach sucht ihr euch beide eine geheime Person aus – du fängst an.'
@@ -2400,6 +2959,7 @@
     if (g.code) connect(g.code); else disconnect();
     if (mode === 'who') { show('sWho'); guessMode = false; whoSync(); return; }
     if (mode === 'four') { show('sFour'); c4Shown = 0; renderFour(); return; }
+    if (mode === 'sea') { show('sSea'); bsLastTurn = null; seaSync(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
     if (mode === 'dice') { renderDice(); return; }
@@ -2463,7 +3023,8 @@
     closePause();
     $('overlay').classList.remove('show');
     if (mode === 'who') { whoRematch(); return; }
-    if (mode === 'four') { fourRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'four') { fourRematch(); return; }
+    if (mode === 'sea') { seaRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -2481,7 +3042,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -2489,6 +3050,7 @@
   else if (D && !D.finished) { mode = 'dice'; resumeGame(); }
   else if (W && !W.finished) { mode = 'who'; resumeGame(); }
   else if (F && !F.finished) { mode = 'four'; resumeGame(); }
+  else if (B && !B.finished) { mode = 'sea'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
