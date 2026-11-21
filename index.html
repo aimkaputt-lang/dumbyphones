@@ -614,7 +614,6 @@
   .bsship.dragghost { opacity: .85; z-index: 5; border-radius: 6px; box-shadow: 0 0 0 2px #7ee0b4; }
   .bsship.dragghost.bad { box-shadow: 0 0 0 2px #e2104c; opacity: .6; }
   /* Flottenübersicht unter dem Gegnerfeld */
-  .bsfleet { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 12px; }
   .bsfrow { display: flex; gap: 10px; }
   .bsfship { transition: opacity .4s, filter .4s; }
   .bsfship svg { width: 100%; height: 100%; display: block; }
@@ -627,8 +626,12 @@
   .bschip.w::before { background: #f1f1f1; opacity: .55; } .bschip.w::after { background: #d6d6d6; opacity: .55; }
   .bschip.pop::before, .bschip.pop::after { animation: bspop .35s cubic-bezier(.3,1.6,.5,1); }
   @keyframes bspop { from { transform: scale(0); } to { transform: scale(1); } }
-  .bssetup, .bsbattle { width: 100%; margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 10px; }
-  .bstrays { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .bssetup, .bsbattle { width: 100%; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  /* Schiffe mittig im freien Raum zwischen Spielfeld und Buttons, mit Luft zu beiden */
+  .bstrays, .bsfleet { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; padding: 18px 0; margin: 0; }
+  .bsfship.tray { cursor: grab; touch-action: none; }
+  .bsfship.tray.placed { opacity: .15; filter: grayscale(1); cursor: default; }
+  .bsfship.tray.sel { outline: 2px dashed var(--title); outline-offset: 3px; border-radius: 6px; }
   .bstray {
     width: auto; margin: 0; padding: 5px 9px; font-size: 12px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 1px;
     background: var(--panel-card); color: var(--text); box-shadow: 0 3px 0 rgba(0,0,0,.35); line-height: 1.1;
@@ -967,7 +970,6 @@
     <div id="bsSetup" class="bssetup">
       <div class="bstrays" id="bsTray"></div>
       <div class="row bsbtns">
-        <button id="btnBsRot" class="bsalt">Drehen ↔</button>
         <button id="btnBsRand" class="bsalt">Zufällig</button>
         <button id="btnBsReady">Bereit</button>
       </div>
@@ -2589,12 +2591,8 @@
     else {
       // Übersicht der gegnerischen Schiffe: versenkte verblassen
       const sunkIds = new Set(sd.myShotRes.filter(x => x && x.k === 's').map(x => x.id));
-      $('bsFleet').style.display = enemy ? '' : 'none';
-      $('bsFleet').innerHTML = [['de', 'es', 'fr'], ['s1', 's2', 's3'], ['it', 'jp', 'nl', 'us', 'row']].map(row =>
-        `<div class="bsfrow">${row.map(id => {
-          const f = fleetById(id);
-          return `<div class="bsfship${sunkIds.has(id) ? ' sunk' : ''}" style="width:${f.len * 21}px;height:21px">${shipSVG({ id, len: f.len, r: 0, c: 0, h: true })}</div>`;
-        }).join('')}</div>`).join('');
+      $('bsFleet').style.visibility = enemy ? '' : 'hidden';
+      $('bsFleet').innerHTML = bsFleetHTML(id => (sunkIds.has(id) ? 'sunk' : ''));
       $('btnBsView').textContent = enemy ? 'Meine Flotte' : 'Gegner-Feld';
       const over = ph === 'won' || ph === 'lost' || ph === 'end';
       $('bsEnd').style.display = over ? '' : 'none';
@@ -2615,15 +2613,23 @@
       }, B.view === 'me' ? 900 : 1500);
     }
   }
+  // Alle Schiffe als Bilder in vier Reihen (für Aufstellung und Gegner-Übersicht)
+  const BS_ROWS = [['de', 'es'], ['fr', 's1', 's2'], ['s3', 'it', 'jp', 'nl'], ['us', 'row']];
+  function bsFleetHTML(clsFor) {
+    const w = Math.min($('sSea').clientWidth || 343, 420);
+    const cp = Math.max(20, Math.min(30, Math.floor((w - 24) / 10))); // Feldgröße in px, längste Reihe = 10 Felder
+    return BS_ROWS.map(row => `<div class="bsfrow">${row.map(id => {
+      const f = fleetById(id);
+      return `<div class="bsfship ${clsFor(id)}" data-id="${id}" style="width:${f.len * cp}px;height:${cp}px">${shipSVG({ id, len: f.len, r: 0, c: 0, h: true })}</div>`;
+    }).join('')}</div>`).join('');
+  }
   function renderSeaTray() {
     const b = B;
-    $('bsTray').innerHTML = b.ships.map(s => {
-      const f = fleetById(s.id);
-      const cls = (s.r !== null ? ' placed' : '') + (bsSel === s.id ? ' sel' : '');
-      return `<button class="bstray${cls}" data-id="${s.id}"><span>${f.name}</span><i>${'■'.repeat(s.len)}</i></button>`;
-    }).join('');
-    $('bsTray').querySelectorAll('button').forEach(btn => btn.addEventListener('pointerdown', e => bsStartDrag(e, btn.dataset.id, true)));
-    $('btnBsRot').textContent = bsRot ? 'Drehen ↕' : 'Drehen ↔';
+    $('bsTray').innerHTML = bsFleetHTML(id => {
+      const s = b.ships.find(x => x.id === id);
+      return 'tray' + (s.r !== null ? ' placed' : '') + (bsSel === id ? ' sel' : '');
+    });
+    $('bsTray').querySelectorAll('.bsfship:not(.placed)').forEach(el => el.addEventListener('pointerdown', e => bsStartDrag(e, el.dataset.id, true)));
     $('btnBsReady').disabled = !b.ships.every(s => s.r !== null);
   }
   function bsTap(r, c) {
@@ -2631,15 +2637,14 @@
     if (ph !== 'setup') { bsFire(r, c); return; }
     // Platziertes Schiff antippen = wieder aufnehmen
     const hitShip = b.ships.find(s => s.r !== null && bsCells(s).some(([a, x]) => a === r && x === c));
-    if (hitShip) { hitShip.r = null; hitShip.c = null; bsSel = hitShip.id; bsRot = hitShip.h; save(MODES.sea.lsKey, b); renderSea(); return; }
-    if (!bsSel) { bsSel = (b.ships.find(s => s.r === null) || {}).id || null; if (!bsSel) return; }
+    if (hitShip) return;
+    if (!bsSel) return; // Feld antippen platziert nur, wenn vorher ein Schiff in der Liste gewählt wurde
     const s = b.ships.find(x => x.id === bsSel);
-    const cand = { ...s, r, c, h: bsRot };
+    const cand = { ...s, r, c, h: true };
     const err = bsFits(b.ships, cand);
     if (err) { toast(err); return; }
     Object.assign(s, cand);
-    bsSel = (b.ships.find(x => x.r === null) || {}).id || null;
-    if (bsSel) bsRot = b.ships.find(x => x.id === bsSel).h;
+    bsSel = null;
     save(MODES.sea.lsKey, b);
     renderSea();
   }
@@ -2655,8 +2660,9 @@
     if (bsPhase() !== 'setup') return;
     const s = B.ships.find(x => x.id === id);
     const { rect, cell } = bsGridInfo();
+    if (fromTray && s.r !== null) return; // schon auf dem Feld
     let grab = Math.floor(s.len / 2);
-    let h = fromTray ? bsRot : s.h;
+    let h = fromTray ? true : s.h;       // aus der Liste kommen Schiffe waagerecht, so wie sie dort liegen
     if (!fromTray) {
       const cc = Math.floor((e.clientX - rect.left) / cell), rr = Math.floor((e.clientY - rect.top) / cell);
       grab = Math.max(0, Math.min(s.len - 1, s.h ? cc - s.c : rr - s.r));
@@ -2695,13 +2701,11 @@
     const b = B, s = b.ships.find(x => x.id === d.id);
     if (d.ghost) d.ghost.remove();
     if (!d.moved) {
-      if (d.fromTray) { // Antippen in der Liste = auswählen (danach Feld antippen)
-        if (s.r !== null) { s.r = null; s.c = null; }
-        bsSel = s.id; bsRot = s.h;
-      } else bsRotate(s);
+      if (d.fromTray) { bsSel = s.id; bsRot = true; } // Antippen in der Liste = auswählen (danach Feld antippen)
+      else bsRotate(s);
     } else if (d.target) {
       Object.assign(s, { r: d.target.r, c: d.target.c, h: d.target.h });
-      bsSel = (b.ships.find(x => x.r === null) || {}).id || null;
+      bsSel = null;
     } else if (d.moved) {
       const { rect } = bsGridInfo();
       const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
@@ -2713,15 +2717,19 @@
   window.addEventListener('pointercancel', () => { if (bsDrag && bsDrag.ghost) bsDrag.ghost.remove(); bsDrag = null; if (mode === 'sea' && B) renderSea(); });
   // Drehen um 90°: bleibt möglichst an der Stelle, rutscht sonst etwas nach, damit es passt
   function bsRotate(s) {
+    // Drehpunkt = mittleres Feld (bei gerader Länge das Feld knapp vor der Mitte)
+    const m = Math.floor((s.len - 1) / 2);
+    const cr = s.h ? s.r : s.r + m, cc = s.h ? s.c + m : s.c;
     const nh = !s.h;
-    for (let k = 0; k < s.len; k++) {
-      const cand = { ...s, h: nh, r: nh ? s.r : s.r - k, c: nh ? s.c - k : s.c };
+    const offs = [0];
+    for (let k = 1; k < s.len; k++) offs.push(-k, k);
+    for (const o of offs) {
+      const cand = { ...s, h: nh, r: nh ? cr : cr - m + o, c: nh ? cc - m + o : cc };
       if (!bsFits(B.ships, cand)) { Object.assign(s, cand); return; }
     }
     toast('Hier ist kein Platz zum Drehen.');
   }
 
-  $('btnBsRot').onclick = () => { bsRot = !bsRot; renderSeaTray(); };
   $('btnBsRand').onclick = () => { const f = bsRandomFleet(); if (f) { B.ships = f; bsSel = null; save(MODES.sea.lsKey, B); renderSea(); } };
   $('btnBsReady').onclick = () => {
     const b = B;
