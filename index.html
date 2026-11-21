@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Shut The Box</title>
+<title>Dumby Phones</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Shut The Box">
+<meta name="apple-mobile-web-app-title" content="Dumby Phones">
 <meta name="theme-color" content="#2b2439">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2681,19 +2681,24 @@
       d.ghost = document.createElement('div');
       d.ghost.className = 'bsship dragghost';
       d.ghost.innerHTML = shipSVG({ ...s, h: d.h });
+      d.ghostH = d.h;
       grid.appendChild(d.ghost);
     }
     // Schiff folgt dem Finger, rastet aber auf Felder ein
     const cc = Math.floor((e.clientX - rect.left) / cell), rr = Math.floor((e.clientY - rect.top) / cell);
     const r = d.h ? rr : rr - d.grab, c = d.h ? cc - d.grab : cc;
     const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
-    const cand = { ...s, r, c, h: d.h };
-    const ok = inside && !bsFits(B.ships, cand);
-    d.target = ok ? cand : null;
+    const want = { ...s, r, c, h: d.h };
+    // Passt es nicht genau, schmiegt sich das Schiff an die nächste freie Stelle (ggf. gedreht)
+    const fit = inside ? (!bsFits(B.ships, want) ? want : bsSnap(want, false)) : null;
+    d.target = fit;
+    const show = fit || want;
+    if (fit && fit.h !== d.ghostH) { d.ghost.innerHTML = shipSVG(fit); d.ghostH = fit.h; }
+    if (!fit && d.ghostH !== d.h) { d.ghost.innerHTML = shipSVG(want); d.ghostH = d.h; }
     d.ghost.style.display = inside ? '' : 'none';
-    d.ghost.style.left = c * 10 + '%'; d.ghost.style.top = r * 10 + '%';
-    d.ghost.style.width = (d.h ? s.len : 1) * 10 + '%'; d.ghost.style.height = (d.h ? 1 : s.len) * 10 + '%';
-    d.ghost.classList.toggle('bad', !ok);
+    d.ghost.style.left = show.c * 10 + '%'; d.ghost.style.top = show.r * 10 + '%';
+    d.ghost.style.width = (show.h ? s.len : 1) * 10 + '%'; d.ghost.style.height = (show.h ? 1 : s.len) * 10 + '%';
+    d.ghost.classList.toggle('bad', !fit);
   });
   window.addEventListener('pointerup', e => {
     const d = bsDrag; if (!d) return;
@@ -2721,13 +2726,30 @@
     const m = Math.floor((s.len - 1) / 2);
     const cr = s.h ? s.r : s.r + m, cc = s.h ? s.c + m : s.c;
     const nh = !s.h;
-    const offs = [0];
-    for (let k = 1; k < s.len; k++) offs.push(-k, k);
-    for (const o of offs) {
-      const cand = { ...s, h: nh, r: nh ? cr : cr - m + o, c: nh ? cc - m + o : cc };
-      if (!bsFits(B.ships, cand)) { Object.assign(s, cand); return; }
-    }
+    const want = { ...s, h: nh, r: nh ? cr : cr - m, c: nh ? cc - m : cc };
+    if (!bsFits(B.ships, want)) { Object.assign(s, want); return; }
+    // kein Platz genau dort: gedreht an die nächste freie Stelle in der Nähe rutschen
+    const fit = bsSnap(want, true);
+    if (fit) { Object.assign(s, fit); return; }
     toast('Hier ist kein Platz zum Drehen.');
+  }
+  // Nächste freie Position für ein Schiff suchen. Nur dieses Schiff bewegt sich, die anderen bleiben, wo sie sind.
+  // keepDir = true: Ausrichtung muss bleiben (beim Drehen). Sonst darf es zusätzlich gedreht werden, wenn es nur so passt.
+  function bsSnap(want, keepDir) {
+    const mid = s => [s.r + (s.h ? 0 : (s.len - 1) / 2), s.c + (s.h ? (s.len - 1) / 2 : 0)];
+    const [wr, wc] = mid(want);
+    let best = null, bestScore = Infinity;
+    for (const h of keepDir ? [want.h] : [want.h, !want.h]) {
+      for (let r = 0; r < BS; r++) for (let c = 0; c < BS; c++) {
+        const cand = { ...want, r, c, h };
+        const [mr, mc] = mid(cand);
+        const dist = Math.hypot(mr - wr, mc - wc);
+        if (dist > 3.2) continue;                      // nicht zu weit weg springen
+        const score = dist + (h !== want.h ? 0.75 : 0); // lieber verschieben als drehen
+        if (score < bestScore && !bsFits(B.ships, cand)) { best = cand; bestScore = score; }
+      }
+    }
+    return best;
   }
 
   $('btnBsRand').onclick = () => { const f = bsRandomFleet(); if (f) { B.ships = f; bsSel = null; save(MODES.sea.lsKey, B); renderSea(); } };

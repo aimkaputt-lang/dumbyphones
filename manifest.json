@@ -1,6 +1,6 @@
-﻿{
-  "name": "Shut The Box",
-  "short_name": "Shut The Box",
+{
+  "name": "Dumby Phones",
+  "short_name": "Dumby Phones",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
