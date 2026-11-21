@@ -806,9 +806,78 @@
   .sdalt { background: #b8875f; color: #fff; box-shadow: 0 6px 0 #85603f; }
   .sdboard.mini { width: 74%; margin: 0 auto; }
 
+  /* ---------- Farbcodeknacker ---------- */
+  body[data-theme="mm"], body[data-theme="mmgame"] {
+    --bg: #2e1a4a; --bg-dark: #170b28; --muted: #d4c3e6;
+    --panel: #b384c2; --panel-card: #7c4f8f; --panel-shadow: #0d0517; --title: #fff3c0;
+    --bar: #b08bbd; --bar-dark: #7b5a8a; --seg-text: #fbf3ff;
+  }
+  body[data-theme="mmgame"] { --bg: #3a3d45; --bg-dark: #1a1b20; --muted: #c4c6cc; --panel-card: #2b2d33; }
+  body[data-theme^="mm"] .title { text-shadow: 0 5px 0 #120820, 0 6px 12px rgba(0,0,0,.3); }
+  body[data-theme="mm"] .pv { background: #2b2e35; }
+  body[data-theme^="mm"] .modal { background: linear-gradient(120deg, #3c2560, #563482); border-color: #b384c2; }
+  body[data-theme^="mm"] .modal .big:empty { display: none; }
+  body[data-theme^="mm"] .modal h2 { font-size: 32px; margin-bottom: 10px; }
+  body[data-theme^="mm"] .modal p { margin: 0 0 18px; }
+  body[data-theme="mm"] .seg button { color: #4d3360; }
+  body[data-theme="mm"] .seg:not(.v1) button[data-mode="solo"], body[data-theme="mm"] .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
+  #sMm .topbar { margin-bottom: 8px; }
+  #mmBoardWrap, #pvmBoard { width: 100%; }
+  .mmplay, .mmwrite { width: 100%; flex: 1; display: flex; flex-direction: column; }
+  .mmboard { width: 100%; background: linear-gradient(160deg, #3b3e46, #26282e); border-radius: 18px; padding: 14px 6px 18px; box-shadow: 0 8px 18px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.06); margin-top: 10px; }
+  .mmcols { display: grid; grid-template-columns: repeat(8, 1fr) 1.15fr; gap: 2px; }
+  .mmcol { display: flex; flex-direction: column; align-items: center; }
+  .mmnum { font-size: 20px; font-weight: 700; color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); }
+  .mmcol.active .mmnum { color: #9df07a; }
+  .mmpegs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin: 6px 0 8px; height: 19px; }
+  .mmpeg { display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: rgba(255,255,255,.08); }
+  .mmpeg.g { background: #7fe05a; box-shadow: 0 0 4px rgba(127,224,90,.6); }
+  .mmpeg.w { background: #fff; }
+  .mmholes { position: relative; display: flex; flex-direction: column; gap: 16px; align-items: center; width: 100%; }
+  .mmrail { position: absolute; top: 10px; bottom: 10px; width: 3px; left: calc(50% - 1.5px); background: #7d9aa0; opacity: .7; border-radius: 2px; }
+  .mmhole { position: relative; width: 33px; height: 33px; border-radius: 50%; border: 2px solid rgba(220,220,225,.55); display: flex; align-items: center; justify-content: center; }
+  .mmhole.cur { border-color: #9df07a; cursor: pointer; }
+  .mmhole .mmgem { width: 37px; height: 37px; position: absolute; filter: drop-shadow(0 3px 2px rgba(0,0,0,.4)); }
+  .mmcol.secret .mmholes { background: transparent; }
+  .mmcover { position: absolute; inset: -6px -3px; border-radius: 6px; background: linear-gradient(90deg, #6e7075, #8d8f94 45%, #6a6c71); box-shadow: inset 0 0 0 2px rgba(0,0,0,.15), 0 6px 10px rgba(0,0,0,.35); transition: transform .6s cubic-bezier(.5,0,.3,1), opacity .6s; transform-origin: top; }
+  .mmcol.secret.open .mmcover { transform: translateY(-110%) scaleY(.2); opacity: 0; }
+  .mmcol.secret .mmhole { border-color: rgba(220,220,225,.35); }
+  .mmpal { display: flex; justify-content: center; gap: 8px; margin: 16px 0 6px; }
+  .mmpick { width: 46px; height: 46px; padding: 0; margin: 0; background: none; box-shadow: none; border-radius: 50%; transition: transform .1s, opacity .2s; }
+  .mmpick .mmgem { width: 100%; height: 100%; filter: drop-shadow(0 4px 3px rgba(0,0,0,.45)); }
+  .mmpick:active:not(:disabled) { transform: scale(.9); box-shadow: none; }
+  .mmpick.used { opacity: .25; }
+  .mmlegend { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+  .mmlegend span { display: flex; align-items: center; gap: 6px; }
+  .mmlegend .mmpeg { width: 12px; height: 12px; border-radius: 3px; }
+  .mmnote { width: 100%; justify-content: center; font-weight: 400; font-size: 12px; }
+  .mmbottom { margin-top: auto; padding-top: 10px; }
+  .mmbottom button { margin: 0; }
+  .mmalt { background: #b08bbd; color: #fff; box-shadow: 0 6px 0 #7b5a8a; }
+  .mmwrite { justify-content: center; gap: 14px; padding-bottom: 30px; }
+  .mmh { text-align: center; margin: 0; color: var(--title); font-size: 26px; text-shadow: 0 3px 0 rgba(0,0,0,.4); }
+  .mmwrite p { color: var(--muted); text-align: center; margin: 0; }
+  .mmdraft { display: flex; justify-content: center; gap: 14px; }
+  .mmhole.big { width: 54px; height: 54px; }
+  .mmhole.big .mmgem { width: 56px; height: 56px; }
+  .mmwrite button#btnMmSecret { margin: 0; }
+  .mmboard.mini { margin: 0; padding: 8px 4px 10px; }
+  .mmboard.mini .mmnum { font-size: 14px; }
+  .mmboard.mini .mmhole { width: 22px; height: 22px; }
+  .mmboard.mini .mmhole .mmgem { width: 24px; height: 24px; }
+  .mmboard.mini .mmholes { gap: 6px; }
+  .mmboard.mini .mmpeg { width: 6px; height: 6px; }
+  .mmboard.mini .mmpegs { height: 15px; margin: 4px 0 5px; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
+  /* Viele Spiele: Symbole starten unter Logo und Zahnrad und dürfen scrollen */
+  #sHome { justify-content: flex-start; }
+  #sHome .toys {
+    margin-top: calc(env(safe-area-inset-top) + 132px); width: 100%; flex: 1; min-height: 0;
+    overflow-y: auto; overscroll-behavior: contain; align-content: flex-start; padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
+  }
 </style>
 </head>
 <body>
@@ -967,6 +1036,19 @@
           <g transform="translate(108 34) rotate(40)"><rect x="-6" y="0" width="12" height="28" rx="2" fill="#c8264f"/><path d="M-6 28 L0 39 L6 28Z" fill="#e6d2b0"/><path d="M-2 34 L0 39 L2 34Z" fill="#333"/></g>
         </svg>
       </button>
+      <button class="toy" id="toyMm" aria-label="Farbcodeknacker" style="animation-delay:-5.2s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="62" ry="7" fill="rgba(0,0,0,.28)"/>
+          <rect x="22" y="22" width="116" height="92" rx="10" fill="#2e3138"/>
+          <rect x="114" y="30" width="16" height="76" rx="3" fill="#7d7f84"/>
+          <g stroke="#7d9aa0" stroke-width="3"><path d="M40 38 L40 98"/><path d="M62 38 L62 98"/><path d="M84 38 L84 98"/></g>
+          <g fill="none" stroke="#a9abb1" stroke-width="2"><circle cx="84" cy="44" r="8"/><circle cx="84" cy="64" r="8"/><circle cx="84" cy="84" r="8"/></g>
+          <circle cx="40" cy="44" r="8" fill="#c8303e"/><circle cx="40" cy="64" r="8" fill="#f2b51e"/><circle cx="40" cy="84" r="8" fill="#5cc23a"/><circle cx="40" cy="100" r="0"/>
+          <circle cx="62" cy="44" r="8" fill="#6a3c8c"/><circle cx="62" cy="64" r="8" fill="#3fb7b5"/><circle cx="62" cy="84" r="8" fill="#e9ecef"/>
+          <g><rect x="34" y="27" width="5" height="5" fill="#7fe05a"/><rect x="41" y="27" width="5" height="5" fill="#fff"/><rect x="56" y="27" width="5" height="5" fill="#7fe05a"/><rect x="63" y="27" width="5" height="5" fill="#7fe05a"/></g>
+          <text x="122" y="20" font-family="Fredoka,sans-serif" font-weight="700" font-size="20" fill="#fff4c2" text-anchor="middle">?</text>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -1014,6 +1096,9 @@
         </div>
         <div class="pv" id="pvSdBox" style="display:none">
           <div class="sdboard mini" id="pvkBoard"></div>
+        </div>
+        <div class="pv" id="pvMmBox" style="display:none">
+          <div id="pvmBoard"></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -1300,6 +1385,46 @@
     </div>
   </section>
 
+  <!-- FARBCODEKNACKER -->
+  <section class="screen" id="sMm">
+    <div class="topbar">
+      <button class="menubtn" id="btnMMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="mmStatus"></div>
+    <div id="mmWrite" class="mmwrite" style="display:none">
+      <h2 class="mmh">Dein Geheimcode</h2>
+      <p>Wähle vier verschiedene Farben. Antippen eines Steins nimmt ihn wieder heraus.</p>
+      <div class="mmdraft" id="mmDraft"></div>
+      <div class="mmpal" id="mmDraftPal"></div>
+      <button id="btnMmSecret">Code festlegen</button>
+    </div>
+    <div id="mmPlay" class="mmplay">
+      <div id="mmBoardWrap"></div>
+      <div class="mmpal" id="mmPal"></div>
+      <div class="mmlegend">
+        <span><i class="mmpeg g"></i>Farbe &amp; Position</span>
+        <span><i class="mmpeg w"></i>Farbe korrekt</span>
+        <span class="mmnote">Jede Farbe maximal einmal</span>
+      </div>
+      <div class="mmbottom">
+        <button id="btnMmCheck">Prüfen</button>
+        <div class="row" id="mmEnd" style="display:none">
+          <button id="btnMmAgain">Nochmal</button>
+          <button id="btnMmMenu" class="mmalt">Menü</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1436,6 +1561,7 @@
     cs:    { topic: 'dumbyphones/flotterdreier/v1/', lsKey: 'fd_state_v1', screen: 'sCs', theme: 'cs' },
     hang:  { topic: 'dumbyphones/abhaengen/v1/', lsKey: 'ab_state_v1', screen: 'sHang', theme: 'hang' },
     sd:    { topic: 'dumbyphones/strichduett/v1/', lsKey: 'sd_state_v1', screen: 'sSd', theme: 'sd' },
+    mm:    { topic: 'dumbyphones/farbcode/v1/', lsKey: 'fc_state_v1', screen: 'sMm', theme: 'mm' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
@@ -1445,7 +1571,8 @@
   let C = load(MODES.cs.lsKey, null); // Flotter-Dreier-Spielstand
   let H = load(MODES.hang.lsKey, null); // Abhängen-Spielstand
   let K = load(MODES.sd.lsKey, null);   // Strichduett-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : S);
+  let M = load(MODES.mm.lsKey, null);   // Farbcodeknacker-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1500,7 +1627,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1547,6 +1674,7 @@
         if (mode === 'cs') csSync();
         if (mode === 'hang') hangSync();
         if (mode === 'sd') sdSync();
+        if (mode === 'mm') mmSync();
       } catch {}
     });
   }
@@ -1569,6 +1697,9 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'mm') {
+      Object.assign(data, { host: g.host, secret: g.secret ? hgEnc(JSON.stringify(g.secret)) : null,
+        tries: g.guesses.length, solved: mmSolved(g), done: mmDone(g) });
     } else if (mode === 'sd') {
       Object.assign(data, { host: g.host, moves: g.moves });
     } else if (mode === 'hang') {
@@ -1612,6 +1743,11 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'mm') {
+      q('.ototal').textContent = o.tries || 0;
+      q('.oround').textContent = o.done ? (o.solved ? 'Versuche · geknackt' : 'Versuche · fertig') : 'Versuche';
       return;
     }
     if (mode === 'sd') {
@@ -3906,6 +4042,211 @@
   }
 
   // =====================================================================
+  //  FARBCODEKNACKER (Farbcode in 8 Versuchen knacken)
+  // =====================================================================
+  const MM_SLOTS = 4, MM_TRIES = 8;
+  const MM_COLORS = [
+    { n: 'Rot', c: '#c8303e', l: '#f07a80', d: '#8a1a26' },
+    { n: 'Grün', c: '#5cc23a', l: '#a6ec7c', d: '#327a1c' },
+    { n: 'Türkis', c: '#3fb7b5', l: '#8ae6e2', d: '#1f7472' },
+    { n: 'Gelb', c: '#f2b51e', l: '#ffe07a', d: '#a8770a' },
+    { n: 'Lila', c: '#6a3c8c', l: '#a77ccb', d: '#3e1f58' },
+    { n: 'Weiß', c: '#e9ecef', l: '#ffffff', d: '#aeb4bb' },
+  ];
+  // Edelstein als SVG (Achteck mit Facetten)
+  function mmGem(i, extra) {
+    const k = MM_COLORS[i];
+    const oct = (r) => [...Array(8)].map((_, j) => { const a = Math.PI / 8 + j * Math.PI / 4; return `${(50 + r * Math.cos(a)).toFixed(1)},${(50 + r * Math.sin(a)).toFixed(1)}`; }).join(' ');
+    return `<svg viewBox="0 0 100 100" class="mmgem${extra ? ' ' + extra : ''}" aria-hidden="true">
+      <polygon points="${oct(46)}" fill="${k.d}"/><polygon points="${oct(40)}" fill="${k.c}"/>
+      <polygon points="${oct(24)}" fill="${k.l}" opacity=".55"/><polygon points="${oct(16)}" fill="${k.c}"/>
+      <path d="M22 34 L34 22 L40 30 L30 40Z" fill="#fff" opacity=".45"/></svg>`;
+  }
+  function mmFeedback(code, guess) {
+    let g = 0, w = 0;
+    guess.forEach((c, i) => { if (code[i] === c) g++; else if (code.includes(c)) w++; });
+    return [g, w];
+  }
+  const mmRandomCode = () => shuffle([0, 1, 2, 3, 4, 5]).slice(0, MM_SLOTS);
+  function freshMm(code, gameNo, host) {
+    return { code, gameNo: gameNo || 1, host: !!host, secret: null, cpuCode: code ? null : mmRandomCode(),
+      guesses: [], fb: [], cur: [null, null, null, null], draft: [null, null, null, null],
+      finished: false, result: null, endShown: false, round: 1, total: 0 };
+  }
+  const mmOpp = () => { const o = currentOpp(); return o && M && o.gameNo === M.gameNo ? o : null; };
+  function mmTarget() {
+    const g = M;
+    if (!g.code) return g.cpuCode;
+    const o = mmOpp();
+    if (!o || !o.secret) return null;
+    try { return JSON.parse(hgDec(o.secret)); } catch { return null; }
+  }
+  const mmSolved = g => g.fb.some(([gr]) => gr === MM_SLOTS);
+  const mmDone = g => mmSolved(g) || g.guesses.length >= MM_TRIES;
+  function mmPhase() {
+    const g = M;
+    if (g.finished) return 'end';
+    if (g.code && !mmOpp()) return 'noopp';
+    if (g.code && !g.secret) return 'write';
+    if (mmDone(g)) return 'done';
+    if (!mmTarget()) return 'waitcode';
+    return 'guess';
+  }
+  const mmScore = (solved, tries) => (solved ? tries : MM_TRIES + 1);
+
+  function mmBoardHTML(g, target, reveal, opts = {}) {
+    const curCol = g.guesses.length;
+    let h = '<div class="mmboard' + (opts.mini ? ' mini' : '') + '"><div class="mmcols">';
+    for (let k = 0; k < MM_TRIES; k++) {
+      const guess = g.guesses[k], fb = g.fb[k];
+      const isCur = !opts.mini && k === curCol && !reveal && opts.active;
+      let pegs = '';
+      if (fb) { const arr = [...Array(fb[0]).fill('g'), ...Array(fb[1]).fill('w')]; for (let i = 0; i < 4; i++) pegs += `<i class="mmpeg ${arr[i] || ''}"></i>`; }
+      else pegs = '<i class="mmpeg"></i>'.repeat(4);
+      let holes = '';
+      for (let s = 0; s < MM_SLOTS; s++) {
+        const v = guess ? guess[s] : (isCur ? g.cur[s] : null);
+        holes += `<div class="mmhole${isCur ? ' cur' : ''}" data-s="${s}">${v !== null && v !== undefined ? mmGem(v) : ''}</div>`;
+      }
+      h += `<div class="mmcol${isCur ? ' active' : ''}"><div class="mmnum">${k + 1}</div><div class="mmpegs">${pegs}</div><div class="mmholes"><i class="mmrail"></i>${holes}</div></div>`;
+    }
+    // verdeckter Code
+    let sec = '';
+    for (let s = 0; s < MM_SLOTS; s++) sec += `<div class="mmhole sec">${reveal && target ? mmGem(target[s]) : ''}</div>`;
+    h += `<div class="mmcol secret${reveal ? ' open' : ''}"><div class="mmnum">?</div><div class="mmpegs"></div><div class="mmholes">${sec}<div class="mmcover"></div></div></div>`;
+    return h + '</div></div>';
+  }
+  function mmPaletteHTML(used) {
+    return MM_COLORS.map((_, i) => `<button class="mmpick${used.includes(i) ? ' used' : ''}" data-c="${i}" aria-label="${MM_COLORS[i].n}">${mmGem(i)}</button>`).join('');
+  }
+
+  function renderMm() {
+    const g = M, ph = mmPhase(), target = mmTarget();
+    const writing = ph === 'write';
+    $('mmWrite').style.display = writing ? '' : 'none';
+    $('mmPlay').style.display = writing ? 'none' : '';
+    let st;
+    if (ph === 'noopp') st = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
+    else if (ph === 'write') st = 'Leg einen Geheimcode für deinen Gegner fest';
+    else if (ph === 'waitcode') st = 'Warte auf den Code deines Gegners …';
+    else if (ph === 'guess') st = `Versuch ${g.guesses.length + 1} von ${MM_TRIES}`;
+    else if (ph === 'done') st = g.code ? 'Warte, bis dein Gegner fertig ist …' : (mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt');
+    else st = { win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden', solo: mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt' }[g.result] || 'Fertig';
+    $('mmStatus').textContent = st;
+    $('mmStatus').classList.toggle('turn', ph === 'guess' || ph === 'write');
+    if (writing) {
+      $('mmDraft').innerHTML = g.draft.map((v, s) => `<div class="mmhole cur big" data-s="${s}">${v !== null ? mmGem(v) : ''}</div>`).join('');
+      $('mmDraft').querySelectorAll('.mmhole').forEach(el => el.onclick = () => { g.draft[+el.dataset.s] = null; save(MODES.mm.lsKey, g); renderMm(); });
+      $('mmDraftPal').innerHTML = mmPaletteHTML(g.draft.filter(v => v !== null));
+      $('mmDraftPal').querySelectorAll('.mmpick').forEach(b => b.onclick = () => mmPick(g.draft, +b.dataset.c));
+      $('btnMmSecret').disabled = g.draft.some(v => v === null);
+      updateOpp();
+      return;
+    }
+    const reveal = ph === 'done' || ph === 'end';
+    $('mmBoardWrap').innerHTML = mmBoardHTML(g, target, reveal, { active: ph === 'guess' });
+    $('mmBoardWrap').querySelectorAll('.mmhole.cur').forEach(el => el.onclick = () => { g.cur[+el.dataset.s] = null; save(MODES.mm.lsKey, g); renderMm(); });
+    const play = ph === 'guess';
+    $('mmPal').style.visibility = play ? '' : 'hidden';
+    $('mmPal').innerHTML = mmPaletteHTML(g.cur.filter(v => v !== null));
+    $('mmPal').querySelectorAll('.mmpick').forEach(b => b.onclick = () => mmPick(g.cur, +b.dataset.c));
+    $('btnMmCheck').style.display = play ? '' : 'none';
+    $('btnMmCheck').disabled = g.cur.some(v => v === null);
+    $('mmEnd').style.display = ph === 'end' ? '' : 'none';
+    updateOpp();
+    if (ph === 'done' || ph === 'end') mmCheckEnd();
+  }
+  // Farbe in die nächste freie Stelle setzen (jede Farbe nur einmal)
+  function mmPick(arr, c) {
+    if (arr.includes(c)) { toast('Jede Farbe nur einmal'); return; }
+    const i = arr.indexOf(null);
+    if (i < 0) return;
+    arr[i] = c;
+    save(MODES.mm.lsKey, M);
+    renderMm();
+  }
+  function mmSetSecret() {
+    const g = M;
+    if (g.draft.some(v => v === null)) return;
+    g.secret = [...g.draft];
+    persist();
+    renderMm();
+  }
+  function mmCheck() {
+    const g = M, target = mmTarget();
+    if (mmPhase() !== 'guess' || g.cur.some(v => v === null) || !target) return;
+    const guess = [...g.cur];
+    g.guesses.push(guess);
+    g.fb.push(mmFeedback(target, guess));
+    g.cur = [null, null, null, null];
+    g.round = g.guesses.length + 1;
+    try { navigator.vibrate && navigator.vibrate(20); } catch {}
+    persist();
+    renderMm();
+  }
+  function mmCheckEnd() {
+    const g = M;
+    if (g.finished) return;
+    const me = mmScore(mmSolved(g), g.guesses.length);
+    let result;
+    if (!g.code) result = 'solo';
+    else {
+      const o = mmOpp();
+      if (!o || !o.done) return;
+      const op = mmScore(o.solved, o.tries);
+      result = me < op ? 'win' : me > op ? 'lose' : 'draw';
+    }
+    g.finished = true; g.result = result; g.total = g.guesses.length;
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedMm = (profile.playedMm || 0) + 1; save(LS_PROFILE, profile);
+      const title = result === 'solo' ? (mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt') : { win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[result];
+      const sub = mmSolved(g) ? `In ${g.guesses.length} ${g.guesses.length === 1 ? 'Versuch' : 'Versuchen'}` : '';
+      setTimeout(() => { if (mode === 'mm' && M === g) modal(title, '', sub, 'Weiter'); }, 900);
+    }
+    persist();
+    renderMm();
+  }
+  function mmSync() { if (mode === 'mm' && M) renderMm(); }
+  function mmRematch() {
+    const g = M;
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    M = freshMm(g.code, n, g.host);
+    persist();
+    renderMm();
+  }
+  $('btnMmSecret').onclick = mmSetSecret;
+  $('btnMmCheck').onclick = mmCheck;
+  $('btnMmAgain').onclick = mmRematch;
+  $('btnMmMenu').onclick = () => { disconnect(); openMode('mm'); };
+  $('btnMMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Farbcodeknacker ----------
+  const pvm = { running: false, timer: null };
+  function pvmLater(fn, ms) { pvm.timer = setTimeout(() => pvm.running && fn(), ms); }
+  function pvmStart() {
+    const code = mmRandomCode();
+    const fake = { guesses: [], fb: [], cur: [null, null, null, null] };
+    // einfacher Löser: nur Codes probieren, die zu allen bisherigen Hinweisen passen
+    const all = [];
+    const rec = (a) => { if (a.length === 4) { all.push(a); return; } for (let c = 0; c < 6; c++) if (!a.includes(c)) rec([...a, c]); };
+    rec([]);
+    let cands = shuffle(all);
+    const step = () => {
+      const guess = cands[0];
+      fake.guesses.push(guess); const f = mmFeedback(code, guess); fake.fb.push(f);
+      cands = cands.filter(c => { const x = mmFeedback(c, guess); return x[0] === f[0] && x[1] === f[1]; });
+      const done = f[0] === 4 || fake.guesses.length >= MM_TRIES;
+      $('pvmBoard').innerHTML = mmBoardHTML(fake, code, done, { mini: true });
+      if (done) pvmLater(pvmStart, 2600); else pvmLater(step, 900);
+    };
+    $('pvmBoard').innerHTML = mmBoardHTML(fake, code, false, { mini: true });
+    pvmLater(step, 700);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -3918,6 +4259,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    mm: {
+      title: 'Farbcodeknacker', playedKey: 'playedMm',
+      desc: ['Knack den geheimen Farbcode aus vier Steinen – jede Farbe kommt höchstens einmal vor. Du hast acht Versuche.',
+        'Nach jedem Versuch gibt es Hinweise: Grün heißt Farbe und Position stimmen, Weiß heißt die Farbe stimmt, steht aber woanders. Welcher Stein gemeint ist, musst du selbst herausfinden. Im 1v1 gewinnt, wer weniger Versuche braucht.'],
     },
     sd: {
       title: 'Strichduett', playedKey: 'playedSd',
@@ -3950,15 +4296,16 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
     else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
     else if (mode === 'cs') { C = v; csAnimating = false; clearTimeout(csCpuTimer); csCpuTimer = null; }
     else if (mode === 'hang') H = v;
-    else if (mode === 'sd') { K = v; clearTimeout(sdCpuTimer); sdCpuTimer = null; } else S = v;
+    else if (mode === 'sd') { K = v; clearTimeout(sdCpuTimer); sdCpuTimer = null; }
+    else if (mode === 'mm') M = v; else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -3980,6 +4327,7 @@
     $('pvCsBox').style.display = mode === 'cs' ? '' : 'none';
     $('pvHangBox').style.display = mode === 'hang' ? '' : 'none';
     $('pvSdBox').style.display = mode === 'sd' ? '' : 'none';
+    $('pvMmBox').style.display = mode === 'mm' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -3989,14 +4337,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd'].includes(mode)
+      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -4007,6 +4355,7 @@
   $('toyCs').onclick = () => openMode('cs');
   $('toyHang').onclick = () => openMode('hang');
   $('toySd').onclick = () => openMode('sd');
+  $('toyMm').onclick = () => openMode('mm');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -4162,6 +4511,7 @@
     else if (mode === 'cs') { pvc.running = true; pvcStart(); }
     else if (mode === 'hang') { pvh.running = true; pvhStart(); }
     else if (mode === 'sd') { pvk.running = true; pvkStart(); }
+    else if (mode === 'mm') { pvm.running = true; pvmStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -4173,6 +4523,7 @@
     pvc.running = false; clearTimeout(pvc.timer);
     pvh.running = false; clearTimeout(pvh.timer);
     pvk.running = false; clearTimeout(pvk.timer);
+    pvm.running = false; clearTimeout(pvm.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -4187,7 +4538,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'sd'
+      const txt = mode === 'mm'
+        ? 'Teile diesen Code mit deinem Gegner. Leg schon mal deinen Geheimcode fest.'
+        : mode === 'sd'
         ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
         : mode === 'hang'
         ? 'Teile diesen Code mit deinem Gegner. Denk dir schon mal dein erstes Wort aus.'
@@ -4213,6 +4566,7 @@
     if (mode === 'sea') { show('sSea'); bsLastTurn = null; seaSync(); return; }
     if (mode === 'hang') { show('sHang'); renderHang(); return; }
     if (mode === 'sd') { show('sSd'); renderSd(); return; }
+    if (mode === 'mm') { show('sMm'); renderMm(); return; }
     if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
@@ -4281,7 +4635,8 @@
     if (mode === 'sea') { seaRematch(); return; }
     if (mode === 'cs') { csRematch(); return; }
     if (mode === 'hang') { hangRematch(); return; }
-    if (mode === 'sd') { sdRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'sd') { sdRematch(); return; }
+    if (mode === 'mm') { mmRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -4299,7 +4654,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -4311,6 +4666,7 @@
   else if (C && !C.finished) { mode = 'cs'; resumeGame(); }
   else if (H && !H.finished) { mode = 'hang'; resumeGame(); }
   else if (K && !K.finished) { mode = 'sd'; resumeGame(); }
+  else if (M && !M.finished) { mode = 'mm'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
