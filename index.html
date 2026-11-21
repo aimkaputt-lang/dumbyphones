@@ -260,7 +260,7 @@
     padding: calc(env(safe-area-inset-top) + 18px) 18px 46px; display: flex; flex-direction: column; align-items: center;
   }
   .played { align-self: flex-start; font-size: 13px; color: var(--muted); margin-bottom: 2px; }
-  #sMode .title { font-size: 46px; margin: 30px 0 20px; }
+  #sMode .title { font-size: min(46px, 10.6vw); margin: 30px 0 20px; white-space: nowrap; }
   .pvframe { width: 100%; background: var(--panel); border-radius: 26px; padding: 9px; box-shadow: 0 8px 20px rgba(0,0,0,.3); }
   .pv { position: relative; border-radius: 19px; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #4a3f60, #2f2840); padding: 14px; }
   .pv .box { padding: 8px; border-radius: 10px; }
@@ -445,6 +445,69 @@
   .brand .b2 { color: #f6efea; margin-left: 10px; transform: translateY(-6px) rotate(-3deg); }
   #sHome .iconbtn { top: calc(env(safe-area-inset-top) + 76px); }
 
+  /* ---------- Dumby Detektiv ---------- */
+  body[data-theme="who"] {
+    --bg: #33365f; --bg-dark: #15162b; --muted: #b9bce0;
+    --panel: #4a4e8f; --panel-card: #32356a; --panel-shadow: #0c0d1c; --title: #ffd35a;
+    --bar: #b0284a; --bar-dark: #771a33; --seg-text: #f3c3cf;
+  }
+  body[data-theme="who"] .pv { background: radial-gradient(ellipse at 50% 30%, #3e4275, #23254a); }
+  #sWho .topbar { margin-bottom: 8px; align-items: center; }
+  .wmine { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
+  .wmine span { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.1; width: 44px; }
+  .wmine .wcard { width: 40px; flex: 0 0 40px; cursor: default; }
+  .wmine .wname { font-size: 6.5px; }
+  .wstatus {
+    width: 100%; text-align: center; font-size: 16px; font-weight: 600; padding: 7px 10px; margin-bottom: 8px;
+    border-radius: 12px; background: var(--panel-card); color: var(--muted); transition: background .2s, color .2s;
+  }
+  .wstatus.turn { background: var(--title); color: #2a2440; }
+  .wboard {
+    width: 100%; background: linear-gradient(#3b3f74, #2a2d58); border-radius: 14px; padding: 8px 7px 9px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.08);
+  }
+  .wgrid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
+  .wgrid > .wcard { min-width: 0; }
+  .wcard {
+    position: relative; aspect-ratio: 3 / 4; background: #a5794f; border-radius: 5px; padding: 2.5px;
+    box-shadow: 0 4px 0 #6e4e30; cursor: pointer; transition: box-shadow .25s, transform .15s;
+  }
+  .wface {
+    height: 100%; border-radius: 3px; display: flex; flex-direction: column; overflow: hidden;
+    transform-origin: 50% 100%; transition: transform .32s ease-in, filter .32s;
+  }
+  .wface.pink { background: #e3a9c9; }
+  .wface.blue { background: #9aa3e6; }
+  .wname {
+    background: #b0284a; color: #fff; font-size: 8.5px; font-weight: 600; text-align: center; border-radius: 3px;
+    margin: 2px 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.45; flex: 0 0 auto;
+  }
+  .wface svg { flex: 1; width: 100%; min-height: 0; display: block; }
+  .wcard.down { background: rgba(10,10,30,.28); box-shadow: inset 0 2px 5px rgba(0,0,0,.35); }
+  .wcard.down .wface { transform: scaleY(.2); background: #8a6240; box-shadow: 0 -2px 0 #a5794f inset; }
+  .wcard.down .wface > * { opacity: 0; transition: opacity .15s; }
+  .wcard.mine { box-shadow: 0 4px 0 #6e4e30, 0 0 0 2.5px var(--title); }
+  .wcard.choosable:active, .wcard.guessable:active { transform: scale(.94); }
+  #sWho.guessing .wcard.guessable { box-shadow: 0 4px 0 #6e4e30, 0 0 0 2.5px var(--title); }
+  .wcard.found { box-shadow: 0 4px 0 #6e4e30, 0 0 0 3px var(--title); transform: scale(1.06); }
+  .wlog { width: 100%; min-height: 42px; margin-top: 8px; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.5; }
+  .wlog div:last-child { color: var(--text); font-weight: 600; }
+  .wact { margin-top: auto; padding-top: 8px; }
+  .wact button { margin: 0; }
+  #btnWGuess { background: var(--bar); color: #fff; box-shadow: 0 6px 0 var(--bar-dark); }
+  #btnWGuess:active:not(:disabled) { box-shadow: 0 1px 0 var(--bar-dark); }
+  .asklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .asklist button { margin: 0; font-size: 16px; padding: 12px 6px; }
+  .ansq { font-size: 20px; font-weight: 600; color: #fff !important; margin-bottom: 12px !important; }
+  .ansmine { display: flex; justify-content: center; margin-bottom: 16px; }
+  .ansmine .wcard { width: 70px; cursor: default; }
+  .ansmine .wname { font-size: 10px; }
+  .wboard.mini { padding: 6px; }
+  .wboard.mini .wgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 0 18px; }
+  .wboard.mini .wcard { cursor: default; }
+  .wboard.mini .wname { font-size: 8px; }
+  body[data-theme="who"] .modal { background: linear-gradient(120deg, #4a4e8f, #5a5fa8); border-color: #a5794f; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -480,6 +543,34 @@
           <g transform="rotate(9 96 82)"><rect x="86" y="72" width="20" height="20" rx="4" fill="#faf7f5"/><rect x="86" y="88" width="20" height="4" rx="2" fill="#c3b7b8"/><circle cx="91" cy="77" r="2" fill="#2a2222"/><circle cx="101" cy="77" r="2" fill="#2a2222"/><circle cx="91" cy="87" r="2" fill="#2a2222"/><circle cx="101" cy="87" r="2" fill="#2a2222"/></g>
         </svg>
       </button>
+      <button class="toy" id="toyWho" aria-label="Dumby Detektiv" style="animation-delay:-.8s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="117" rx="62" ry="8" fill="rgba(0,0,0,.28)"/>
+          <rect x="22" y="96" width="116" height="16" rx="3" fill="#2f3260"/>
+          <rect x="22" y="108" width="116" height="5" rx="2" fill="#1f2145"/>
+          <g transform="rotate(-6 52 70)">
+            <rect x="30" y="34" width="46" height="64" rx="4" fill="#a5794f"/>
+            <rect x="34" y="38" width="38" height="56" rx="2.5" fill="#e3a9c9"/>
+            <rect x="36" y="40" width="34" height="9" rx="2" fill="#b0284a"/>
+            <circle cx="53" cy="60" r="10" fill="#f3d2b8"/>
+            <path d="M43 59 Q43 47 53 47 Q63 47 63 59 Q59 52 53 53 Q47 52 43 59Z" fill="#7a4a2e"/>
+            <circle cx="49.5" cy="60" r="1.4" fill="#3a2618"/><circle cx="56.5" cy="60" r="1.4" fill="#3a2618"/>
+            <path d="M50 65 Q53 67 56 65" stroke="#c8405a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+            <path d="M40 94 Q42 78 53 77 Q64 78 66 94Z" fill="#7bc96f"/>
+          </g>
+          <g transform="rotate(5 108 76)">
+            <rect x="86" y="40" width="46" height="62" rx="4" fill="#a5794f"/>
+            <rect x="90" y="44" width="38" height="54" rx="2.5" fill="#9aa3e6"/>
+            <rect x="92" y="46" width="34" height="9" rx="2" fill="#b0284a"/>
+            <circle cx="109" cy="66" r="10" fill="#8a5a3c"/>
+            <g fill="none" stroke="#222" stroke-width="1.6"><circle cx="105" cy="65" r="3.2"/><circle cx="113" cy="65" r="3.2"/></g>
+            <path d="M100 67 Q100 78 109 78 Q118 78 118 67 Q115 73 109 73 Q103 73 100 67Z" fill="#1e1a18"/>
+            <path d="M96 98 Q98 84 109 83 Q120 84 122 98Z" fill="#d8343f"/>
+          </g>
+          <circle cx="128" cy="34" r="12" fill="none" stroke="#f6efea" stroke-width="4"/>
+          <path d="M136 43 L146 54" stroke="#f6efea" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -509,6 +600,9 @@
             <div class="cup" id="pvdCup"><svg viewBox="0 0 60 84" aria-hidden="true"><path d="M5 8 L55 8 L49 78 L11 78 Z" fill="#3b2422"/><path d="M5 8 L16 8 L19 78 L11 78 Z" fill="#4c302d"/><rect x="10" y="70" width="40" height="8" rx="2" fill="#2a1918"/><ellipse cx="30" cy="8" rx="25" ry="6.5" fill="#5a3a35"/><ellipse cx="30" cy="8" rx="19.5" ry="4.2" fill="#1d1110"/><path d="M31 18 L30 66" stroke="#a5948f" stroke-width="2.4" stroke-dasharray="3.5 3.5" stroke-linecap="round"/></svg></div>
           </div></div>
           <div class="pvbadge" id="pvdBadge"></div>
+        </div>
+        <div class="pv" id="pvWhoBox" style="display:none">
+          <div class="wboard mini"><div class="wgrid" id="pvwGrid"></div></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -611,6 +705,30 @@
     </div>
   </section>
 
+  <!-- DUMBY DETEKTIV -->
+  <section class="screen" id="sWho">
+    <div class="topbar">
+      <button class="menubtn" id="btnWMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="wmine" id="wMine"></div>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="wStatus"></div>
+    <div class="wboard"><div class="wgrid" id="wGrid"></div></div>
+    <div class="wlog" id="wLog"></div>
+    <div class="row wact">
+      <button id="btnWAsk">Frage stellen</button>
+      <button id="btnWGuess">Tippen</button>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -649,11 +767,35 @@
 </div>
 <div class="overlay dlg" id="dlgConfirm">
   <div class="modal">
-    <h2>Pausiertes Spiel beenden?</h2>
+    <h2 id="confTitle">Pausiertes Spiel beenden?</h2>
     <p id="confText"></p>
     <button id="btnConfYes">Neues Spiel starten</button>
     <div class="gap"></div>
     <button id="btnConfNo" class="secondary">Abbrechen</button>
+  </div>
+</div>
+<div class="overlay dlg" id="dlgAsk">
+  <div class="modal">
+    <h2>Frage stellen</h2>
+    <p>Ist deine Person …</p>
+    <div class="asklist" id="askList"></div>
+    <div id="askCustom">
+      <label for="askCustomText">Eigene Frage</label>
+      <input id="askCustomText" maxlength="80" placeholder="z. B. Trägt sie Rot?" autocomplete="off">
+      <div class="gap"></div>
+      <button id="btnAskCustom">Eigene Frage stellen</button>
+    </div>
+  </div>
+</div>
+<div class="overlay dlg stay" id="dlgAnswer">
+  <div class="modal">
+    <h2>Dein Gegner fragt</h2>
+    <p id="ansText" class="ansq"></p>
+    <div class="ansmine" id="ansMine"></div>
+    <div class="row">
+      <button id="btnAnsYes">Ja</button>
+      <button id="btnAnsNo">Nein</button>
+    </div>
   </div>
 </div>
 <div class="overlay dlg" id="dlgSettings">
@@ -717,10 +859,12 @@
   const MODES = {
     klapp: { topic: 'dumbyphones/shutthebox/v1/', lsKey: LS_KEY, screen: 'sGame', theme: '' },
     dice:  { topic: 'dumbyphones/dumbydices/v1/', lsKey: 'dd_state_v1', screen: 'sDice', theme: 'dice' },
+    who:   { topic: 'dumbyphones/dumbydetektiv/v1/', lsKey: 'wi_state_v1', screen: 'sWho', theme: 'who' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
-  const G = () => (mode === 'dice' ? D : S);
+  let W = load(MODES.who.lsKey, null); // Dumby-Detektiv-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -814,6 +958,7 @@
         opponents[id] = d;
         updateOpp();
         if (G() && G().finished && $('sEnd').classList.contains('active')) renderEnd();
+        if (mode === 'who') whoSync();
       } catch {}
     });
   }
@@ -829,7 +974,14 @@
       name: profile.name || 'Spieler', gameNo: g.gameNo, round: g.round, total: g.total,
       finished: g.finished, ts: Date.now(),
     };
-    if (mode === 'dice') data.sheet = g.sheet; else data.scores = g.scores;
+    if (mode === 'dice') data.sheet = g.sheet;
+    else if (mode === 'who') {
+      Object.assign(data, {
+        host: g.host, ready: g.secret !== null, askN: g.askN, ask: g.ask, reply: g.reply,
+        open: g.down.filter(x => !x).length,
+      });
+      if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else data.scores = g.scores;
     client.publish(topicFor(g.code, profile.id), JSON.stringify(data), { qos: 1, retain: true });
   }
 
@@ -850,7 +1002,7 @@
     if (!g || !g.code) { q('.opp').style.display = 'none'; return; }
     q('.opp').style.display = '';
     const o = currentOpp();
-    q('.avatar').classList.toggle('off', !o || o.gameNo !== g.gameNo);
+    q('.opp .avatar').classList.toggle('off', !o || o.gameNo !== g.gameNo);
     if (!o) {
       q('.oname').textContent = connected ? 'Gegner' : 'verbinde…';
       q('.ototal').textContent = '–';
@@ -861,6 +1013,11 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'who') {
+      q('.ototal').textContent = o.open ?? '–';
+      q('.oround').textContent = 'offen';
       return;
     }
     q('.ototal').textContent = o.total;
@@ -1281,6 +1438,356 @@
   $('btnDEnter').onclick = enterCat;
 
   // =====================================================================
+  //  DUMBY DETEKTIV (Personen raten)
+  // =====================================================================
+  // g: Geschlecht · hs: Frisur · hc: Haarfarbe · long: lange Haare · light: helle Augen · eye: Augenfarbe
+  // gl: Brillenfarbe · sun: getönte Brille · beard: Bartform · bc: Bartfarbe · bg: Kartenfarbe (p = rosa, b = blau)
+  const EYE_DARK = '#3a2618';
+  const PEOPLE = [
+    { n: 'Burgerking', g: 'm', skin: '#8a5a3c', hs: 'bald', hc: '#2a1f1a', long: 0, light: 0, beard: 'full', bc: '#ece6dc', shirt: '#e0559a', bg: 'b' },
+    { n: 'Mercedes', g: 'f', skin: '#f3d2b8', hs: 'braids', hc: '#7a4a2e', long: 1, light: 1, eye: '#3f8fd0', shirt: '#7bc96f', bg: 'p' },
+    { n: 'Baklava', g: 'f', skin: '#9b6a45', hs: 'long', hc: '#f0d070', long: 1, light: 0, shirt: '#2f3f8f', bg: 'b' },
+    { n: 'Ouioui', g: 'f', skin: '#f6dcc6', hs: 'short', hc: '#e0703a', long: 0, light: 1, eye: '#3f8fd0', gl: '#6a6a6a', shirt: '#f2d14a', bg: 'p' },
+    { n: 'Python', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#c8a070', long: 0, light: 1, eye: '#3f8fd0', beard: 'mustache', bc: '#3a2a20', shirt: '#e98ab8', bg: 'b' },
+    { n: 'Depri', g: 'f', skin: '#5a3a28', hs: 'curlylong', hc: '#1e1a18', long: 1, light: 0, gl: '#e04050', shirt: '#6fbf5f', bg: 'p' },
+    { n: 'Monday', g: 'f', skin: '#6a4028', hs: 'long', hc: '#b5602a', long: 1, light: 1, eye: '#3f9a5a', shirt: '#eeeeee', bg: 'p' },
+    { n: 'Miro', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b4a2e', long: 0, light: 0, shirt: '#d9eef5', bg: 'b' },
+    { n: 'Stracciatella', g: 'f', skin: '#f6dcc6', hs: 'bob', hc: '#e2c58a', long: 0, light: 0, shirt: '#d8343f', bg: 'p' },
+    { n: 'Udo', g: 'm', skin: '#d9a77a', hs: 'short', hc: '#1e1a18', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#7a3fb0', bg: 'p' },
+    { n: 'Berry', g: 'f', skin: '#6a4028', hs: 'curly', hc: '#1e1a18', long: 0, light: 0, gl: '#f0d030', shirt: '#3fc6d0', bg: 'p' },
+    { n: 'Pepe', g: 'm', skin: '#4a2e20', hs: 'bald', hc: '#1e1a18', long: 0, light: 0, shirt: '#f2d14a', bg: 'b' },
+    { n: 'Jackson', g: 'm', skin: '#f6dcc6', hs: 'spiky', hc: '#f0d070', long: 0, light: 0, shirt: '#d8343f', bg: 'b' },
+    { n: 'Havana', g: 'f', skin: '#6a4028', hs: 'long', hc: '#f5b5d0', long: 1, light: 1, eye: '#3f8fd0', shirt: '#2f3f8f', bg: 'p' },
+    { n: 'Jarack', g: 'm', skin: '#8a5a3c', hs: 'curly', hc: '#e8c050', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#f2d14a', bg: 'b' },
+    { n: 'Trixi', g: 'f', skin: '#f6dcc6', hs: 'long', hc: '#e8d3a8', long: 1, light: 1, eye: '#3f9a5a', shirt: '#f08a3a', bg: 'p' },
+    { n: 'Jassin', g: 'm', skin: '#f0c8a8', hs: 'long', hc: '#1e1a18', long: 1, light: 1, eye: '#3f8fd0', beard: 'full', bc: '#1e1a18', shirt: '#c0305a', bg: 'p' },
+    { n: 'Saskia', g: 'f', skin: '#f3d2b8', hs: 'bob', hc: '#4a2a4a', long: 0, light: 0, shirt: '#f08a3a', bg: 'p' },
+    { n: 'Flower', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#6b3a2a', long: 1, light: 1, eye: '#3f9a5a', shirt: '#d65ad0', bg: 'b' },
+    { n: 'Rino', g: 'm', skin: '#c08a5a', hs: 'spiky', hc: '#e03a2a', long: 0, light: 0, gl: '#1a1a1a', sun: 1, shirt: '#5fd0d8', bg: 'b' },
+    { n: 'Doris', g: 'f', skin: '#7a4a30', hs: 'long', hc: '#e0c070', long: 1, light: 1, eye: '#3f9a5a', shirt: '#dddddd', bg: 'p' },
+    { n: 'Clark', g: 'm', skin: '#f6dcc6', hs: 'bowl', hc: '#6b4a2e', long: 0, light: 0, gl: '#5a7a4a', sun: 1, shirt: '#f08a3a', bg: 'b' },
+    { n: 'Nike', g: 'f', skin: '#e8b890', hs: 'curlylong', hc: '#1e1a18', long: 1, light: 0, shirt: '#9a3fc0', bg: 'p' },
+    { n: 'Adalbert', g: 'm', skin: '#f6dcc6', hs: 'short', hc: '#d8b060', long: 0, light: 1, eye: '#3f8fd0', gl: '#222222', shirt: '#6fbf5f', bg: 'b' },
+    { n: 'Berrick', g: 'm', skin: '#6a4028', hs: 'short', hc: '#1e1a18', long: 0, light: 0, gl: '#f4f4f4', shirt: '#3fae4a', bg: 'b' },
+    { n: 'Susanne', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#7a5034', long: 1, light: 1, eye: '#3f8fd0', gl: '#9a8ac8', sun: 1, shirt: '#2f4fb0', bg: 'p' },
+    { n: 'Abel', g: 'm', skin: '#6a4028', hs: 'afro', hc: '#1e1a18', long: 0, light: 0, gl: '#222222', beard: 'full', bc: '#1e1a18', shirt: '#d8343f', bg: 'b' },
+    { n: 'Mandy', g: 'f', skin: '#d8a070', hs: 'short', hc: '#ece2c8', long: 0, light: 1, eye: '#3f8fd0', shirt: '#3fb0b0', bg: 'p' },
+    { n: 'Happy', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b3a2a', long: 0, light: 0, gl: '#777777', beard: 'full', bc: '#f4f0ea', shirt: '#8a4ac0', bg: 'p' },
+    { n: 'Waylay', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#1e1a18', long: 1, light: 0, gl: '#d8343f', shirt: '#f2d14a', bg: 'p' },
+  ];
+  const WHO_Q = [
+    { id: 'm', text: 'Ist deine Person männlich?', short: 'männlich?', test: p => p.g === 'm' },
+    { id: 'f', text: 'Ist deine Person weiblich?', short: 'weiblich?', test: p => p.g === 'f' },
+    { id: 'gl', text: 'Trägt deine Person eine Brille?', short: 'Brille?', test: p => !!p.gl },
+    { id: 'bd', text: 'Hat deine Person einen Bart?', short: 'Bart?', test: p => !!p.beard },
+    { id: 'lh', text: 'Hat deine Person lange Haare?', short: 'lange Haare?', test: p => !!p.long },
+    { id: 'kh', text: 'Hat deine Person kurze Haare?', short: 'kurze Haare?', test: p => !p.long },
+    { id: 'he', text: 'Hat deine Person helle Augen?', short: 'helle Augen?', test: p => !!p.light },
+    { id: 'de', text: 'Hat deine Person dunkle Augen?', short: 'dunkle Augen?', test: p => !p.light },
+  ];
+
+  // Figur als SVG zeichnen (eigener, schlichter Stil)
+  function avatarSVG(p) {
+    const s = p.skin, h = p.hc;
+    const cap = `<path d="M14 28 Q13 10 30 10 Q47 10 46 28 Q42 17 30 17 Q18 17 14 28Z" fill="${h}"/>`;
+    let back = '', front = '';
+    switch (p.hs) {
+      case 'short': front = cap; break;
+      case 'bowl': front = `<path d="M13 31 Q12 9 30 9 Q48 9 47 31 L44 31 Q43 22 30 22 Q17 22 16 31Z" fill="${h}"/>`; break;
+      case 'spiky': front = `<path d="M14 27 L15 12 L20 17 L22 6 L28 13 L32 5 L36 13 L41 7 L42 17 L46 13 L46 27 Q30 15 14 27Z" fill="${h}"/>`; break;
+      case 'bob': back = `<path d="M12 34 Q10 9 30 8 Q50 9 48 34 Q48 43 42 42 L42 30 L18 30 L18 42 Q12 43 12 34Z" fill="${h}"/>`;
+        front = `<path d="M15 25 Q15 11 30 11 Q45 11 45 25 Q38 19 30 21 Q22 19 15 25Z" fill="${h}"/>`; break;
+      case 'long': back = `<path d="M12 30 Q11 8 30 8 Q49 8 48 30 L50 58 Q30 64 10 58Z" fill="${h}"/>`; front = cap; break;
+      case 'braids': back = `<rect x="9" y="26" width="7" height="28" rx="3.5" fill="${h}"/><rect x="44" y="26" width="7" height="28" rx="3.5" fill="${h}"/>`; front = cap; break;
+      case 'afro': back = `<circle cx="30" cy="22" r="21" fill="${h}"/>`; break;
+      case 'curly': back = [[17, 18], [24, 12], [30, 10], [36, 12], [43, 18], [15, 27], [45, 27]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${h}"/>`).join(''); break;
+      case 'curlylong': back = [[17, 18], [24, 12], [30, 10], [36, 12], [43, 18], [14, 28], [46, 28], [13, 38], [47, 38], [14, 48], [46, 48]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7.5" fill="${h}"/>`).join(''); break;
+      default: break; // Glatze
+    }
+    const eye = p.light ? p.eye : EYE_DARK;
+    let beard = '';
+    if (p.beard === 'full') beard = `<path d="M15 31 Q15 49 30 49 Q45 49 45 31 Q43 41 30 41 Q17 41 15 31Z" fill="${p.bc}"/><path d="M23 38 Q30 34 37 38 Q30 40 23 38Z" fill="${p.bc}"/>`;
+    else if (p.beard === 'goatee') beard = `<path d="M26 41 Q30 49 34 41 Q30 43 26 41Z" fill="${p.bc}"/><path d="M24 38 Q30 35 36 38 Q30 39.5 24 38Z" fill="${p.bc}"/>`;
+    else if (p.beard === 'mustache') beard = `<path d="M23 38 Q30 34 37 38 Q30 40 23 38Z" fill="${p.bc}"/>`;
+    let glasses = '';
+    if (p.gl) glasses = p.sun
+      ? `<g><circle cx="24" cy="30" r="4.8" fill="${p.gl}" opacity=".82"/><circle cx="36" cy="30" r="4.8" fill="${p.gl}" opacity=".82"/><path d="M28.8 30h2.4" stroke="${p.gl}" stroke-width="1.6"/></g>`
+      : `<g fill="none" stroke="${p.gl}" stroke-width="1.7"><circle cx="24" cy="30" r="4.6"/><circle cx="36" cy="30" r="4.6"/><path d="M28.6 30h2.8"/></g>`;
+    const mouth = p.g === 'f'
+      ? `<path d="M26.5 40 Q30 43 33.5 40 Q30 41.2 26.5 40Z" fill="#c8405a" stroke="#c8405a" stroke-width="1"/>`
+      : `<path d="M26.5 40 Q30 42.6 33.5 40" stroke="#7a3a30" stroke-width="1.4" fill="none" stroke-linecap="round"/>`;
+    return `<svg viewBox="0 0 60 64" aria-hidden="true">${back}
+      <path d="M7 64 Q9 50 30 49 Q51 50 53 64Z" fill="${p.shirt}"/>
+      <rect x="25" y="42" width="10" height="9" fill="${s}"/>
+      <ellipse cx="15" cy="31" rx="2.6" ry="3.6" fill="${s}"/><ellipse cx="45" cy="31" rx="2.6" ry="3.6" fill="${s}"/>
+      <ellipse cx="30" cy="30" rx="15" ry="17" fill="${s}"/>
+      ${front}
+      <ellipse cx="24" cy="30" rx="3" ry="2.4" fill="#fff"/><ellipse cx="36" cy="30" rx="3" ry="2.4" fill="#fff"/>
+      <circle cx="24" cy="30" r="1.7" fill="${eye}"/><circle cx="36" cy="30" r="1.7" fill="${eye}"/>
+      <path d="M20.5 25.5 Q24 24 27 25.5 M33 25.5 Q36 24 39.5 25.5" stroke="${p.hs === 'bald' ? '#3a2a20' : h}" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      ${beard}${mouth}${glasses}</svg>`;
+  }
+  function cardHTML(i, extra) {
+    const p = PEOPLE[i];
+    return `<div class="wcard${extra ? ' ' + extra : ''}" data-i="${i}"><div class="wface ${p.bg === 'p' ? 'pink' : 'blue'}"><div class="wname">${p.n}</div>${avatarSVG(p)}</div></div>`;
+  }
+
+  function freshWho(code, gameNo, host) {
+    return {
+      code, gameNo: gameNo || 1, host: !!host, secret: code ? null : -1,
+      cpu: code ? null : Math.floor(Math.random() * PEOPLE.length),
+      down: PEOPLE.map(() => false), askN: 0, ask: null, reply: null, answeredN: 0,
+      log: [], finished: false, result: null, endBy: null, oppSecret: null, endShown: false,
+      round: 1, total: 0,
+    };
+  }
+  let whoHost = true;      // beim Erstellen true, beim Beitreten false
+  let guessMode = false;   // Tipp-Modus: nächste angetippte Karte ist der Tipp
+
+  const whoOpp = () => { const o = currentOpp(); return o && W && o.gameNo === W.gameNo ? o : null; };
+  function whoPhase() {
+    const w = W;
+    if (w.finished) return 'end';
+    if (!w.code) return 'mine';
+    if (w.secret === null) return 'choose';
+    const o = whoOpp();
+    if (!o) return 'noopp';
+    if (!o.ready) return 'oppchoose';
+    if (o.ask && o.ask.n > w.answeredN) return 'answering';
+    if (w.ask && !w.ask.done) return 'wait';
+    const mine = w.host ? w.askN <= (o.askN || 0) : w.askN < (o.askN || 0);
+    return mine ? 'mine' : 'theirs';
+  }
+  function whoAnswer(ask, secretIdx) {
+    if (ask.kind === 'guess') return ask.pid === secretIdx;
+    const q = WHO_Q.find(x => x.id === ask.q);
+    return q ? q.test(PEOPLE[secretIdx]) : false;
+  }
+  function addLog(t) { W.log.push(t); if (W.log.length > 20) W.log.shift(); }
+  function askText(a) { return a.kind === 'guess' ? `Ist es ${PEOPLE[a.pid].n}?` : a.text; }
+
+  // Gegner hat gefragt -> antworten (automatisch oder per Dialog bei eigener Frage)
+  function answerOpp(ask, ans) {
+    const w = W;
+    if (ask.n <= w.answeredN) return;
+    w.answeredN = ask.n;
+    w.reply = { n: ask.n, ans };
+    if (ask.kind === 'guess') {
+      w.reply.secret = w.secret;
+      if (ask.own !== undefined && ask.own !== null) w.oppSecret = ask.own;
+      w.finished = true; w.result = ans ? 'lose' : 'win'; w.endBy = 'opp';
+    }
+    addLog(`Gegner: ${askText(ask)} → ${ans ? 'Ja' : 'Nein'}`);
+    persist();
+    renderWho();
+    if (w.finished) whoFinish();
+  }
+  // Antwort auf meine Frage übernehmen
+  function applyReply(rep) {
+    const w = W, a = w.ask;
+    if (!a || a.done) return;
+    a.done = true;
+    w.total = w.askN;
+    if (rep.secret !== undefined && rep.secret !== null) w.oppSecret = rep.secret;
+    addLog(`Du: ${askText(a)} → ${rep.ans ? 'Ja' : 'Nein'}${a.kind === 'custom' ? ' · klappe selbst um' : ''}`);
+    if (a.kind === 'guess') {
+      w.finished = true; w.result = rep.ans ? 'win' : 'lose'; w.endBy = 'me';
+      if (rep.ans) w.oppSecret = a.pid;
+    } else if (a.kind === 'attr') {
+      const q = WHO_Q.find(x => x.id === a.q);
+      PEOPLE.forEach((p, i) => { if (q.test(p) !== rep.ans) w.down[i] = true; });
+    }
+    persist();
+    renderWho();
+    if (w.finished) whoFinish();
+  }
+  function whoAsk(kind, data) {
+    const w = W;
+    if (whoPhase() !== 'mine') return;
+    w.askN++; w.round = w.askN + 1;
+    const ask = { n: w.askN, kind, done: false, ...data };
+    if (kind === 'guess' && w.code) ask.own = w.secret; // Spiel endet mit dem Tipp -> eigene Person mitschicken
+    if (kind === 'attr') ask.text = WHO_Q.find(x => x.id === data.q).text;
+    w.ask = ask;
+    if (!w.code) { // Solo: der Computer antwortet sofort
+      const ans = whoAnswer(ask, w.cpu);
+      applyReply({ n: ask.n, ans, secret: kind === 'guess' ? w.cpu : undefined });
+      return;
+    }
+    persist();
+    renderWho();
+  }
+
+  let answerOpen = 0;
+  function whoSync() {
+    if (mode !== 'who' || !W) return;
+    const w = W, o = whoOpp();
+    if (o && w.code) {
+      if (o.secret !== undefined && o.secret !== null && w.oppSecret === null) { w.oppSecret = o.secret; save(MODES.who.lsKey, w); }
+      if (o.ask && o.ask.n > w.answeredN && w.secret !== null && w.secret >= 0 && !w.finished) {
+        if (o.ask.kind === 'custom') showAnswerDlg(o.ask);
+        else answerOpp(o.ask, whoAnswer(o.ask, w.secret));
+      }
+      if (w.ask && !w.ask.done && o.reply && o.reply.n === w.ask.n) applyReply(o.reply);
+    }
+    renderWho();
+  }
+  function showAnswerDlg(ask) {
+    if (answerOpen === ask.n) return;
+    answerOpen = ask.n;
+    $('ansText').textContent = ask.text;
+    $('ansMine').innerHTML = W.secret !== null && W.secret >= 0 ? cardHTML(W.secret) : '';
+    openDlg('dlgAnswer');
+    const done = ans => { closeDlg('dlgAnswer'); answerOpen = 0; answerOpp(ask, ans); };
+    $('btnAnsYes').onclick = () => done(true);
+    $('btnAnsNo').onclick = () => done(false);
+  }
+
+  function whoFinish() {
+    const w = W;
+    if (w.endShown) return;
+    w.endShown = true;
+    profile.playedWho = (profile.playedWho || 0) + 1; save(LS_PROFILE, profile);
+    persist();
+    const win = w.result === 'win';
+    const name = w.oppSecret !== null && w.oppSecret >= 0 ? PEOPLE[w.oppSecret].n : '?';
+    const qn = w.askN - (w.endBy === 'me' ? 1 : 0); // der Tipp selbst zählt nicht als Frage
+    const fr = `${qn} ${qn === 1 ? 'Frage' : 'Fragen'}`;
+    let text;
+    if (!w.code) text = win ? `Gefunden mit ${fr}.` : `Falsch getippt – gesucht war ${name}.`;
+    else if (w.endBy === 'me') text = win ? `Richtig getippt nach ${fr}!` : `Falsch getippt – die Person deines Gegners war ${name}.`;
+    else text = win ? `Dein Gegner hat falsch getippt. Seine Person war ${name}.` : `Dein Gegner hat ${PEOPLE[w.secret].n} erraten. Seine Person war ${name}.`;
+    modal(win ? 'Gewonnen! 🏆' : 'Verloren', name, text, 'Weiter');
+  }
+
+  function whoBuildGrid() {
+    const grid = $('wGrid');
+    grid.innerHTML = PEOPLE.map((_, i) => cardHTML(i)).join('');
+    grid.querySelectorAll('.wcard').forEach(c => c.onclick = () => whoTap(+c.dataset.i));
+  }
+  function whoTap(i) {
+    const w = W, ph = whoPhase(), p = PEOPLE[i];
+    if (ph === 'end') return;
+    if (ph === 'choose') {
+      askConfirm('Deine Person', `${p.n} als deine geheime Person wählen?`, 'Auswählen', () => {
+        w.secret = i; persist(); whoSync();
+      });
+      return;
+    }
+    if (guessMode) {
+      if (w.down[i]) return;
+      askConfirm('Tippen', `Ist es ${p.n}? Liegst du falsch, hast du verloren.`, 'Ja, tippen', () => {
+        guessMode = false; whoAsk('guess', { pid: i });
+      });
+      return;
+    }
+    w.down[i] = !w.down[i];
+    persist();
+    renderWho();
+  }
+
+  function renderWho() {
+    const w = W;
+    if (!$('wGrid').children.length) whoBuildGrid();
+    const ph = whoPhase();
+    if (ph !== 'mine') guessMode = false;
+    $('wGrid').querySelectorAll('.wcard').forEach(c => {
+      const i = +c.dataset.i;
+      c.classList.toggle('down', !!w.down[i]);
+      c.classList.toggle('choosable', ph === 'choose');
+      c.classList.toggle('guessable', guessMode && !w.down[i]);
+      c.classList.toggle('mine', w.secret === i);
+    });
+    // eigene Person
+    $('wMine').innerHTML = w.secret !== null && w.secret >= 0
+      ? `<span>Deine Person</span>${cardHTML(w.secret)}` : '';
+    // Status
+    const name = w.oppSecret !== null && w.oppSecret >= 0 ? PEOPLE[w.oppSecret].n : '';
+    const st = {
+      choose: 'Wähle deine geheime Person',
+      noopp: connected ? `Warte auf Gegner … (Raum ${w.code})` : 'Verbinde …',
+      oppchoose: 'Gegner wählt seine Person …',
+      answering: 'Gegner stellt eine Frage …',
+      mine: guessMode ? 'Tippe auf die Person, die du vermutest' : w.code ? 'Du bist dran – stell eine Frage oder tippe' : 'Stell eine Frage oder tippe',
+      wait: 'Warte auf Antwort …',
+      theirs: 'Gegner ist dran …',
+      end: w.result === 'win' ? `Gewonnen!${name ? ' Es war ' + name + '.' : ''}` : `Verloren.${name ? ' Es war ' + name + '.' : ''}`,
+    }[ph];
+    $('wStatus').textContent = st;
+    $('wStatus').classList.toggle('turn', ph === 'mine' || ph === 'choose');
+    // Verlauf: letzte zwei Einträge
+    $('wLog').innerHTML = w.log.slice(-2).map(t => `<div>${esc(t)}</div>`).join('');
+    // Buttons
+    const a = $('btnWAsk'), g = $('btnWGuess');
+    if (ph === 'end') {
+      a.textContent = 'Nochmal'; a.disabled = false;
+      g.textContent = 'Menü'; g.disabled = false;
+    } else {
+      a.textContent = 'Frage stellen'; a.disabled = ph !== 'mine' || guessMode;
+      g.textContent = guessMode ? 'Abbrechen' : 'Tippen'; g.disabled = ph !== 'mine';
+    }
+    $('sWho').classList.toggle('guessing', guessMode);
+    updateOpp();
+  }
+
+  function openAsk() {
+    const solo = !W.code;
+    $('askList').innerHTML = WHO_Q.map(q => `<button data-q="${q.id}">${q.short}</button>`).join('');
+    $('askList').querySelectorAll('button').forEach(b => b.onclick = () => { closeDlg('dlgAsk'); whoAsk('attr', { q: b.dataset.q }); });
+    $('askCustom').style.display = solo ? 'none' : '';
+    $('askCustomText').value = '';
+    openDlg('dlgAsk');
+  }
+  $('btnAskCustom').onclick = () => {
+    const t = $('askCustomText').value.trim().slice(0, 80);
+    if (!t) { toast('Bitte gib eine Frage ein'); return; }
+    closeDlg('dlgAsk');
+    whoAsk('custom', { text: t.endsWith('?') ? t : t + '?' });
+  };
+  $('btnWAsk').onclick = () => {
+    if (whoPhase() === 'end') { whoRematch(); return; }
+    openAsk();
+  };
+  $('btnWGuess').onclick = () => {
+    if (whoPhase() === 'end') { disconnect(); openMode('who'); return; }
+    guessMode = !guessMode;
+    renderWho();
+  };
+  $('btnWMenu').onclick = () => openPause();
+  function whoRematch() {
+    const w = W;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    let g = (w.gameNo || 1) + 1;
+    if (o && o.gameNo > g) g = o.gameNo;
+    whoHost = w.host;
+    W = freshWho(w.code, g, w.host);
+    guessMode = false;
+    persist();
+    renderWho();
+  }
+
+  // ---------- Mini-Vorschau Dumby Detektiv ----------
+  const pvw = { running: false, timer: null };
+  function pvwLater(fn, ms) { pvw.timer = setTimeout(() => pvw.running && fn(), ms); }
+  function pvwStart() {
+    const ids = shuffle(PEOPLE.map((_, i) => i)).slice(0, 8);
+    $('pvwGrid').innerHTML = ids.map(i => cardHTML(i)).join('');
+    const cards = [...$('pvwGrid').children];
+    const target = Math.floor(Math.random() * cards.length);
+    const order = shuffle(cards.map((_, k) => k).filter(k => k !== target));
+    const step = k => {
+      if (k >= order.length) {
+        cards[target].classList.add('found');
+        pvwLater(pvwStart, 1800);
+        return;
+      }
+      cards[order[k]].classList.add('down');
+      pvwLater(() => step(k + 1), 650);
+    };
+    pvwLater(() => step(0), 900);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -1294,10 +1801,15 @@
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
     },
+    who: {
+      title: 'Dumby Detektiv', playedKey: 'playedWho',
+      desc: ['Wer steckt dahinter? Ihr sucht euch beide heimlich eine Person aus und fragt euch abwechselnd aus: Brille? Bart? Lange Haare? Die App beantwortet die Fragen und klappt alle Personen um, die nicht mehr passen.',
+        'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
+    },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : freshGame(code, gameNo));
-  function setG(v) { if (mode === 'dice') D = v; else S = v; }
-  function renderActive() { if (mode === 'dice') renderDice(); else renderGame(); }
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : freshGame(code, gameNo));
+  function setG(v) { if (mode === 'dice') D = v; else if (mode === 'who') W = v; else S = v; }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -1313,6 +1825,7 @@
     $('modeDesc').innerHTML = info.desc.map(p => `<p>${p}</p>`).join('');
     $('pvKlapp').style.display = mode === 'klapp' ? '' : 'none';
     $('pvDiceBox').style.display = mode === 'dice' ? '' : 'none';
+    $('pvWhoBox').style.display = mode === 'who' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -1322,14 +1835,17 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
+      r.textContent = mode === 'who'
+        ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
+        : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = mode === 'who' ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
   $('toyDice').onclick = () => openMode('dice');
+  $('toyWho').onclick = () => openMode('who');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -1338,7 +1854,23 @@
   // Dialoge
   function openDlg(id) { $(id).classList.add('show'); }
   function closeDlg(id) { $(id).classList.remove('show'); }
-  document.querySelectorAll('.dlg').forEach(dl => dl.addEventListener('click', e => { if (e.target === dl) closeDlg(dl.id); }));
+  document.querySelectorAll('.dlg').forEach(dl => dl.addEventListener('click', e => { if (e.target === dl && !dl.classList.contains('stay')) closeDlg(dl.id); }));
+
+  // Allgemeine Rückfrage (Titel, Text, Button-Text, Aktion bei Ja)
+  let afterConfirm = null;
+  function askConfirm(title, text, yes, cb) {
+    $('confTitle').textContent = title;
+    $('confText').textContent = text;
+    $('btnConfYes').textContent = yes;
+    afterConfirm = cb;
+    openDlg('dlgConfirm');
+  }
+  $('btnConfYes').onclick = () => {
+    closeDlg('dlgConfirm');
+    const cb = afterConfirm; afterConfirm = null;
+    if (cb) cb();
+  };
+  $('btnConfNo').onclick = () => { afterConfirm = null; closeDlg('dlgConfirm'); };
 
   let afterSettings = null;
   function openSettings(hint, cb) {
@@ -1367,6 +1899,7 @@
     closeDlg('dlgJoin');
     stopPreview();
     isRolling = false;
+    whoHost = false;
     setG(freshFor(mode, c));
     save(MODES[mode].lsKey, G());
     connect(c);
@@ -1462,17 +1995,20 @@
 
   function startPreview() {
     if (mode === 'dice') { pvd.running = true; pvdStart(); }
+    else if (mode === 'who') { pvw.running = true; pvwStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
     pv.running = false; clearTimeout(pv.timer);
     pvd.running = false; clearTimeout(pvd.timer);
+    pvw.running = false; clearTimeout(pvw.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
   function startGame(code) {
     stopPreview();
     isRolling = false;
+    whoHost = true;
     setG(freshFor(mode, code));
     save(MODES[mode].lsKey, G());
     if (code) connect(code); else disconnect();
@@ -1480,7 +2016,10 @@
     renderActive();
     publish();
     if (code) {
-      modal('Raum erstellt', code, 'Teile diesen Code mit deinem Gegner. Ihr spielt jeder für euch – die Punkte des Gegners siehst du oben rechts.', 'Los geht\'s');
+      const txt = mode === 'who'
+        ? 'Teile diesen Code mit deinem Gegner. Danach sucht ihr euch beide eine geheime Person aus – du fängst an.'
+        : 'Teile diesen Code mit deinem Gegner. Ihr spielt jeder für euch – die Punkte des Gegners siehst du oben rechts.';
+      modal('Raum erstellt', code, txt, 'Los geht\'s');
     }
   }
   function resumeGame() {
@@ -1488,6 +2027,7 @@
     isRolling = false;
     const g = G();
     if (g.code) connect(g.code); else disconnect();
+    if (mode === 'who') { show('sWho'); guessMode = false; whoSync(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
     if (mode === 'dice') { renderDice(); return; }
@@ -1501,20 +2041,15 @@
   }
 
   // Vor einem neuen Spiel warnen, wenn in diesem Modus noch ein pausiertes Spiel läuft
-  let afterConfirm = null;
   function confirmNew(cb) {
     const g = G();
     if (!g || g.finished) { cb(); return; }
-    $('confText').textContent = `Du hast noch ein pausiertes Spiel (${g.code ? 'Raum ' + g.code : 'Solo'}, Runde ${g.round}). Wenn du ein neues startest, wird es beendet.`;
-    afterConfirm = cb;
-    openDlg('dlgConfirm');
+    const where = g.code ? 'Raum ' + g.code : 'Solo';
+    const prog = mode === 'who' ? `${g.askN} Fragen` : `Runde ${g.round}`;
+    askConfirm('Pausiertes Spiel beenden?',
+      `Du hast noch ein pausiertes Spiel (${where}, ${prog}). Wenn du ein neues startest, wird es beendet.`,
+      'Neues Spiel starten', cb);
   }
-  $('btnConfYes').onclick = () => {
-    closeDlg('dlgConfirm');
-    const cb = afterConfirm; afterConfirm = null;
-    if (cb) cb();
-  };
-  $('btnConfNo').onclick = () => { afterConfirm = null; closeDlg('dlgConfirm'); };
 
   $('btnCreate').onclick = () => ensureName(() => confirmNew(() => startGame(newCode())));
   $('btnJoin').onclick = () => ensureName(() => confirmNew(openJoin));
@@ -1555,6 +2090,7 @@
   $('btnRestart').onclick = () => {
     closePause();
     $('overlay').classList.remove('show');
+    if (mode === 'who') { whoRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -1572,12 +2108,13 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = params.get('mode') === 'dice' ? 'dice' : 'klapp';
+    mode = ['dice', 'who'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
   } else if (S && !S.finished) { mode = 'klapp'; resumeGame(); }
   else if (D && !D.finished) { mode = 'dice'; resumeGame(); }
+  else if (W && !W.finished) { mode = 'who'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
