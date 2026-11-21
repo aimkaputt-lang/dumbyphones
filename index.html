@@ -709,6 +709,70 @@
   .csalt:active:not(:disabled) { box-shadow: 0 1px 0 #17164a; }
   #pvcBoard .csboard { width: 72%; margin: 0 auto; }
 
+  /* ---------- Abhängen ---------- */
+  body[data-theme="hang"], body[data-theme="hanggame"] {
+    --bg: #14205e; --bg-dark: #0a103a; --muted: #b8c4ea;
+    --panel: #a9cbea; --panel-card: #7fa6cc; --panel-shadow: #070b26; --title: #f2b96c;
+    --bar: #94aac8; --bar-dark: #61789a; --seg-text: #f4f7fb;
+  }
+  body[data-theme="hanggame"] { --bg: #1d2c64; --bg-dark: #121c48; }
+  /* Blaupausen-Raster im Spiel */
+  body[data-theme="hanggame"] {
+    background:
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px) 0 0 / 34px 34px,
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px) 0 0 / 34px 34px,
+      radial-gradient(ellipse at 50% 30%, #23336f, #121c48);
+  }
+  body[data-theme^="hang"] .title { text-shadow: 0 5px 0 #070a20, 0 6px 12px rgba(0,0,0,.3); }
+  body[data-theme="hang"] .pv { background: #1b2a62; }
+  body[data-theme^="hang"] .modal { background: linear-gradient(120deg, #1f2f6e, #2b3d86); border-color: #a9cbea; }
+  body[data-theme^="hang"] .modal .big:empty { display: none; }
+  body[data-theme^="hang"] .modal h2 { font-size: 32px; margin-bottom: 18px; }
+  body[data-theme="hang"] .pause .menucard { background: #6f95bd; }
+  body[data-theme="hang"] .seg button { color: #3a4a62; }
+  body[data-theme="hang"] .seg:not(.v1) button[data-mode="solo"], body[data-theme="hang"] .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
+  #sHang .topbar { margin-bottom: 8px; }
+  .hgplay, .hgwrite { width: 100%; flex: 1; display: flex; flex-direction: column; }
+  .hgscene { position: relative; width: 100%; }
+  .hggallow svg { width: 100%; display: block; }
+  .hggallow { width: 92%; margin: 0 auto; }
+  .hgwrongbox { width: 100%; text-align: center; margin-top: 4px; }
+  .hgwrongbox h3 { margin: 0 0 6px; color: #d62d55; font-size: 19px; font-weight: 700; text-shadow: 0 2px 0 rgba(0,0,0,.3); }
+  .hgwrong { display: flex; flex-wrap: wrap; gap: 4px 10px; justify-content: center; font-size: 22px; font-weight: 600; color: #fff; min-height: 30px; }
+  .hgwrong .word { font-size: 13px; align-self: center; text-decoration: line-through; opacity: .85; }
+  .hgerr { margin-top: 6px; font-size: 13px; color: var(--muted); }
+  .hgword { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 5px; margin: 14px 0 6px; min-height: 40px; }
+  .hgch { width: 22px; height: 34px; border-bottom: 4px solid #e8ecf8; display: flex; align-items: flex-end; justify-content: center; font-size: 24px; font-weight: 700; color: #fff; line-height: 1; padding-bottom: 3px; }
+  .hgch.fix { border-bottom-color: transparent; }
+  .hgch.miss { color: #ff7d9a; }
+  .hgch.on { animation: hgpop .3s ease-out; }
+  @keyframes hgpop { from { transform: translateY(-8px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .hgsp { width: 14px; }
+  .hgbottom { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+  .hgbottom button { margin: 0; }
+  .hginrow { gap: 10px; }
+  .hginrow .hginput { flex: 1; }
+  .hginrow button { flex: 0 0 76px; }
+  .hginput {
+    background: #b3204a; color: #fff; border: none; border-radius: 18px; font-size: 22px; font-weight: 600; padding: 14px 18px;
+    box-shadow: 0 6px 0 #7a1231; text-transform: uppercase;
+  }
+  .hginput::placeholder { color: rgba(255,255,255,.55); font-style: italic; text-transform: none; }
+  .hginput:focus { border: none; outline: 2px solid #f2b96c; }
+  .hgalt { background: #94aac8; color: #1c2a4a; box-shadow: 0 6px 0 #61789a; }
+  .hgwrite { gap: 14px; justify-content: center; padding-bottom: 40px; }
+  .hgwrite p { color: var(--muted); text-align: center; margin: 0; }
+  .hgh { text-align: center; margin: 0; color: var(--title); font-size: 26px; text-shadow: 0 3px 0 rgba(0,0,0,.4); }
+  .hgwrite button { margin: 0; }
+  .hgsummary { width: 100%; background: rgba(0,0,0,.25); border-radius: 14px; padding: 4px 10px; margin-top: 4px; }
+  .hgsummary table.rounds td { background: transparent; color: #fff; }
+  .hgsummary table.rounds td + td { border-left: none; }
+  .hgman.shake { transform-origin: 186px 70px; animation: hgswing 1.4s ease-in-out infinite; }
+  @keyframes hgswing { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+  .hgpv { width: 100%; padding: 4px 30px 8px; }
+  .hgword.mini { margin: 4px 0 0; min-height: 24px; }
+  .hgword.mini .hgch { width: 13px; height: 20px; font-size: 14px; border-bottom-width: 3px; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -839,6 +903,24 @@
           <g transform="rotate(10 132 100)"><rect x="118" y="86" width="26" height="26" rx="6" fill="#d8456a"/><rect x="118" y="107" width="26" height="5" rx="2.5" fill="#9c2443"/><circle cx="131" cy="98" r="3" fill="#fff"/></g>
         </svg>
       </button>
+      <button class="toy" id="toyHang" aria-label="Abhängen" style="animation-delay:-4s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="120" rx="62" ry="7" fill="rgba(0,0,0,.28)"/>
+          <path d="M14 122 Q30 98 58 102 Q76 106 88 122Z" fill="#4f6b3f"/>
+          <rect x="32" y="94" width="22" height="18" rx="2" fill="#b9bcc6"/><rect x="29" y="90" width="28" height="6" rx="2" fill="#d6d9e0"/>
+          <path d="M38 90 L48 90 L46 24 L40 24Z" fill="#3a2b2e"/>
+          <rect x="38" y="16" width="96" height="5" rx="1.5" fill="#c9a24a"/><rect x="38" y="27" width="96" height="5" rx="1.5" fill="#b38a34"/>
+          <path d="M40 21 L46 27 L52 21 L58 27 L64 21 L70 27 L76 21 L82 27 L88 21 L94 27 L100 21 L106 27 L112 21 L118 27 L124 21 L130 27" stroke="#d8b45c" stroke-width="2.4" fill="none"/>
+          <g fill="#4c7a3c"><path d="M34 18 q8 -12 18 -2 q-8 6 -18 2z"/><path d="M36 32 q-12 2 -10 14 q9 -4 10 -14z"/><path d="M46 30 q12 0 12 11 q-10 -2 -12 -11z"/></g>
+          <path d="M104 32 L104 40 q0 6 -5 6 q-4 0 -4 -4" stroke="#8fb2c4" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <path d="M98 46 L84 58 L118 58 Z" fill="none" stroke="#3a3440" stroke-width="3"/>
+          <path d="M90 58 L94 66 M112 58 L108 66" stroke="#7fa8a8" stroke-width="2.4"/>
+          <rect x="88" y="66" width="28" height="26" rx="4" fill="#5f9493"/>
+          <ellipse cx="86" cy="79" rx="4.5" ry="6" fill="#9a6a3e"/><ellipse cx="118" cy="79" rx="4.5" ry="6" fill="#9a6a3e"/>
+          <g fill="none" stroke="#2f4c4c" stroke-width="1.6"><circle cx="97" cy="76" r="3.6"/><circle cx="107" cy="76" r="3.6"/></g>
+          <rect x="91" y="92" width="9" height="6" rx="2.5" fill="#2d4a36"/><rect x="104" y="92" width="9" height="6" rx="2.5" fill="#2d4a36"/>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -880,6 +962,9 @@
         </div>
         <div class="pv" id="pvCsBox" style="display:none">
           <div id="pvcBoard"></div>
+        </div>
+        <div class="pv" id="pvHangBox" style="display:none">
+          <div class="hgpv"><div class="hggallow" id="pvhGallow"></div><div class="hgword mini" id="pvhWord"></div></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -1098,6 +1183,52 @@
     </div>
   </section>
 
+  <!-- ABHÄNGEN -->
+  <section class="screen" id="sHang">
+    <div class="topbar">
+      <button class="menubtn" id="btnHMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="hgStatus"></div>
+    <div id="hgWrite" class="hgwrite" style="display:none">
+      <h2 class="hgh" id="hgWriteRound">Wort 1 von 3</h2>
+      <p>Denk dir ein Wort für deinen Gegner aus. Bis zu 30 Zeichen, Leerzeichen und Bindestriche sind erlaubt.</p>
+      <input id="hgWordInput" class="hginput" maxlength="30" placeholder="Geheimes Wort" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <button id="btnHgWord">Wort abschicken</button>
+    </div>
+    <div id="hgPlay" class="hgplay">
+      <div class="hgscene">
+        <div class="hggallow" id="hgGallow"></div>
+        <div class="hgwrongbox">
+          <h3>Falsche Buchstaben</h3>
+          <div class="hgwrong" id="hgWrong"></div>
+          <div class="hgerr" id="hgErr"></div>
+        </div>
+      </div>
+      <div class="hgword" id="hgWord"></div>
+      <div class="hgsummary" id="hgSummary" style="display:none"></div>
+      <div class="hgbottom">
+        <div class="row hginrow" id="hgInputRow">
+          <input id="hgGuess" class="hginput" maxlength="30" placeholder="Raten" autocomplete="off" autocapitalize="characters" spellcheck="false">
+          <button id="btnHgGuess">OK</button>
+        </div>
+        <button id="hgNext" style="display:none">Nächste Runde</button>
+        <div class="row" id="hgEnd" style="display:none">
+          <button id="btnHgAgain">Nochmal</button>
+          <button id="btnHgMenu" class="hgalt">Menü</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1232,6 +1363,7 @@
     four:  { topic: 'dumbyphones/viererkette/v1/', lsKey: 'vk_state_v1', screen: 'sFour', theme: 'four' },
     sea:   { topic: 'dumbyphones/schiffe/v1/', lsKey: 'sv_state_v1', screen: 'sSea', theme: 'sea' },
     cs:    { topic: 'dumbyphones/flotterdreier/v1/', lsKey: 'fd_state_v1', screen: 'sCs', theme: 'cs' },
+    hang:  { topic: 'dumbyphones/abhaengen/v1/', lsKey: 'ab_state_v1', screen: 'sHang', theme: 'hang' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
@@ -1239,7 +1371,8 @@
   let F = load(MODES.four.lsKey, null); // Viererkette-Spielstand
   let B = load(MODES.sea.lsKey, null); // Schiffe-versenken-Spielstand
   let C = load(MODES.cs.lsKey, null); // Flotter-Dreier-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : S);
+  let H = load(MODES.hang.lsKey, null); // Abhängen-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1294,7 +1427,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1339,6 +1472,7 @@
         if (mode === 'four') fourSync();
         if (mode === 'sea') seaSync();
         if (mode === 'cs') csSync();
+        if (mode === 'hang') hangSync();
       } catch {}
     });
   }
@@ -1361,6 +1495,8 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'hang') {
+      Object.assign(data, { host: g.host, words: g.words.map(hgEnc), results: g.results, curErrors: g.cur ? g.cur.errors : 0 });
     } else if (mode === 'cs') {
       Object.assign(data, { host: g.host, prog: g.prog, turns: g.turns, live: g.live });
     } else if (mode === 'sea') {
@@ -1400,6 +1536,12 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'hang') {
+      const res = o.results || [];
+      q('.ototal').textContent = res.filter(x => x.solved).length;
+      q('.oround').textContent = res.length >= HG_ROUNDS ? 'gelöst · fertig' : `gelöst · R${res.length + 1}`;
       return;
     }
     if (mode === 'cs') {
@@ -3228,6 +3370,247 @@
   }
 
   // =====================================================================
+  //  ABHÄNGEN (Wörter raten, 10 Fehler, 3 Runden)
+  // =====================================================================
+  const HG_MAX = 10, HG_ROUNDS = 3, HG_LEN = 30;
+  const HG_WORDS = ['BANANE', 'GIRAFFE', 'FAHRRAD', 'KAFFEEMASCHINE', 'REGENBOGEN', 'SCHNEEMANN', 'TASCHENLAMPE', 'ZAHNBÜRSTE',
+    'KÜHLSCHRANK', 'EISBÄR', 'PINGUIN', 'LEUCHTTURM', 'ACHTERBAHN', 'SONNENBRILLE', 'FUSSBALL', 'GEBURTSTAG', 'SCHMETTERLING',
+    'KROKODIL', 'HUBSCHRAUBER', 'WASSERMELONE', 'KÄNGURU', 'DRACHE', 'RAKETE', 'SCHATZKISTE', 'TROMPETE', 'KAKTUS', 'STAUBSAUGER',
+    'LÖWENZAHN', 'QUALLE', 'VULKAN', 'SCHLITTEN', 'POPCORN', 'TEDDYBÄR', 'WOLKENKRATZER', 'ZAUBERER', 'MARMELADE', 'BLUMENTOPF',
+    'SPIELPLATZ', 'BADEWANNE', 'GOLDFISCH', 'FEUERWEHR', 'KLEIDERBÜGEL', 'BAUMHAUS', 'PFANNKUCHEN', 'ROLLSCHUHE', 'SCHOKOLADE'];
+  // Großschreibung ohne ß -> SS
+  const hgUp = s => [...s].map(ch => (ch === 'ß' ? 'ß' : ch.toUpperCase())).join('');
+  const hgIsLetter = ch => /[A-ZÄÖÜß]/.test(ch);
+  const hgEnc = s => btoa(unescape(encodeURIComponent(s)));
+  const hgDec = s => { try { return decodeURIComponent(escape(atob(s))); } catch { return ''; } };
+  const hgBlankCur = () => ({ letters: [], wrong: [], errors: 0, over: null, ack: false });
+  function freshHang(code, gameNo, host) {
+    const pool = shuffle([...HG_WORDS]);
+    return {
+      code, gameNo: gameNo || 1, host: !!host,
+      words: [], results: [], cur: hgBlankCur(),
+      cpuWords: code ? null : pool.slice(0, HG_ROUNDS),
+      finished: false, result: null, endShown: false, round: 1, total: 0,
+    };
+  }
+  const hgOpp = () => { const o = currentOpp(); return o && H && o.gameNo === H.gameNo ? o : null; };
+  function hgOppWord(r) {
+    const g = H;
+    if (!g.code) return g.cpuWords[r - 1];
+    const o = hgOpp(); if (!o || !o.words || !o.words[r - 1]) return null;
+    return hgDec(o.words[r - 1]);
+  }
+  function hgPhase() {
+    const g = H;
+    if (g.finished) return 'end';
+    if (g.code && !hgOpp()) return 'noopp';
+    if (g.results.length >= HG_ROUNDS) return 'done';
+    const r = g.results.length + 1;
+    if (g.code && g.words.length < r) return 'write';
+    if (!hgOppWord(r)) return 'waitword';
+    return 'guess';
+  }
+  const hgSolved = (word, letters) => [...word].every(ch => !hgIsLetter(ch) || letters.includes(ch));
+
+  // Galgen: Teil 1–10 erscheint je Fehler
+  function hgSVG(n, shake) {
+    const p = k => n >= k;
+    let s = '<svg viewBox="0 0 320 290" aria-hidden="true">';
+    // Hügel (immer da)
+    s += '<path d="M0 290 L0 238 Q40 214 86 222 Q130 230 168 262 L196 290Z" fill="#4f6b3f"/><path d="M0 290 L0 256 Q50 236 96 246 Q132 254 150 290Z" fill="#3f5a33"/>';
+    if (p(1)) s += '<rect x="44" y="214" width="56" height="40" rx="3" fill="#b9bcc6"/><rect x="38" y="206" width="68" height="12" rx="4" fill="#d6d9e0"/><path d="M54 218 L54 252 M72 218 L72 252 M90 218 L90 252" stroke="#9a9ea9" stroke-width="3"/>';
+    if (p(2)) s += '<path d="M62 208 L82 208 L78 56 L66 56Z" fill="#3a2b2e"/><path d="M66 56 L72 56 L70 208 L62 208Z" fill="#2c2023"/>';
+    if (p(3)) {
+      s += '<rect x="62" y="40" width="200" height="8" rx="2" fill="#c9a24a"/><rect x="62" y="62" width="200" height="8" rx="2" fill="#b38a34"/>';
+      let z = 'M66 48'; for (let x = 66; x < 258; x += 16) z += ` L${x + 8} 62 L${x + 16} 48`;
+      s += `<path d="${z}" stroke="#d8b45c" stroke-width="4" fill="none" stroke-linejoin="round"/><rect x="254" y="40" width="10" height="30" rx="2" fill="#a37b2c"/>`;
+    }
+    if (p(4)) s += '<g fill="#4c7a3c"><path d="M56 42 q14 -20 30 -4 q-12 10 -30 4z"/><path d="M60 70 q-22 4 -18 24 q16 -6 18 -24z"/><path d="M78 64 q22 0 22 20 q-18 -4 -22 -20z"/><path d="M58 52 q-20 -8 -26 8 q14 6 26 -8z"/></g><g fill="#6a9a4e"><path d="M66 46 q10 -12 22 -2 q-10 6 -22 2z"/><path d="M64 66 q-12 8 -6 18 q8 -8 6 -18z"/></g>';
+    if (p(5)) s += '<path d="M186 70 L186 86 M186 86 q0 10 -9 10 q-8 0 -8 -8" stroke="#8fb2c4" stroke-width="4" fill="none" stroke-linecap="round"/>';
+    if (p(6)) s += '<path d="M178 92 L150 118 L222 118 Z" fill="none" stroke="#3a3440" stroke-width="5" stroke-linejoin="round"/><path d="M146 118 L226 118" stroke="#4a3f52" stroke-width="7" stroke-linecap="round"/>';
+    s += `<g class="hgman${shake ? ' shake' : ''}">`;
+    if (p(7)) s += '<path d="M160 118 L168 142 M212 118 L204 142" stroke="#7fa8a8" stroke-width="4"/><rect x="156" y="140" width="60" height="58" rx="6" fill="#5f9493"/><rect x="156" y="140" width="60" height="58" rx="6" fill="none" stroke="#467474" stroke-width="3"/><path d="M162 146 L208 146" stroke="rgba(255,255,255,.25)" stroke-width="3"/>';
+    if (p(8)) s += '<path d="M168 198 L168 210 M204 198 L204 210" stroke="#2d4a36" stroke-width="6"/><rect x="158" y="208" width="22" height="12" rx="5" fill="#2d4a36"/><rect x="192" y="208" width="22" height="12" rx="5" fill="#2d4a36"/>';
+    if (p(9)) s += '<ellipse cx="152" cy="168" rx="9" ry="13" fill="#9a6a3e"/><ellipse cx="220" cy="168" rx="9" ry="13" fill="#9a6a3e"/><ellipse cx="152" cy="168" rx="4" ry="7" fill="#7a5030"/><ellipse cx="220" cy="168" rx="4" ry="7" fill="#7a5030"/>';
+    if (p(10)) s += '<g fill="none" stroke="#2f4c4c" stroke-width="2.5"><circle cx="175" cy="160" r="7"/><circle cx="197" cy="160" r="7"/><path d="M182 160 L190 160"/></g><circle cx="175" cy="160" r="2" fill="#1f2f2f"/><circle cx="197" cy="160" r="2" fill="#1f2f2f"/><circle cx="186" cy="174" r="7" fill="#4e8180"/><path d="M178 186 Q186 182 194 186" stroke="#2f4c4c" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
+    s += '</g></svg>';
+    return s;
+  }
+  function hgWordHTML(word, letters, reveal) {
+    return [...word].map(ch => {
+      if (ch === ' ') return '<span class="hgsp"></span>';
+      if (!hgIsLetter(ch)) return `<span class="hgch fix">${esc(ch)}</span>`;
+      const show = reveal || letters.includes(ch);
+      const missed = reveal && !letters.includes(ch);
+      return `<span class="hgch${show ? ' on' : ''}${missed ? ' miss' : ''}">${show ? ch : ''}</span>`;
+    }).join('');
+  }
+
+  function renderHang() {
+    const g = H, ph = hgPhase();
+    const r = Math.min(g.results.length + 1, HG_ROUNDS);
+    $('hgWrite').style.display = ph === 'write' ? '' : 'none';
+    $('hgPlay').style.display = ph === 'write' ? 'none' : '';
+    let st = '';
+    if (ph === 'noopp') st = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
+    else if (ph === 'write') st = `Runde ${r}/${HG_ROUNDS} – schreib ein Wort`;
+    else if (ph === 'waitword') st = `Runde ${r}/${HG_ROUNDS} – warte auf das Wort deines Gegners …`;
+    else if (ph === 'guess') st = g.cur.over ? (g.cur.over === 'solved' ? 'Gelöst!' : 'Abgehängt!') : `Runde ${r}/${HG_ROUNDS} – rate das Wort`;
+    else if (ph === 'done') st = 'Warte, bis dein Gegner fertig ist …';
+    else st = g.result === 'win' ? 'Gewonnen!' : g.result === 'lose' ? 'Verloren' : g.result === 'draw' ? 'Unentschieden' : 'Fertig!';
+    $('hgStatus').textContent = st;
+    $('hgStatus').classList.toggle('turn', ph === 'guess' && !g.cur.over || ph === 'write');
+    if (ph === 'write') {
+      $('hgWriteRound').textContent = `Wort ${r} von ${HG_ROUNDS}`;
+      updateOpp();
+      return;
+    }
+    const word = ph === 'guess' ? hgOppWord(r) : null;
+    const cur = g.cur;
+    const errs = ph === 'guess' ? cur.errors : (g.results.length ? g.results[g.results.length - 1].errors : 0);
+    $('hgGallow').innerHTML = hgSVG(ph === 'guess' ? cur.errors : (['done', 'end'].includes(ph) ? 0 : 0), cur.over === 'failed');
+    $('hgWrong').innerHTML = (ph === 'guess' ? cur.wrong : []).map(w => `<span${w.length > 1 ? ' class="word"' : ''}>${esc(w)}</span>`).join('');
+    $('hgErr').textContent = ph === 'guess' ? `${cur.errors} / ${HG_MAX} Fehler` : '';
+    $('hgWord').innerHTML = word ? hgWordHTML(word, cur.letters, !!cur.over) : '';
+    const over = ph === 'done' || ph === 'end';
+    $('hgSummary').style.display = over ? '' : 'none';
+    if (over) $('hgSummary').innerHTML = hgSummaryHTML();
+    // Eingabe / Buttons
+    const inp = ph === 'guess' && !cur.over;
+    $('hgInputRow').style.display = inp ? '' : 'none';
+    $('hgNext').style.display = ph === 'guess' && cur.over ? '' : 'none';
+    $('hgNext').textContent = g.results.length + 1 >= HG_ROUNDS ? 'Ergebnis' : 'Nächste Runde';
+    $('hgEnd').style.display = ph === 'end' ? '' : 'none';
+    updateOpp();
+    if (ph === 'done' || ph === 'end') hgCheckEnd();
+  }
+  function hgSummaryHTML() {
+    const g = H, o = g.code ? hgOpp() : null;
+    const ores = (o && o.results) || [];
+    let h = `<table class="rounds"><tr><th>Runde</th><th>${esc(profile.name || 'Du')}</th>${g.code ? `<th>${esc(o ? o.name : 'Gegner')}</th>` : ''}</tr>`;
+    for (let i = 0; i < HG_ROUNDS; i++) {
+      const a = g.results[i], b = ores[i];
+      const cell = x => (x ? (x.solved ? `✓ ${x.errors} F.` : '✗') : '·');
+      h += `<tr><td>${i + 1}</td><td>${cell(a)}</td>${g.code ? `<td>${cell(b)}</td>` : ''}</tr>`;
+    }
+    return h + '</table>';
+  }
+  function hgScore(res) { return { solved: res.filter(x => x.solved).length, errors: res.reduce((s, x) => s + x.errors, 0) }; }
+  function hgCheckEnd() {
+    const g = H;
+    if (g.finished) return;
+    let result;
+    const me = hgScore(g.results);
+    if (!g.code) result = me.solved === HG_ROUNDS ? 'win' : me.solved === 0 ? 'lose' : 'solo';
+    else {
+      const o = hgOpp();
+      if (!o || !o.results || o.results.length < HG_ROUNDS) return;
+      const op = hgScore(o.results);
+      result = me.solved !== op.solved ? (me.solved > op.solved ? 'win' : 'lose') : me.errors !== op.errors ? (me.errors < op.errors ? 'win' : 'lose') : 'draw';
+    }
+    g.finished = true; g.result = result; g.total = me.solved;
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedHang = (profile.playedHang || 0) + 1; save(LS_PROFILE, profile);
+      const title = result === 'win' ? 'Gewonnen!' : result === 'lose' ? 'Verloren' : result === 'draw' ? 'Unentschieden' : `${me.solved} von ${HG_ROUNDS} gelöst`;
+      setTimeout(() => { if (mode === 'hang' && H === g) modal(title, '', '', 'Weiter'); }, 500);
+    }
+    persist();
+    renderHang();
+  }
+
+  function hgSubmitWord() {
+    const raw = $('hgWordInput').value.trim().replace(/\s+/g, ' ');
+    const w = hgUp(raw);
+    if (!w) { toast('Bitte gib ein Wort ein'); return; }
+    if (w.length > HG_LEN) { toast(`Maximal ${HG_LEN} Zeichen`); return; }
+    if (![...w].every(ch => hgIsLetter(ch) || ch === ' ' || ch === '-')) { toast('Nur Buchstaben, Leerzeichen und Bindestriche'); return; }
+    if (![...w].some(hgIsLetter)) { toast('Das Wort braucht Buchstaben'); return; }
+    H.words.push(w);
+    $('hgWordInput').value = '';
+    persist();
+    renderHang();
+  }
+  function hgGuess() {
+    const g = H, cur = g.cur;
+    if (hgPhase() !== 'guess' || cur.over) return;
+    const word = hgOppWord(g.results.length + 1);
+    const t = hgUp($('hgGuess').value.trim().replace(/\s+/g, ' '));
+    $('hgGuess').value = '';
+    if (!t) return;
+    if (t.length === 1) {
+      if (!hgIsLetter(t)) { toast('Bitte einen Buchstaben eingeben'); return; }
+      if (cur.letters.includes(t)) { // schon gefragt -> zählt als Fehler
+        cur.errors++;
+        toast(`${t} hattest du schon – Fehler!`);
+      } else {
+        cur.letters.push(t);
+        if (!word.includes(t)) { cur.wrong.push(t); cur.errors++; }
+      }
+    } else if (t === word) {
+      [...word].forEach(ch => { if (hgIsLetter(ch) && !cur.letters.includes(ch)) cur.letters.push(ch); });
+    } else { cur.wrong.push(t); cur.errors++; }
+    if (hgSolved(word, cur.letters)) cur.over = 'solved';
+    else if (cur.errors >= HG_MAX) cur.over = 'failed';
+    persist();
+    renderHang();
+    if (!cur.over) setTimeout(() => $('hgGuess').focus(), 30);
+  }
+  function hgNextRound() {
+    const g = H, cur = g.cur;
+    if (!cur.over) return;
+    g.results.push({ errors: cur.errors, solved: cur.over === 'solved' });
+    g.cur = hgBlankCur();
+    g.round = g.results.length + 1;
+    persist();
+    renderHang();
+  }
+  function hangSync() { if (mode === 'hang' && H) renderHang(); }
+  function hangRematch() {
+    const g = H;
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    H = freshHang(g.code, n, g.host);
+    persist();
+    renderHang();
+  }
+  $('btnHgWord').onclick = hgSubmitWord;
+  $('hgWordInput').addEventListener('keydown', e => { if (e.key === 'Enter') hgSubmitWord(); });
+  $('btnHgGuess').onclick = hgGuess;
+  $('hgGuess').addEventListener('keydown', e => { if (e.key === 'Enter') hgGuess(); });
+  $('hgNext').onclick = hgNextRound;
+  $('btnHgAgain').onclick = hangRematch;
+  $('btnHgMenu').onclick = () => { disconnect(); openMode('hang'); };
+  $('btnHMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Abhängen ----------
+  const pvh = { running: false, timer: null };
+  function pvhLater(fn, ms) { pvh.timer = setTimeout(() => pvh.running && fn(), ms); }
+  function pvhStart() {
+    const word = HG_WORDS[Math.floor(Math.random() * HG_WORDS.length)];
+    const letters = [], wrong = [];
+    const abc = shuffle([...'ENRSTAILHUDGOMBKFWZP']);
+    let n = 0;
+    const draw = over => {
+      $('pvhGallow').innerHTML = hgSVG(n, over === 'failed');
+      $('pvhWord').innerHTML = hgWordHTML(word, letters, !!over);
+    };
+    draw();
+    const step = () => {
+      const ch = abc.shift();
+      if (!ch) { draw('failed'); pvhLater(pvhStart, 2500); return; }
+      letters.push(ch);
+      if (!word.includes(ch)) { wrong.push(ch); n++; }
+      const solved = hgSolved(word, letters);
+      if (solved || n >= HG_MAX) { draw(solved ? 'solved' : 'failed'); pvhLater(pvhStart, 2500); return; }
+      draw();
+      pvhLater(step, 650);
+    };
+    pvhLater(step, 700);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -3240,6 +3623,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    hang: {
+      title: 'Abhängen', playedKey: 'playedHang',
+      desc: ['Ihr denkt euch gegenseitig ein Wort aus – bis zu 30 Zeichen, streng geheim. Dann wird geraten: Buchstabe für Buchstabe oder gleich das ganze Wort.',
+        'Jeder Fehler baut den Galgen ein Stück weiter, und auch ein schon gefragter Buchstabe zählt als Fehler. Nach 10 Fehlern hängt der Kerl am Bügel. Drei Runden – wer mehr Wörter knackt, gewinnt.'],
     },
     cs: {
       title: 'Flotter Dreier', playedKey: 'playedCs',
@@ -3262,13 +3650,14 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
     else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
-    else if (mode === 'cs') { C = v; csAnimating = false; clearTimeout(csCpuTimer); csCpuTimer = null; } else S = v;
+    else if (mode === 'cs') { C = v; csAnimating = false; clearTimeout(csCpuTimer); csCpuTimer = null; }
+    else if (mode === 'hang') H = v; else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -3288,6 +3677,7 @@
     $('pvFourBox').style.display = mode === 'four' ? '' : 'none';
     $('pvSeaBox').style.display = mode === 'sea' ? '' : 'none';
     $('pvCsBox').style.display = mode === 'cs' ? '' : 'none';
+    $('pvHangBox').style.display = mode === 'hang' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -3297,14 +3687,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = ['four', 'sea', 'cs'].includes(mode)
+      r.textContent = ['four', 'sea', 'cs', 'hang'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea', 'cs'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs', 'hang'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -3313,6 +3703,7 @@
   $('toyFour').onclick = () => openMode('four');
   $('toySea').onclick = () => openMode('sea');
   $('toyCs').onclick = () => openMode('cs');
+  $('toyHang').onclick = () => openMode('hang');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -3466,6 +3857,7 @@
     else if (mode === 'four') { pvf.running = true; pvfStart(); }
     else if (mode === 'sea') { pvs.running = true; pvsStart(); }
     else if (mode === 'cs') { pvc.running = true; pvcStart(); }
+    else if (mode === 'hang') { pvh.running = true; pvhStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -3475,6 +3867,7 @@
     pvf.running = false; clearTimeout(pvf.timer);
     pvs.running = false; clearTimeout(pvs.timer);
     pvc.running = false; clearTimeout(pvc.timer);
+    pvh.running = false; clearTimeout(pvh.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -3489,7 +3882,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'cs'
+      const txt = mode === 'hang'
+        ? 'Teile diesen Code mit deinem Gegner. Denk dir schon mal dein erstes Wort aus.'
+        : mode === 'cs'
         ? 'Teile diesen Code mit deinem Gegner. Du würfelst zuerst.'
         : mode === 'sea'
         ? 'Teile diesen Code mit deinem Gegner. Stell inzwischen deine Flotte auf – du schießt zuerst.'
@@ -3509,6 +3904,7 @@
     if (mode === 'who') { show('sWho'); guessMode = false; whoSync(); return; }
     if (mode === 'four') { show('sFour'); c4Shown = 0; renderFour(); return; }
     if (mode === 'sea') { show('sSea'); bsLastTurn = null; seaSync(); return; }
+    if (mode === 'hang') { show('sHang'); renderHang(); return; }
     if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
@@ -3575,7 +3971,8 @@
     if (mode === 'who') { whoRematch(); return; }
     if (mode === 'four') { fourRematch(); return; }
     if (mode === 'sea') { seaRematch(); return; }
-    if (mode === 'cs') { csRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'cs') { csRematch(); return; }
+    if (mode === 'hang') { hangRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -3593,7 +3990,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea', 'cs'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -3603,6 +4000,7 @@
   else if (F && !F.finished) { mode = 'four'; resumeGame(); }
   else if (B && !B.finished) { mode = 'sea'; resumeGame(); }
   else if (C && !C.finished) { mode = 'cs'; resumeGame(); }
+  else if (H && !H.finished) { mode = 'hang'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
