@@ -1210,14 +1210,13 @@
         <div class="hgwrongbox">
           <h3>Falsche Buchstaben</h3>
           <div class="hgwrong" id="hgWrong"></div>
-          <div class="hgerr" id="hgErr"></div>
         </div>
       </div>
       <div class="hgword" id="hgWord"></div>
       <div class="hgsummary" id="hgSummary" style="display:none"></div>
       <div class="hgbottom">
         <div class="row hginrow" id="hgInputRow">
-          <input id="hgGuess" class="hginput" maxlength="30" placeholder="Raten" autocomplete="off" autocapitalize="characters" spellcheck="false">
+          <input id="hgGuess" class="hginput" maxlength="1" placeholder="Buchstabe" autocomplete="off" autocapitalize="characters" spellcheck="false">
           <button id="btnHgGuess">OK</button>
         </div>
         <button id="hgNext" style="display:none">Nächste Runde</button>
@@ -3470,7 +3469,6 @@
     const errs = ph === 'guess' ? cur.errors : (g.results.length ? g.results[g.results.length - 1].errors : 0);
     $('hgGallow').innerHTML = hgSVG(ph === 'guess' ? cur.errors : (['done', 'end'].includes(ph) ? 0 : 0), cur.over === 'failed');
     $('hgWrong').innerHTML = (ph === 'guess' ? cur.wrong : []).map(w => `<span${w.length > 1 ? ' class="word"' : ''}>${esc(w)}</span>`).join('');
-    $('hgErr').textContent = ph === 'guess' ? `${cur.errors} / ${HG_MAX} Fehler` : '';
     $('hgWord').innerHTML = word ? hgWordHTML(word, cur.letters, !!cur.over) : '';
     const over = ph === 'done' || ph === 'end';
     $('hgSummary').style.display = over ? '' : 'none';
@@ -3535,21 +3533,17 @@
     const g = H, cur = g.cur;
     if (hgPhase() !== 'guess' || cur.over) return;
     const word = hgOppWord(g.results.length + 1);
-    const t = hgUp($('hgGuess').value.trim().replace(/\s+/g, ' '));
+    const t = hgUp($('hgGuess').value.trim()).slice(0, 1); // nur ein Buchstabe pro Versuch
     $('hgGuess').value = '';
     if (!t) return;
-    if (t.length === 1) {
-      if (!hgIsLetter(t)) { toast('Bitte einen Buchstaben eingeben'); return; }
-      if (cur.letters.includes(t)) { // schon gefragt -> zählt als Fehler
-        cur.errors++;
-        toast(`${t} hattest du schon – Fehler!`);
-      } else {
-        cur.letters.push(t);
-        if (!word.includes(t)) { cur.wrong.push(t); cur.errors++; }
-      }
-    } else if (t === word) {
-      [...word].forEach(ch => { if (hgIsLetter(ch) && !cur.letters.includes(ch)) cur.letters.push(ch); });
-    } else { cur.wrong.push(t); cur.errors++; }
+    if (!hgIsLetter(t)) { toast('Bitte einen Buchstaben eingeben'); return; }
+    if (cur.letters.includes(t)) { // schon gefragt -> zählt als Fehler
+      cur.errors++;
+      toast(`${t} hattest du schon – Fehler!`);
+    } else {
+      cur.letters.push(t);
+      if (!word.includes(t)) { cur.wrong.push(t); cur.errors++; }
+    }
     if (hgSolved(word, cur.letters)) cur.over = 'solved';
     else if (cur.errors >= HG_MAX) cur.over = 'failed';
     persist();
@@ -3626,7 +3620,7 @@
     },
     hang: {
       title: 'Abhängen', playedKey: 'playedHang',
-      desc: ['Ihr denkt euch gegenseitig ein Wort aus – bis zu 30 Zeichen, streng geheim. Dann wird geraten: Buchstabe für Buchstabe oder gleich das ganze Wort.',
+      desc: ['Ihr denkt euch gegenseitig ein Wort aus – bis zu 30 Zeichen, streng geheim. Dann wird geraten – Buchstabe für Buchstabe.',
         'Jeder Fehler baut den Galgen ein Stück weiter, und auch ein schon gefragter Buchstabe zählt als Fehler. Nach 10 Fehlern hängt der Kerl am Bügel. Drei Runden – wer mehr Wörter knackt, gewinnt.'],
     },
     cs: {
