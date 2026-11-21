@@ -137,11 +137,17 @@
     box-shadow: 0 6px 0 var(--btn-edge), 0 10px 18px rgba(0,0,0,.3);
   }
   .die.empty { background: rgba(255,255,255,.08); box-shadow: none; border: 2px dashed rgba(255,255,255,.22); }
-  .die.rolling { animation: roll .45s ease-out; }
+  .die { --dir: 1; }
+  .die.rolling { animation: roll .95s ease-out; }
   @keyframes roll {
-    0% { transform: rotate(-200deg) scale(.6); }
-    70% { transform: rotate(15deg) scale(1.08); }
-    100% { transform: rotate(0) scale(1); }
+    0%   { transform: translate(0, 0) rotate(0); }
+    12%  { transform: translate(calc(var(--dir) * -7px), -10px) rotate(calc(var(--dir) * -32deg)); }
+    26%  { transform: translate(calc(var(--dir) * 6px), -6px) rotate(calc(var(--dir) * 26deg)); }
+    40%  { transform: translate(calc(var(--dir) * -5px), -3px) rotate(calc(var(--dir) * -20deg)); }
+    54%  { transform: translate(calc(var(--dir) * 3px), 0) rotate(calc(var(--dir) * 13deg)); }
+    68%  { transform: translate(calc(var(--dir) * -2px), 0) rotate(calc(var(--dir) * -7deg)); }
+    82%  { transform: rotate(calc(var(--dir) * 3deg)); }
+    100% { transform: translate(0, 0) rotate(0); }
   }
   .pip { width: 13px; height: 13px; background: #2a2222; border-radius: 50%; align-self: center; justify-self: center; visibility: hidden; }
   .pip.on { visibility: visible; }
@@ -193,44 +199,210 @@
     transition: opacity .25s; pointer-events: none; z-index: 20;
   }
   .toast.show { opacity: 1; }
+
+  /* Wave panel (Pause + Hauptmenü) */
+  :root { --panel: #6c0e30; --panel-card: #560a25; --panel-shadow: #1c0f1e; --title: #ffad0a; }
+  .wavepanel { position: relative; background: var(--panel); width: 100%; padding: calc(env(safe-area-inset-top) + 26px) 24px 6px; }
+  .wavepanel .wave { position: absolute; left: 0; right: 0; top: 100%; width: 100%; height: 56px; display: block; margin-top: -1px; }
+  .title {
+    font-size: 54px; font-weight: 700; color: var(--title); text-align: center; margin: 0 0 22px; line-height: 1;
+    text-shadow: 0 5px 0 #2a0a14, 0 6px 12px rgba(0,0,0,.25); letter-spacing: .5px;
+  }
+  .menucard {
+    background: var(--panel-card); border-radius: 34px; padding: 26px 24px 20px; max-width: 360px; margin: 0 auto;
+    transform: perspective(700px) rotateY(-5deg); display: flex; flex-direction: column; gap: 14px;
+  }
+  .menucard button { margin: 0; }
+  .menucard .sub { margin: 0; color: #e6bcc8; font-size: 14px; }
+  .panelfoot { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 18px 0 4px; font-size: 22px; font-weight: 600; }
+  .panelfoot small { color: #e6bcc8; font-size: 14px; font-weight: 500; }
+
+  /* Full-screen screens */
+  .screen.fixed { position: fixed; inset: 0; max-width: 560px; margin: 0 auto; }
+
+  /* Hauptmenü */
+  #sHome { justify-content: center; }
+  .iconbtn {
+    position: absolute; top: calc(env(safe-area-inset-top) + 14px); right: 16px;
+    width: 48px; height: 48px; padding: 0; border-radius: 50%; margin: 0;
+    display: flex; align-items: center; justify-content: center; color: var(--btn-text);
+  }
+  .iconbtn svg { width: 26px; height: 26px; }
+  .toys { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px; }
+  .toy {
+    width: 190px; padding: 0; background: none; box-shadow: none; border-radius: 0; margin: 0;
+    animation: float 3.2s ease-in-out infinite; transition: transform .12s;
+  }
+  .toy svg { width: 100%; display: block; filter: drop-shadow(0 6px 0 rgba(0,0,0,.18)); }
+  .toy:active:not(:disabled) { transform: scale(.93); box-shadow: none; animation-play-state: paused; }
+  @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+
+  /* Modus-Start (Klappkrawall) */
+  #sMode { justify-content: flex-start; }
+  .modebody {
+    flex: 1; width: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: calc(env(safe-area-inset-top) + 18px) 18px 46px; display: flex; flex-direction: column; align-items: center;
+  }
+  .played { align-self: flex-start; font-size: 13px; color: var(--muted); margin-bottom: 2px; }
+  #sMode .title { font-size: 46px; margin-bottom: 16px; }
+  .pvframe { width: 100%; background: var(--panel); border-radius: 26px; padding: 9px; box-shadow: 0 8px 20px rgba(0,0,0,.3); }
+  .pv { position: relative; border-radius: 19px; overflow: hidden; background: radial-gradient(ellipse at 50% 30%, #4a3f60, #2f2840); padding: 14px; }
+  .pv .box { padding: 8px; border-radius: 10px; }
+  .pv .felt { padding: 7px 6px 8px; }
+  .pv .tiles { gap: 3px; }
+  .pv .tile { font-size: 15px; border-radius: 3px; box-shadow: 0 3px 0 var(--tile-edge); cursor: default; }
+  .pv .tile.sel { transform: translateY(-3px); box-shadow: 0 6px 0 var(--tile-edge); }
+  .pv .tile.shut { transform: translateY(3px) scaleY(.9); box-shadow: inset 0 2px 5px rgba(0,0,0,.5); }
+  .pv .rail { height: 7px; margin-top: 8px; }
+  .pv .dicearea { margin: 12px 0 2px; min-height: 40px; gap: 12px; }
+  .pv .die { width: 38px; height: 38px; padding: 5px; border-radius: 8px; box-shadow: 0 3px 0 var(--btn-edge); }
+  .pv .die.empty { border-width: 1.5px; }
+  .pv .pip { width: 6.5px; height: 6.5px; }
+  .pvbadge {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 54px; font-weight: 700; color: var(--title); text-shadow: 0 4px 0 #2a0a14;
+    opacity: 0; transform: scale(.7); transition: opacity .25s, transform .25s; pointer-events: none;
+    background: rgba(30,20,40,.35);
+  }
+  .pvbadge.show { opacity: 1; transform: scale(1); }
+  .desc { width: 100%; font-size: 16px; line-height: 1.4; margin-top: 16px; }
+  .desc p { margin: 0 0 10px; }
+  .resume { margin-top: 6px; font-size: 16px; padding: 12px; background: rgba(255,255,255,.12); color: var(--text); box-shadow: 0 5px 0 rgba(0,0,0,.3); }
+
+  .bottombar {
+    position: relative; width: 100%; background: #d98f00;
+    padding: 12px 16px calc(env(safe-area-inset-bottom) + 14px); display: flex; flex-direction: column; gap: 12px;
+  }
+  .bottombar::before {
+    content: ''; position: absolute; left: 0; right: 0; top: -21px; height: 22px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 22'%3E%3Cpath fill='%23d98f00' d='M0 22V18Q8 18 15 10L23 2.5Q28 -1.5 33 2.5L41 10Q48 18 56 18V22Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 56px 22px;
+  }
+  .bottombar button { margin: 0; }
+  .bottombar .row { gap: 12px; }
+  .barlow { align-items: stretch; }
+  .barlow > .backbtn { flex: 0 0 64px; padding: 0; display: flex; align-items: center; justify-content: center; }
+  .backbtn svg { width: 28px; height: 28px; }
+  .seg {
+    position: relative; display: flex; background: #a66a00; border-radius: 18px; padding: 4px; flex: 1;
+    box-shadow: inset 0 3px 6px rgba(60,30,0,.45);
+  }
+  .seg .knob {
+    position: absolute; top: 4px; bottom: 8px; left: 4px; width: calc(50% - 4px);
+    background: var(--btn); border-radius: 14px; box-shadow: 0 4px 0 var(--btn-edge); transition: left .25s cubic-bezier(.3,1.3,.5,1);
+  }
+  .seg.v1 .knob { left: 50%; }
+  .seg button {
+    position: relative; flex: 1; background: none; box-shadow: none; padding: 10px 0 14px; font-size: 18px;
+    color: #f6dca8; transition: color .2s;
+  }
+  .seg button:active:not(:disabled) { transform: none; box-shadow: none; }
+  .seg:not(.v1) button[data-mode="solo"], .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
+
+  /* Dialoge */
+  .dlg .modal label { display: block; text-align: left; color: #f0dbe0; margin: 4px 0 6px; }
+  .dlg .modal p { margin: 0 0 14px; }
+  .dlg #joinCode { text-transform: uppercase; letter-spacing: 6px; text-align: center; }
+
+  /* Menu button */
+  .menubtn {
+    width: 48px; height: 48px; flex: 0 0 48px; padding: 0; border-radius: 14px; margin: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  }
+  .menubtn i { display: block; width: 22px; height: 3px; border-radius: 2px; background: var(--btn-text); }
+
+  /* Pause overlay */
+  .pause { position: fixed; inset: 0; z-index: 15; pointer-events: none; }
+  .pause .shade { position: absolute; inset: 0; background: rgba(12,6,18,.72); opacity: 0; transition: opacity .3s; }
+  .pause .wavepanel { position: absolute; top: 0; left: 0; right: 0; transform: translateY(calc(-100% - 70px)); transition: transform .38s cubic-bezier(.2,.9,.3,1.05); }
+  .pause.show { pointer-events: auto; }
+  .pause.show .shade { opacity: 1; }
+  .pause.show .wavepanel { transform: translateY(0); }
+  .pause .inner { max-width: 420px; margin: 0 auto; min-height: 48vh; display: flex; flex-direction: column; justify-content: center; }
+  .pause .title { font-size: 62px; margin-bottom: 28px; }
+  .pause .menucard { gap: 20px; padding: 32px 26px; width: 100%; }
+  .pause .menucard button { padding: 18px; font-size: 22px; }
+  .resumehint { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 28px); left: 0; right: 0; text-align: center; color: var(--muted); font-size: 14px; opacity: 0; transition: opacity .3s; }
+  .pause.show .resumehint { opacity: 1; }
 </style>
 </head>
 <body>
 <div id="app">
 
   <!-- START -->
-  <section class="screen active" id="sStart">
-    <h1>Shut The Box</h1>
-    <p class="sub">12er Version · 10 Runden · wenigste Punkte gewinnen</p>
-
-    <div class="card">
-      <label for="name">Dein Name</label>
-      <input id="name" maxlength="14" placeholder="Name" autocomplete="off">
+  <section class="screen fixed" id="sHome">
+    <button class="iconbtn" id="btnSettings" aria-label="Einstellungen">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="3.6" stroke-dasharray="3.34 3.34"/><circle cx="12" cy="12" r="6.6" fill="currentColor"/><circle cx="12" cy="12" r="2.6" fill="var(--btn)"/></svg>
+    </button>
+    <div class="toys">
+      <button class="toy" id="toyKlapp" aria-label="Klappkrawall">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="116" rx="72" ry="9" fill="rgba(0,0,0,.28)"/>
+          <polygon points="22,52 138,52 156,110 4,110" fill="#5a3d33"/>
+          <polygon points="22,52 138,52 150,104 10,104" fill="#7a5547"/>
+          <polygon points="31,60 129,60 139,97 21,97" fill="#9c3a52"/>
+          <polygon points="31,60 129,60 131,66 29,66" fill="#6e2236"/>
+          <g fill="#9a817a" stroke="#6f5a55" stroke-width="1.2">
+            <rect x="31" y="31" width="12" height="29" rx="1.5"/><rect x="44" y="31" width="12" height="29" rx="1.5"/>
+            <rect x="70" y="31" width="12" height="29" rx="1.5"/><rect x="83" y="31" width="12" height="29" rx="1.5"/>
+            <rect x="96" y="31" width="12" height="29" rx="1.5"/><rect x="117" y="31" width="12" height="29" rx="1.5"/>
+          </g>
+          <g fill="#7d6660"><rect x="57" y="62" width="12" height="7" rx="1"/><rect x="109" y="62" width="7" height="7" rx="1"/></g>
+          <g font-family="Georgia,serif" font-weight="700" font-size="11" fill="#241a1a" text-anchor="middle">
+            <text x="37" y="50">1</text><text x="50" y="50">2</text><text x="76" y="50">4</text><text x="89" y="50">5</text><text x="102" y="50">6</text><text x="123" y="50">9</text>
+          </g>
+          <g transform="rotate(-12 64 82)"><rect x="54" y="72" width="20" height="20" rx="4" fill="#faf7f5"/><rect x="54" y="88" width="20" height="4" rx="2" fill="#c3b7b8"/><circle cx="59" cy="77" r="2" fill="#2a2222"/><circle cx="64" cy="82" r="2" fill="#2a2222"/><circle cx="69" cy="87" r="2" fill="#2a2222"/></g>
+          <g transform="rotate(9 96 82)"><rect x="86" y="72" width="20" height="20" rx="4" fill="#faf7f5"/><rect x="86" y="88" width="20" height="4" rx="2" fill="#c3b7b8"/><circle cx="91" cy="77" r="2" fill="#2a2222"/><circle cx="101" cy="77" r="2" fill="#2a2222"/><circle cx="91" cy="87" r="2" fill="#2a2222"/><circle cx="101" cy="87" r="2" fill="#2a2222"/></g>
+        </svg>
+      </button>
     </div>
+  </section>
 
-    <div class="card">
-      <button id="btnCreate">Raum erstellen</button>
-      <div class="or" style="text-align:center">oder Raumcode eingeben</div>
-      <input id="joinCode" maxlength="5" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false">
-      <div class="gap"></div>
-      <button id="btnJoin" class="secondary">Beitreten</button>
+  <section class="screen fixed" id="sMode">
+    <div class="modebody">
+      <div class="played" id="played"></div>
+      <h1 class="title">Klappkrawall</h1>
+      <div class="pvframe">
+        <div class="pv">
+          <div class="box"><div class="felt">
+            <div class="tiles" id="pvTiles"></div>
+            <div class="rail"></div>
+            <div class="dicearea" id="pvDice"></div>
+          </div></div>
+          <div class="pvbadge" id="pvBadge"></div>
+        </div>
+      </div>
+      <div class="desc">
+        <p>Klappe zu, Punkte weg! Würfle mit zwei Würfeln und klappe Plättchen um, die zusammen genau deine Augenzahl ergeben – einzeln oder kombiniert.</p>
+        <p>Geht keine Kombination mehr, ist die Runde vorbei und alle stehenden Zahlen landen als Strafpunkte auf deinem Konto. Nach 10 Runden gewinnt, wer die wenigsten Punkte hat.</p>
+      </div>
+      <button class="resume" id="btnResume" style="display:none"></button>
     </div>
-
-    <div class="card" id="resumeCard" style="display:none">
-      <button id="btnResume">Laufendes Spiel fortsetzen</button>
-      <div class="hint" id="resumeInfo"></div>
+    <div class="bottombar">
+      <div class="row" id="rowVs">
+        <button id="btnJoin">Beitreten</button>
+        <button id="btnCreate">Erstellen</button>
+      </div>
+      <div class="row" id="rowSolo" style="display:none">
+        <button id="btnSolo">Spiel starten</button>
+      </div>
+      <div class="row barlow">
+        <button class="backbtn" id="btnBack" aria-label="Zurück zum Hauptmenü">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+        </button>
+        <div class="seg" id="seg">
+          <div class="knob"></div>
+          <button data-mode="solo">Solo</button>
+          <button data-mode="1v1">1v1</button>
+        </div>
+      </div>
     </div>
-
-    <button id="btnSolo" class="secondary" style="margin-top:auto">Allein spielen (ohne Raum)</button>
   </section>
 
   <!-- GAME -->
   <section class="screen" id="sGame">
     <div class="topbar">
-      <div class="me">
-        <div class="round" id="roundLbl">Runde 1 / 10</div>
-        <div class="roomtag" id="roomTag"></div>
-      </div>
+      <button class="menubtn" id="btnMenu" aria-label="Menü"><i></i><i></i><i></i></button>
       <div class="opp" id="oppBox">
         <div class="avatar off" id="oppAvatar">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
@@ -246,7 +418,6 @@
       <div class="tiles" id="tiles"></div>
       <div class="rail"></div>
       <div class="dicearea" id="dice"></div>
-      <div class="status" id="status"></div>
     </div></div>
 
     <div class="actions">
@@ -274,7 +445,7 @@
     </div>
     <div class="actions">
       <button id="btnRematch">Neues Spiel im selben Raum</button>
-      <button id="btnHome" class="secondary">Zum Start</button>
+      <button id="btnHome" class="secondary">Zurück</button>
     </div>
   </section>
 </div>
@@ -287,6 +458,43 @@
     <button id="mBtn">Weiter</button>
   </div>
 </div>
+<div class="overlay dlg" id="dlgJoin">
+  <div class="modal">
+    <h2>Raum beitreten</h2>
+    <p>Gib den Code deines Gegners ein.</p>
+    <input id="joinCode" maxlength="5" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <div class="gap"></div>
+    <button id="btnJoinGo">Beitreten</button>
+  </div>
+</div>
+<div class="overlay dlg" id="dlgSettings">
+  <div class="modal">
+    <h2>Einstellungen</h2>
+    <p id="setHint"></p>
+    <label for="name">Spielername</label>
+    <input id="name" maxlength="14" placeholder="Name" autocomplete="off">
+    <div class="gap"></div>
+    <button id="btnSaveSettings">Speichern</button>
+  </div>
+</div>
+<div class="pause" id="pause">
+  <div class="shade" id="pauseShade"></div>
+  <div class="wavepanel">
+    <div class="inner">
+      <h1 class="title">Pause</h1>
+      <div class="menucard">
+        <button id="btnRestart">Neustart</button>
+        <button id="btnMain">Hauptmenü</button>
+      </div>
+      <div class="panelfoot" id="pauseFoot"></div>
+    </div>
+    <svg class="wave" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="var(--panel-shadow)" opacity=".55" d="M0 0H400V22C370 56 330 18 290 34S220 56 180 30 110 10 70 38 20 50 0 30Z" transform="translate(0 10)"/>
+      <path fill="var(--panel)" d="M0 0H400V22C370 56 330 18 290 34S220 56 180 30 110 10 70 38 20 50 0 30Z"/>
+    </svg>
+  </div>
+  <div class="resumehint">Tippen zum Weiterspielen</div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script src="https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js"></script>
@@ -295,6 +503,8 @@
   'use strict';
   const ROUNDS = 10;
   const TILES = 12;
+  const ROLL_MS = 950; // Dauer der Würfelanimation
+  let isRolling = false;
   const BROKER = 'wss://broker.emqx.io:8084/mqtt';
   const TOPIC_ROOT = 'dumbyphones/shutthebox/v1/';
   const LS_KEY = 'stb_state_v1';
@@ -454,17 +664,32 @@
 
   // ---------- rendering ----------
   const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
-  function dieHTML(v, rolling) {
+  function dieHTML(v) {
     if (!v) return '<div class="die empty"></div>';
-    let h = `<div class="die${rolling ? ' rolling' : ''}">`;
+    let h = '<div class="die">';
     for (let i = 0; i < 9; i++) h += `<div class="pip${PIPS[v].includes(i) ? ' on' : ''}"></div>`;
     return h + '</div>';
   }
+  function setPips(el, v) {
+    [...el.children].forEach((p, i) => p.classList.toggle('on', PIPS[v].includes(i)));
+  }
+  const d6 = () => 1 + Math.floor(Math.random() * 6);
+  // Würfel wackeln hin und her, Augen wechseln, dann landen sie auf dem Endwert
+  function animateDice(container, values, ms, done) {
+    container.innerHTML = values.map(() => dieHTML(d6())).join('');
+    const els = [...container.children];
+    els.forEach(el => {
+      el.style.setProperty('--dir', Math.random() < .5 ? 1 : -1);
+      el.style.animationDuration = ms + 'ms';
+      el.classList.add('rolling');
+    });
+    const iv = setInterval(() => els.forEach(el => setPips(el, d6())), 90);
+    setTimeout(() => { clearInterval(iv); els.forEach((el, i) => setPips(el, values[i])); }, ms * 0.72);
+    setTimeout(() => { els.forEach(el => el.classList.remove('rolling')); done && done(); }, ms);
+  }
 
-  function renderGame(rolling) {
-    $('roundLbl').textContent = `Runde ${S.round} / ${ROUNDS}`;
+  function renderGame() {
     $('myTotal').textContent = S.total;
-    $('roomTag').textContent = S.code ? 'Raum ' + S.code : 'Solo';
 
     // tiles
     const t = $('tiles'); t.innerHTML = '';
@@ -476,34 +701,29 @@
       d.textContent = n;
       if (!o) d.classList.add('shut');
       else if (S.selected.includes(n)) d.classList.add('sel');
-      else if (S.phase === 'select' && !canComplete([...S.selected, n], target)) d.classList.add('dim');
+      else if (S.phase === 'select' && !isRolling && !canComplete([...S.selected, n], target)) d.classList.add('dim');
       d.onclick = () => tapTile(n);
       t.appendChild(d);
     });
 
     // dice
     const dc = $('dice');
-    if (S.dice) dc.innerHTML = S.dice.map(v => dieHTML(v, rolling)).join('');
-    else dc.innerHTML = dieHTML(0) + dieHTML(0);
+    if (!isRolling) dc.innerHTML = S.dice ? S.dice.map(v => dieHTML(v)).join('') : dieHTML(0) + dieHTML(0);
 
-    // status & buttons
-    const st = $('status');
+    // buttons
     const conf = $('btnConfirm');
     const rollRow = $('rollRow');
     if (S.phase === 'roll') {
-      st.innerHTML = S.dice ? 'Würfle weiter!' : 'Würfle, um die Runde zu starten.';
       conf.style.display = 'none';
       rollRow.style.display = '';
       $('btnRoll1').style.display = highShut() ? '' : 'none';
       $('btnRoll').textContent = highShut() ? '2 Würfel' : 'Würfeln';
     } else if (S.phase === 'select') {
       const rest = target - selSum();
-      st.innerHTML = `Gewürfelt: <b>${target}</b>` + (S.selected.length ? ` · noch <b>${rest}</b>` : ' · wähle Klappen');
       rollRow.style.display = 'none';
       conf.style.display = '';
       conf.disabled = rest !== 0;
     } else {
-      st.innerHTML = '';
       conf.style.display = 'none';
       rollRow.style.display = 'none';
     }
@@ -514,7 +734,7 @@
       const c = document.createElement('div');
       c.className = 'rcell' + (r === S.round && !S.finished ? ' cur' : '');
       const v = S.scores[r - 1];
-      c.innerHTML = `R${r}<b>${v === undefined ? '·' : v}</b>`;
+      c.innerHTML = `${r}<b>${v === undefined ? '·' : v}</b>`;
       rl.appendChild(c);
     }
     updateOpp();
@@ -579,24 +799,23 @@
 
   // ---------- game actions ----------
   function roll(count) {
-    if (S.phase !== 'roll') return;
+    if (S.phase !== 'roll' || isRolling) return;
     S.dice = Array.from({ length: count }, () => 1 + Math.floor(Math.random() * 6));
     S.selected = [];
     if (navigator.vibrate) navigator.vibrate(30);
-    if (canMake(diceSum())) {
-      S.phase = 'select';
-      save(LS_KEY, S);
-      renderGame(true);
-    } else {
-      S.phase = 'over';
-      save(LS_KEY, S);
-      renderGame(true);
-      setTimeout(endRound, 900);
-    }
+    const possible = canMake(diceSum());
+    S.phase = possible ? 'select' : 'over';
+    save(LS_KEY, S);
+    isRolling = true;
+    renderGame();
+    animateDice($('dice'), S.dice, ROLL_MS, () => {
+      isRolling = false;
+      if (possible) renderGame(); else setTimeout(endRound, 400);
+    });
   }
 
   function tapTile(n) {
-    if (S.phase !== 'select' || !S.open[n - 1]) return;
+    if (S.phase !== 'select' || isRolling || !S.open[n - 1]) return;
     const i = S.selected.indexOf(n);
     if (i >= 0) S.selected.splice(i, 1);
     else {
@@ -611,6 +830,7 @@
     if (S.phase !== 'select' || selSum() !== diceSum()) return;
     S.selected.forEach(n => { S.open[n - 1] = false; });
     S.selected = [];
+    S.dice = null;
     if (sumOpen() === 0) {
       S.phase = 'over';
       save(LS_KEY, S);
@@ -635,6 +855,7 @@
     modal(title, (pts === 0 ? '0' : '+' + pts), '', last ? 'Ergebnis ansehen' : 'Nächste Runde', () => {
       if (last) {
         S.finished = true; S.phase = 'done';
+        profile.played = (profile.played || 0) + 1; save(LS_PROFILE, profile);
         persist();
         renderEnd();
       } else {
@@ -647,14 +868,134 @@
     });
   }
 
-  // ---------- start screen ----------
-  function getName() {
-    const n = $('name').value.trim().slice(0, 14);
-    if (!n) { toast('Bitte gib deinen Namen ein'); $('name').focus(); return null; }
-    profile.name = n; save(LS_PROFILE, profile);
-    return n;
+  // ---------- Hauptmenü / Modus-Screen ----------
+  function goHome() { stopPreview(); show('sHome'); }
+  function openMode() {
+    show('sMode');
+    renderMode();
+    startPreview();
   }
+  function renderMode() {
+    const n = profile.played || 0;
+    $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
+    const v1 = profile.mode !== 'solo';
+    $('seg').classList.toggle('v1', v1);
+    $('rowVs').style.display = v1 ? '' : 'none';
+    $('rowSolo').style.display = v1 ? 'none' : '';
+    const r = $('btnResume');
+    if (S && !S.finished) {
+      r.style.display = '';
+      r.textContent = `▶ Fortsetzen · ${S.code ? 'Raum ' + S.code : 'Solo'} · Runde ${S.round}`;
+    } else if (S && S.finished) {
+      r.style.display = '';
+      r.textContent = `Letztes Ergebnis ansehen · ${S.total} Punkte`;
+    } else r.style.display = 'none';
+  }
+  $('toyKlapp').onclick = openMode;
+  $('btnBack').onclick = goHome;
+  $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
+    profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
+  });
+
+  // Dialoge
+  function openDlg(id) { $(id).classList.add('show'); }
+  function closeDlg(id) { $(id).classList.remove('show'); }
+  document.querySelectorAll('.dlg').forEach(d => d.addEventListener('click', e => { if (e.target === d) closeDlg(d.id); }));
+
+  let afterSettings = null;
+  function openSettings(hint, cb) {
+    $('name').value = profile.name || '';
+    $('setHint').textContent = hint || '';
+    afterSettings = cb || null;
+    openDlg('dlgSettings');
+  }
+  $('btnSettings').onclick = () => openSettings();
+  $('btnSaveSettings').onclick = () => {
+    const n = $('name').value.trim().slice(0, 14);
+    if (!n) { toast('Bitte gib einen Namen ein'); return; }
+    profile.name = n; save(LS_PROFILE, profile);
+    closeDlg('dlgSettings');
+    const cb = afterSettings; afterSettings = null;
+    if (cb) cb();
+  };
+  function ensureName(cb) {
+    if (profile.name) cb(); else openSettings('Bitte gib zuerst deinen Spielernamen ein.', cb);
+  }
+
+  function openJoin() { openDlg('dlgJoin'); setTimeout(() => $('joinCode').focus(), 50); }
+  $('btnJoinGo').onclick = () => {
+    const c = $('joinCode').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (c.length < 4) { toast('Bitte gültigen Raumcode eingeben'); return; }
+    closeDlg('dlgJoin');
+    stopPreview();
+    S = freshGame(c);
+    save(LS_KEY, S);
+    connect(c);
+    show('sGame');
+    renderGame();
+    toast('Raum ' + c + ' beigetreten');
+  };
+
+  // ---------- Mini-Vorschau (läuft in Schleife) ----------
+  const pv = { running: false, timer: null, open: [] };
+  function pvRender(sel) {
+    $('pvTiles').innerHTML = pv.open.map((o, i) =>
+      `<div class="tile${!o ? ' shut' : sel && sel.includes(i + 1) ? ' sel' : ''}">${i + 1}</div>`).join('');
+  }
+  function pvCombo(t) {
+    const nums = []; pv.open.forEach((o, i) => o && nums.push(i + 1));
+    let best = null;
+    for (let m = 1; m < (1 << nums.length); m++) {
+      let s = 0; const pick = [];
+      for (let j = 0; j < nums.length; j++) if (m & (1 << j)) { s += nums[j]; pick.push(nums[j]); }
+      if (s === t && (!best || pick.length < best.length || (pick.length === best.length && Math.max(...pick) > Math.max(...best)))) best = pick;
+    }
+    return best;
+  }
+  function pvLater(fn, ms) { pv.timer = setTimeout(() => pv.running && fn(), ms); }
+  function pvReset() {
+    pv.open = Array(TILES).fill(true);
+    $('pvBadge').classList.remove('show');
+    $('pvDice').innerHTML = dieHTML(0) + dieHTML(0);
+    pvRender();
+  }
+  function pvStep() {
+    const vals = [d6(), d6()];
+    animateDice($('pvDice'), vals, ROLL_MS, () => {
+      if (!pv.running) return;
+      const combo = pvCombo(vals[0] + vals[1]);
+      if (!combo) {
+        const pts = pv.open.reduce((a, o, i) => a + (o ? i + 1 : 0), 0);
+        $('pvBadge').textContent = '+' + pts;
+        $('pvBadge').classList.add('show');
+        pvLater(() => { pvReset(); pvLater(pvStep, 700); }, 1800);
+        return;
+      }
+      pvLater(() => {
+        pvRender(combo);
+        pvLater(() => {
+          combo.forEach(n => pv.open[n - 1] = false);
+          $('pvDice').innerHTML = dieHTML(0) + dieHTML(0);
+          pvRender();
+          if (pv.open.every(o => !o)) {
+            $('pvBadge').textContent = '0!';
+            $('pvBadge').classList.add('show');
+            pvLater(() => { pvReset(); pvLater(pvStep, 700); }, 1800);
+          } else pvLater(pvStep, 650);
+        }, 650);
+      }, 350);
+    });
+  }
+  function startPreview() {
+    if (pv.running) return;
+    pv.running = true;
+    pvReset();
+    pvLater(pvStep, 600);
+  }
+  function stopPreview() { pv.running = false; clearTimeout(pv.timer); }
+
   function startGame(code) {
+    stopPreview();
     S = freshGame(code);
     save(LS_KEY, S);
     if (code) connect(code); else disconnect();
@@ -666,6 +1007,7 @@
     }
   }
   function resumeGame() {
+    stopPreview();
     if (S.code) connect(S.code); else disconnect();
     if (S.finished) { renderEnd(); return; }
     show('sGame');
@@ -679,20 +1021,9 @@
     renderGame();
   }
 
-  $('name').value = profile.name || '';
-  $('btnCreate').onclick = () => { if (getName()) startGame(newCode()); };
-  $('btnJoin').onclick = () => {
-    if (!getName()) return;
-    const c = $('joinCode').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-    if (c.length < 4) { toast('Bitte gültigen Raumcode eingeben'); return; }
-    S = freshGame(c);
-    save(LS_KEY, S);
-    connect(c);
-    show('sGame');
-    renderGame();
-    toast('Raum ' + c + ' beigetreten');
-  };
-  $('btnSolo').onclick = () => { if (getName()) startGame(null); };
+  $('btnCreate').onclick = () => ensureName(() => startGame(newCode()));
+  $('btnJoin').onclick = () => ensureName(openJoin);
+  $('btnSolo').onclick = () => ensureName(() => startGame(null));
   $('btnResume').onclick = resumeGame;
   $('btnRoll').onclick = () => roll(2);
   $('btnRoll1').onclick = () => roll(1);
@@ -710,28 +1041,40 @@
   $('btnHome').onclick = () => {
     disconnect();
     S = null; save(LS_KEY, null);
-    showStart();
+    openMode();
   };
 
-  function showStart() {
-    show('sStart');
-    if (S && !S.finished) {
-      $('resumeCard').style.display = '';
-      $('resumeInfo').textContent = (S.code ? 'Raum ' + S.code : 'Solo') + ` · Runde ${S.round} / ${ROUNDS} · ${S.total} Punkte`;
-    } else if (S && S.finished) {
-      $('resumeCard').style.display = '';
-      $('btnResume').textContent = 'Letztes Ergebnis ansehen';
-      $('resumeInfo').textContent = (S.code ? 'Raum ' + S.code : 'Solo') + ` · ${S.total} Punkte`;
-    } else {
-      $('resumeCard').style.display = 'none';
-    }
+  // ---------- pause menu ----------
+  function openPause() {
+    $('pauseFoot').innerHTML = S && S.code ? `<small>Raum</small> ${esc(S.code)}` : '<small>Solo-Spiel</small>';
+    $('pause').classList.add('show');
   }
+  function closePause() { $('pause').classList.remove('show'); }
+  $('btnMenu').onclick = openPause;
+  $('pauseShade').onclick = closePause;
+  $('pause').querySelector('.resumehint').onclick = closePause;
+  $('btnRestart').onclick = () => {
+    closePause();
+    $('overlay').classList.remove('show');
+    S = freshGame(S.code, S.gameNo);
+    persist();
+    show('sGame');
+    renderGame();
+  };
+  $('btnMain').onclick = () => {
+    closePause();
+    disconnect();
+    goHome();
+  };
 
   // Allow ?room=CODE links
   const urlRoom = new URLSearchParams(location.search).get('room');
-  if (urlRoom) $('joinCode').value = urlRoom.toUpperCase();
-
-  if (S && !urlRoom) resumeGame(); else showStart();
+  if (urlRoom) {
+    $('joinCode').value = urlRoom.toUpperCase();
+    openMode();
+    ensureName(openJoin);
+  } else if (S && !S.finished) resumeGame();
+  else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
   document.addEventListener('visibilitychange', () => {
