@@ -667,31 +667,36 @@
   body[data-theme="cs"] .seg:not(.v1) button[data-mode="solo"], body[data-theme="cs"] .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
   #sCs .topbar { margin-bottom: 8px; }
   .csboardwrap, #pvcBoard { width: 100%; }
+  /* Schräges quadratisches Brett */
   .csboard {
-    width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 3px;
-    background: linear-gradient(160deg, #2e2d78, #24235e); border-radius: 18px; padding: 16px 8px 10px;
-    box-shadow: 0 8px 18px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.08);
+    position: relative; width: 100%; aspect-ratio: 1; border-radius: 22px;
+    background: linear-gradient(160deg, #2f2e7c, #22215a);
+    box-shadow: 0 10px 20px rgba(0,0,0,.45), inset 0 2px 0 rgba(255,255,255,.08), inset 0 -6px 0 rgba(0,0,0,.2);
   }
-  .cscol { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 9px; }
+  .csgrid { position: absolute; inset: 1.5%; }
   .cscell {
-    position: relative; width: 66%; aspect-ratio: 1; max-width: 20px; transform: rotate(45deg);
-    background: #3b4a8a; border-radius: 3px; box-shadow: inset 0 -2px 0 rgba(0,0,0,.25), 0 2px 3px rgba(0,0,0,.25);
+    position: absolute; width: 7.1%; aspect-ratio: 1; transform: translate(-50%, -50%) rotate(45deg);
+    background: #3b4886; border-radius: 20%; transition: background .25s;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.28), 0 3px 4px rgba(0,0,0,.3);
   }
-  .cscell.ownme { background: #8fe3d8; }
-  .cscell.ownop { background: #e2104c; }
-  .mk { position: absolute; border-radius: 3px; }
-  .mk.me { inset: 0; background: #8fe3d8; box-shadow: 0 0 6px rgba(143,227,216,.7); }
-  .mk.op { inset: 22%; background: #e2104c; border-radius: 50%; }
-  .mk.run { inset: -4px; border-radius: 5px; border: 3px solid #fff; box-shadow: 0 0 8px rgba(255,255,255,.8); animation: csglow 1s ease-in-out infinite alternate; }
-  .mk.run.op { border-color: #ffd0dc; }
-  @keyframes csglow { from { opacity: .7; } to { opacity: 1; } }
-  .cslab { margin-top: 4px; font-size: 13px; font-weight: 700; color: #f1f2ff; }
+  .cscell.top { width: 5.4%; }
+  .csconn { position: absolute; width: 2.6%; aspect-ratio: 1; transform: translate(-50%, -50%) rotate(45deg); background: #333f78; border-radius: 2px; }
+  .cscell.at-r, .cspawn.at-r, .csdot.at-r { background: #e2104c; }
+  .cscell.at-y, .cspawn.at-y, .csdot.at-y { background: #f4c80f; }
+  /* noch nicht gesichert (Läufer im aktuellen Zug): hellerer Ton der Spielerfarbe */
+  .cscell.run-r { background: #f68fab; box-shadow: 0 0 10px rgba(246,143,171,.8), inset 0 -2px 0 rgba(0,0,0,.15); }
+  .cscell.run-y { background: #fbe38a; box-shadow: 0 0 10px rgba(251,227,138,.8), inset 0 -2px 0 rgba(0,0,0,.15); }
+  .csdot { position: absolute; inset: 28%; border-radius: 30%; box-shadow: 0 0 0 2px rgba(0,0,0,.25); }
+  .cslab {
+    position: absolute; transform: translate(-50%, -50%) rotate(45deg); font-size: 13px; font-weight: 700; color: #f1f2ff;
+    text-shadow: 0 2px 0 rgba(0,0,0,.35);
+  }
+  .csboard.mini .cslab { font-size: 9px; }
   .csgoal { text-align: center; font-size: 13px; color: var(--muted); margin: 8px 0 0; }
   .csbottom { width: 100%; display: flex; gap: 12px; align-items: stretch; margin-top: auto; padding-top: 12px; }
   .cstray { flex: 0 0 150px; background: linear-gradient(160deg, #4a4d54, #2e3035); border-radius: 18px; padding: 8px 9px 10px; box-shadow: 0 6px 14px rgba(0,0,0,.4); }
   .cspawns { display: flex; justify-content: center; gap: 8px; margin-bottom: 7px; }
   .cspawn { width: 16px; height: 20px; border-radius: 8px 8px 4px 4px; background: #8fe3d8; box-shadow: inset 0 -3px 0 rgba(0,0,0,.25); transition: opacity .3s; }
-  .cspawn.op { background: #e2104c; }
   .cspawn.used { opacity: .2; }
   .csfelt { background: linear-gradient(#6fa9c0, #4f8aa3); border-radius: 10px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; justify-items: center; }
   .die.pink { width: 48px; height: 48px; padding: 7px; border-radius: 10px; background: #d8456a; box-shadow: 0 4px 0 #9c2443, 0 6px 10px rgba(0,0,0,.3); }
@@ -702,10 +707,7 @@
   .csactions .csopt { background: #a6e8e3; color: #173a3a; box-shadow: 0 5px 0 #5fa8a2; font-size: 20px; }
   .csalt { background: #2b2a6e; color: #fff; box-shadow: 0 6px 0 #17164a; }
   .csalt:active:not(:disabled) { box-shadow: 0 1px 0 #17164a; }
-  #pvcBoard .csboard { padding: 10px 6px 6px; }
-  .csboard.mini .cscol { gap: 5px; }
-  .csboard.mini .cscell { max-width: 12px; }
-  .csboard.mini .cslab { font-size: 10px; }
+  #pvcBoard .csboard { width: 72%; margin: 0 auto; }
 
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
@@ -3017,17 +3019,34 @@
 
   let csAnimating = false, csCpuTimer = null, csBustTimer = null;
 
-  function csBoardHTML(sd, runners, runMine, mini) {
-    return `<div class="csboard${mini ? ' mini' : ''}">${CS_COLS.map(c => {
-      const H = CS_H[c], ownMe = sd.myProg[c] >= H, ownOp = sd.oppProg[c] >= H;
-      let cells = '';
-      for (let i = H; i >= 1; i--) {
-        const m = !ownMe && !ownOp && sd.myProg[c] === i, o = !ownMe && !ownOp && sd.oppProg[c] === i;
-        const run = runners && runners[c] === i;
-        cells += `<div class="cscell${ownMe ? ' ownme' : ownOp ? ' ownop' : ''}">${m ? '<i class="mk me"></i>' : ''}${o ? '<i class="mk op"></i>' : ''}${run ? `<i class="mk run ${runMine ? 'me' : 'op'}"></i>` : ''}</div>`;
+  // Schräges, quadratisches Brett: jede Spalte läuft diagonal nach rechts oben.
+  // Spalte c (k = c-7) beginnt bei Höhe |k|; Bildschirmposition X = k + y, Y = y - k (gedreht um 45°).
+  // myCol: 'r' oder 'y' = Farbe des Spielers, dessen Fortschritt in myProg steht.
+  function csBoardHTML(sd, runners, runMine, mini, myCol) {
+    const opCol = myCol === 'r' ? 'y' : 'r';
+    const pad = 1.35, span = 12 + 2 * pad;
+    const pct = v => ((v + pad) / span * 100).toFixed(3) + '%';
+    let h = '';
+    CS_COLS.forEach(c => {
+      const k = c - 7, H = CS_H[c], base = Math.abs(k);
+      const ownMe = sd.myProg[c] >= H, ownOp = sd.oppProg[c] >= H;
+      for (let i = 0; i < H; i++) {
+        const y = base + i, X = k + y, Ys = 12 - (y - k);
+        if (i < H - 1) h += `<i class="csconn" style="left:${pct(X + .5)};top:${pct(Ys - .5)}"></i>`;
+        const step = i + 1;
+        const me = sd.myProg[c] === step, op = sd.oppProg[c] === step, run = runners && runners[c] === step;
+        let cls = 'cscell' + (i === H - 1 ? ' top' : ''), dot = '';
+        if (ownMe) cls += ' at-' + myCol;
+        else if (ownOp) cls += ' at-' + opCol;
+        else if (run) { cls += ' run-' + (runMine ? myCol : opCol); const other = runMine ? op : me; if (other) dot = `<i class="csdot at-${runMine ? opCol : myCol}"></i>`; }
+        else if (me) { cls += ' at-' + myCol; if (op) dot = `<i class="csdot at-${opCol}"></i>`; }
+        else if (op) cls += ' at-' + opCol;
+        h += `<div class="${cls}" style="left:${pct(X)};top:${pct(Ys)}">${dot}</div>`;
       }
-      return `<div class="cscol">${cells}<div class="cslab">${c}</div></div>`;
-    }).join('')}</div>`;
+      const ly = base - 1;
+      h += `<b class="cslab" style="left:${pct(k + ly)};top:${pct(12 - (ly - k))}">${c}</b>`;
+    });
+    return `<div class="csboard${mini ? ' mini' : ''}"><div class="csgrid">${h}</div></div>`;
   }
   const csDiceHTML = dice => (dice || [0, 0, 0, 0]).map(v => (v ? dieHTML(v).replace('class="die"', 'class="die pink"') : '<div class="die pink empty"></div>')).join('');
 
@@ -3036,12 +3055,14 @@
     const myTurn = ph === 'me';
     const live = myTurn ? g.live : (ph === 'opp' ? sd.oppLive : null);
     // Brett
-    $('csBoard').innerHTML = csBoardHTML(sd, live && live.runners, myTurn);
+    const myCol = sd.meStarts ? 'r' : 'y'; // wer anfängt, spielt Rot
+    $('csBoard').innerHTML = csBoardHTML(sd, live && live.runners, myTurn, false, myCol);
     // Würfel
     if (!csAnimating) $('csDice').innerHTML = csDiceHTML(live && live.dice);
     // Läufer-Anzeige (3 Figuren)
     const used = live ? Object.keys(live.runners).length : 0;
-    $('csPawns').innerHTML = [...Array(CS_RUNNERS)].map((_, i) => `<i class="cspawn${i < CS_RUNNERS - used ? '' : ' used'} ${myTurn || ph !== 'opp' ? 'me' : 'op'}"></i>`).join('');
+    const pawnCol = myTurn || ph !== 'opp' ? myCol : (myCol === 'r' ? 'y' : 'r');
+    $('csPawns').innerHTML = [...Array(CS_RUNNERS)].map((_, i) => `<i class="cspawn${i < CS_RUNNERS - used ? '' : ' used'} at-${pawnCol}"></i>`).join('');
     // Status
     const bust = live && live.bust;
     let st;
@@ -3183,7 +3204,7 @@
     const A = { prog: csZero() }, Bp = { prog: csZero() };
     let turnA = true, live = null;
     const sd = () => ({ myProg: A.prog, oppProg: Bp.prog });
-    const draw = () => { $('pvcBoard').innerHTML = csBoardHTML(sd(), live && live.runners, turnA, true); };
+    const draw = () => { $('pvcBoard').innerHTML = csBoardHTML(sd(), live && live.runners, turnA, true, 'r'); };
     const step = () => {
       const p = turnA ? A : Bp;
       live = live || { runners: {}, steps: 0 };
