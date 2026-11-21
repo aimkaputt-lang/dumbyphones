@@ -183,17 +183,32 @@
   .modal p:empty { display: none; }
 
   /* End screen */
-  .vs { display: flex; width: 100%; gap: 12px; margin: 10px 0 18px; }
-  .vs .side { flex: 1; background: rgba(0,0,0,.25); border-radius: 16px; padding: 16px 10px; text-align: center; }
-  .vs .side.win { outline: 3px solid var(--highlight); background: rgba(142,47,71,.5); }
-  .vs .name { font-size: 15px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .vs .pts { font-size: 44px; font-weight: 700; }
-  .verdict { font-size: 26px; font-weight: 700; text-align: center; margin: 18px 0 4px; }
+  /* Farben je Modus: Klappkrawall = Holz/Plättchen, Dumby Dices = Spielzettel */
+  #sEnd { --es-frame: var(--wood); --es-edge: var(--wood-dark); --es-row: #ece0d9; --es-text: #241a1a; --es-head: #f6efea; }
+  body[data-theme="dice"] #sEnd { --es-frame: #dcc08c; --es-edge: #b39456; --es-row: #f0e1c3; --es-text: #2d2418; --es-head: #fff; }
+  #sEnd .title { font-size: 46px; margin: 18px 0 6px; }
+  #sEnd button.secondary { background: var(--es-frame); color: var(--es-head); box-shadow: 0 6px 0 var(--es-edge); }
+  #sEnd button.secondary:active { box-shadow: 0 1px 0 var(--es-edge); }
+  .vs { display: flex; width: 100%; gap: 12px; margin: 12px 0 16px; }
+  .vs .side {
+    flex: 1; min-width: 0; background: var(--es-frame); border-radius: 16px; padding: 12px 10px 14px; text-align: center;
+    box-shadow: 0 5px 0 var(--es-edge);
+  }
+  .vs .side.win { box-shadow: 0 5px 0 var(--es-edge), 0 0 0 3px var(--title); }
+  .vs .name { font-size: 15px; font-weight: 600; color: var(--es-head); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 8px; }
+  .vs .pts { font-size: 36px; font-weight: 700; background: #fff; color: #1f1a14; border-radius: 14px; line-height: 1.3; }
+  .verdict { font-size: 26px; font-weight: 700; text-align: center; margin: 10px 0 4px; }
   .verdict:empty { display: none; }
   .hint { font-size: 13px; color: var(--muted); text-align: center; margin-top: 8px; }
-  table.rounds { width: 100%; border-collapse: collapse; font-size: 15px; margin-bottom: 4px; }
-  table.rounds th, table.rounds td { padding: 6px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.08); }
-  table.rounds th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  .endsheet { width: 100%; background: var(--es-frame); border-radius: 16px; padding: 4px 7px 7px; margin-top: 14px; box-shadow: 0 8px 18px rgba(0,0,0,.35); }
+  table.rounds { width: 100%; border-collapse: separate; border-spacing: 0 2px; font-size: 15px; }
+  table.rounds td { background: var(--es-row); color: var(--es-text); height: 24px; padding: 0 8px; text-align: center; font-weight: 700; }
+  table.rounds td:first-child { text-align: left; font-weight: 500; }
+  table.rounds td + td { border-left: 3px solid var(--es-frame); }
+  table.rounds th { color: var(--es-head); font-weight: 700; font-size: 14px; padding: 6px 8px 4px; text-align: center; }
+  table.rounds th:first-child { text-align: left; }
+  table.rounds tr.sum th { padding-top: 6px; }
+  table.rounds .pill { display: inline-block; background: #fff; color: #1f1a14; border-radius: 12px; min-width: 54px; padding: 1px 8px; font-size: 16px; }
   .toast {
     position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateX(-50%);
     background: rgba(0,0,0,.85); padding: 10px 16px; border-radius: 12px; font-size: 14px; opacity: 0;
@@ -598,14 +613,14 @@
 
   <!-- END -->
   <section class="screen" id="sEnd">
-    <h1>Spielende</h1>
+    <h1 class="title">Spielende</h1>
     <div class="verdict" id="verdict"></div>
     <div class="vs">
       <div class="side" id="sideMe"><div class="name" id="endMeName">Du</div><div class="pts" id="endMe">0</div></div>
       <div class="side" id="sideOpp"><div class="name" id="endOppName">Gegner</div><div class="pts" id="endOpp">–</div></div>
     </div>
     <div class="hint" id="endHint"></div>
-    <div class="card" style="margin-top:14px">
+    <div class="endsheet">
       <table class="rounds" id="endTable"></table>
     </div>
     <div class="actions">
@@ -990,7 +1005,7 @@
           (both ? `<td>${(o.scores || [])[r] ?? '·'}</td>` : '') + '</tr>';
       }
     }
-    h += `<tr><th>Summe</th><th>${g.total}</th>` + (both ? `<th>${o.total}</th>` : '') + '</tr>';
+    h += `<tr class="sum"><th>Summe</th><th><span class="pill">${g.total}</span></th>` + (both ? `<th><span class="pill">${o.total}</span></th>` : '') + '</tr>';
     $('endTable').innerHTML = h;
   }
   function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
@@ -1100,6 +1115,13 @@
       default: { const n = +id; return c[n] * n; }
     }
   }
+  // Hausregel: Wer DUMBY schon mit 50 eingetragen hat und nochmal 5 Gleiche würfelt,
+  // darf diesen Wurf in jeder freien Kategorie mit 50 Punkten eintragen.
+  const isDumby = dice => dice.every(v => v && v === dice[0]);
+  function ddValue(id, dice, sheet) {
+    if (id !== 'dumby' && sheet.dumby === 50 && isDumby(dice)) return 50;
+    return ddScore(id, dice);
+  }
   const ddUpper = sh => ['1', '2', '3', '4', '5', '6'].reduce((a, k) => a + (sh[k] || 0), 0);
   const ddBonus = sh => (ddUpper(sh) >= 63 ? 35 : 0);
   const ddTotal = sh => CATS.reduce((a, c) => a + (sh[c.id] || 0), 0) + ddBonus(sh);
@@ -1138,7 +1160,7 @@
     let h = '';
     CATS.forEach((c, i) => {
       const filled = d.sheet[c.id] !== undefined;
-      const val = filled ? d.sheet[c.id] : rolled ? ddScore(c.id, d.dice) : 0;
+      const val = filled ? d.sheet[c.id] : rolled ? ddValue(c.id, d.dice, d.sheet) : 0;
       let cls = 'srow';
       if (filled) cls += ' done';
       else if (rolled) cls += ' open' + (val > 0 ? ' good' : '');
@@ -1234,7 +1256,7 @@
     const d = D;
     const id = d.pick;
     if (!id || isRolling) return;
-    const pts = ddScore(id, d.dice);
+    const pts = ddValue(id, d.dice, d.sheet);
     d.sheet[id] = pts;
     d.total = ddTotal(d.sheet);
     const fl = $('ddFlash');
