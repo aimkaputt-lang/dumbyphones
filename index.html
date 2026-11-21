@@ -271,13 +271,14 @@
   .resume { margin-top: 6px; font-size: 16px; padding: 12px; background: rgba(255,255,255,.12); color: var(--text); box-shadow: 0 5px 0 rgba(0,0,0,.3); }
 
   .bottombar {
-    position: relative; width: 100%; background: #d98f00;
+    position: relative; width: 100%; background: var(--bar);
     padding: 12px 16px calc(env(safe-area-inset-bottom) + 14px); display: flex; flex-direction: column; gap: 12px;
   }
   .bottombar::before {
     content: ''; position: absolute; left: 0; right: 0; top: -21px; height: 22px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 22'%3E%3Cpath fill='%23d98f00' d='M0 22V18Q8 18 15 10L23 2.5Q28 -1.5 33 2.5L41 10Q48 18 56 18V22Z'/%3E%3C/svg%3E") repeat-x;
-    background-size: 56px 22px;
+    background: var(--bar);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 22'%3E%3Cpath d='M0 22V18Q8 18 15 10L23 2.5Q28 -1.5 33 2.5L41 10Q48 18 56 18V22Z'/%3E%3C/svg%3E") repeat-x 0 0 / 56px 22px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 22'%3E%3Cpath d='M0 22V18Q8 18 15 10L23 2.5Q28 -1.5 33 2.5L41 10Q48 18 56 18V22Z'/%3E%3C/svg%3E") repeat-x 0 0 / 56px 22px;
   }
   .bottombar button { margin: 0; }
   .bottombar .row { gap: 12px; }
@@ -285,7 +286,7 @@
   .barlow > .backbtn { flex: 0 0 64px; padding: 0; display: flex; align-items: center; justify-content: center; }
   .backbtn svg { width: 28px; height: 28px; }
   .seg {
-    position: relative; display: flex; background: #a66a00; border-radius: 18px; padding: 4px; flex: 1;
+    position: relative; display: flex; background: var(--bar-dark); border-radius: 18px; padding: 4px; flex: 1;
     box-shadow: inset 0 3px 6px rgba(60,30,0,.45);
   }
   .seg .knob {
@@ -295,7 +296,7 @@
   .seg.v1 .knob { left: 50%; }
   .seg button {
     position: relative; flex: 1; background: none; box-shadow: none; padding: 10px 0 14px; font-size: 18px;
-    color: #f6dca8; transition: color .2s;
+    color: var(--seg-text); transition: color .2s;
   }
   .seg button:active:not(:disabled) { transform: none; box-shadow: none; }
   .seg:not(.v1) button[data-mode="solo"], .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
@@ -325,6 +326,89 @@
   .pause .menucard button { padding: 18px; font-size: 22px; }
   .resumehint { position: absolute; bottom: calc(env(safe-area-inset-bottom) + 28px); left: 0; right: 0; text-align: center; color: var(--muted); font-size: 14px; opacity: 0; transition: opacity .3s; }
   .pause.show .resumehint { opacity: 1; }
+  .wave .w0 { fill: var(--panel-shadow); }
+  .wave .w1 { fill: var(--panel); }
+
+  /* ---------- Themes ---------- */
+  :root { --bar: #d98f00; --bar-dark: #a66a00; --seg-text: #f6dca8; }
+  body[data-theme="dice"] {
+    --bg: #3e1b20; --bg-dark: #1d0b0e; --muted: #c9a7ab;
+    --panel: #7d3c45; --panel-card: #5c2830; --panel-shadow: #100508; --title: #d9c65c;
+    --bar: #7d3c45; --bar-dark: #4b1f26; --seg-text: #e8c3c8;
+  }
+  body[data-theme="dice"] .pause .shade { background: rgba(14,4,7,.75); }
+  body[data-theme="dice"] .pv { background: radial-gradient(ellipse at 50% 30%, #4a252b, #2a1216); }
+
+  /* ---------- Dumby Dices: Spielzettel ---------- */
+  #sDice .topbar { margin-bottom: 10px; }
+  .sheet { width: 100%; background: #dcc08c; border-radius: 16px; padding: 0 7px 7px; box-shadow: 0 8px 18px rgba(0,0,0,.35); }
+  .shead { display: grid; grid-template-columns: 64px 1fr 58px; align-items: center; padding: 7px 0 5px; }
+  .rpill { background: #fff; color: #1f1a14; border-radius: 14px; font-weight: 700; font-size: 17px; text-align: center; padding: 1px 0; }
+  .shead .ttl { color: #fff; font-weight: 700; font-size: 20px; text-align: center; text-shadow: 0 2px 0 rgba(120,80,30,.35); }
+  .shead .pk { color: #3b2a17; font-weight: 600; font-size: 14px; text-align: center; }
+  .srow {
+    display: grid; grid-template-columns: 26px 1fr 58px; align-items: center; height: 24px; margin-top: 2px;
+    background: #f0e1c3; color: #2d2418; font-size: 15px; cursor: default; transition: background .15s;
+  }
+  .srow .cicon { width: 18px; height: 18px; justify-self: center; }
+  .srow .sname { padding-left: 6px; }
+  .srow .sval { height: 100%; display: flex; align-items: center; justify-content: center; border-left: 3px solid #dcc08c; font-weight: 700; color: #a49f98; }
+  .srow.done .sval { color: #2d2418; }
+  .srow.open { cursor: pointer; }
+  .srow.open.good .sval { color: #c46f00; }
+  .srow.pick { background: #fff7e2; box-shadow: inset 0 0 0 2px #c46f00; }
+  .srow.pick .sval { color: #c46f00; }
+  .sbonus, .stotal {
+    display: flex; justify-content: space-between; align-items: center; color: #fff; font-weight: 700;
+    padding: 3px 4px 3px 10px; margin-top: 2px; font-size: 15px;
+  }
+  .sbonus { background: #cfae72; }
+  .sbonus.got { background: #b8923f; }
+  .sbonus .pill, .stotal .pill {
+    background: #fff; color: #1f1a14; border-radius: 12px; min-width: 70px; text-align: center; padding: 1px 10px; font-size: 17px;
+  }
+  .sbonus .pill small { font-size: 11px; margin-left: 3px; color: #555; }
+  .stotal { padding-top: 6px; font-size: 16px; }
+
+  /* ---------- Dumby Dices: Würfelfeld mit Becher ---------- */
+  .ddbox { width: 100%; background: linear-gradient(160deg, #3a3a42, #232329); border-radius: 14px; padding: 9px; margin-top: 10px; box-shadow: 0 8px 18px rgba(0,0,0,.4); }
+  .ddfelt {
+    position: relative; height: 124px; border-radius: 6px; overflow: hidden;
+    background: linear-gradient(120deg, #7c2738, #9b3a50); box-shadow: inset 0 4px 10px rgba(0,0,0,.45);
+  }
+  .dddice { position: absolute; inset: 0; }
+  .die.beige { background: #ecdcbc; box-shadow: 0 4px 0 #b89d6e, 0 6px 10px rgba(0,0,0,.3); }
+  .die.beige .pip { background: #2c2219; }
+  .dddice .die { position: absolute; width: 42px; height: 42px; padding: 6px; border-radius: 9px; cursor: pointer; }
+  .dddice .pip, .ddtray .pip { width: 7.5px; height: 7.5px; }
+  .ddtray { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 8px; }
+  .slot { height: 46px; border: 2px dashed rgba(255,255,255,.14); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .slot .die { width: 38px; height: 38px; padding: 5px; border-radius: 8px; cursor: pointer; }
+  .cup { position: absolute; right: 8px; bottom: 6px; width: 58px; rotate: -14deg; transform-origin: 50% 85%; transition: rotate .25s; }
+  .cup svg { width: 100%; display: block; filter: drop-shadow(-4px 6px 4px rgba(0,0,0,.35)); }
+  .cup.shake { animation: cupshake .48s ease-in-out; }
+  .cup.pour { rotate: -58deg; }
+  @keyframes cupshake {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    15% { transform: translate(-4px, -10px) rotate(-12deg); }
+    35% { transform: translate(4px, -14px) rotate(12deg); }
+    55% { transform: translate(-4px, -10px) rotate(-10deg); }
+    75% { transform: translate(3px, -6px) rotate(8deg); }
+  }
+  .ddact { margin-top: auto; padding-top: 12px; }
+  .ddact button { margin: 0; }
+
+  /* Vorschau Dumby Dices */
+  .ddbox.mini { margin: 0; }
+  .ddbox.mini .ddfelt { height: 118px; }
+  .ddbox.mini .die { width: 36px; height: 36px; padding: 5px; transition: top .3s; cursor: default; }
+  .ddbox.mini .pip { width: 6.5px; height: 6.5px; }
+  .ddbox.mini .die.held { box-shadow: 0 0 0 3px #d9c65c, 0 4px 0 #b89d6e; }
+  #pvdBadge { font-size: 30px; text-align: center; line-height: 1.15; }
+
+  /* Hauptmenü: zwei Symbole */
+  .toys { gap: 14px; padding: 10px; }
+  .toy { width: 150px; }
 </style>
 </head>
 <body>
@@ -356,15 +440,37 @@
           <g transform="rotate(9 96 82)"><rect x="86" y="72" width="20" height="20" rx="4" fill="#faf7f5"/><rect x="86" y="88" width="20" height="4" rx="2" fill="#c3b7b8"/><circle cx="91" cy="77" r="2" fill="#2a2222"/><circle cx="101" cy="77" r="2" fill="#2a2222"/><circle cx="91" cy="87" r="2" fill="#2a2222"/><circle cx="101" cy="87" r="2" fill="#2a2222"/></g>
         </svg>
       </button>
+      <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
+          <g transform="rotate(-18 66 66)">
+            <path d="M40 20 L92 20 L86 106 L46 106 Z" fill="#3b2422"/>
+            <path d="M40 20 L52 20 L56 106 L46 106 Z" fill="#4c302d"/>
+            <rect x="45" y="96" width="42" height="10" rx="2" fill="#2a1918"/>
+            <ellipse cx="66" cy="20" rx="26" ry="7" fill="#5a3a35"/>
+            <ellipse cx="66" cy="20" rx="20.5" ry="4.6" fill="#1d1110"/>
+            <path d="M68 30 L66 92" stroke="#a5948f" stroke-width="2.6" stroke-dasharray="4 4" stroke-linecap="round"/>
+          </g>
+          <g transform="rotate(-10 108 98)"><rect x="94" y="84" width="28" height="28" rx="6" fill="#ecdcbc"/><rect x="94" y="106" width="28" height="6" rx="3" fill="#b89d6e"/><circle cx="101" cy="91" r="2.8" fill="#2c2219"/><circle cx="108" cy="98" r="2.8" fill="#2c2219"/><circle cx="115" cy="105" r="2.8" fill="#2c2219"/></g>
+          <g transform="rotate(14 136 94)"><rect x="124" y="82" width="24" height="24" rx="5" fill="#ecdcbc"/><rect x="124" y="101" width="24" height="5" rx="2.5" fill="#b89d6e"/><circle cx="130" cy="88" r="2.4" fill="#2c2219"/><circle cx="142" cy="88" r="2.4" fill="#2c2219"/><circle cx="130" cy="99" r="2.4" fill="#2c2219"/><circle cx="142" cy="99" r="2.4" fill="#2c2219"/></g>
+        </svg>
+      </button>
     </div>
   </section>
 
   <section class="screen fixed" id="sMode">
     <div class="modebody">
       <div class="played" id="played"></div>
-      <h1 class="title">Klappkrawall</h1>
+      <h1 class="title" id="modeTitle">Klappkrawall</h1>
       <div class="pvframe">
-        <div class="pv">
+        <div class="pv" id="pvDiceBox" style="display:none">
+          <div class="ddbox mini"><div class="ddfelt">
+            <div class="dddice" id="pvdDice"></div>
+            <div class="cup" id="pvdCup"><svg viewBox="0 0 60 84" aria-hidden="true"><path d="M5 8 L55 8 L49 78 L11 78 Z" fill="#3b2422"/><path d="M5 8 L16 8 L19 78 L11 78 Z" fill="#4c302d"/><rect x="10" y="70" width="40" height="8" rx="2" fill="#2a1918"/><ellipse cx="30" cy="8" rx="25" ry="6.5" fill="#5a3a35"/><ellipse cx="30" cy="8" rx="19.5" ry="4.2" fill="#1d1110"/><path d="M31 18 L30 66" stroke="#a5948f" stroke-width="2.4" stroke-dasharray="3.5 3.5" stroke-linecap="round"/></svg></div>
+          </div></div>
+          <div class="pvbadge" id="pvdBadge"></div>
+        </div>
+        <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
             <div class="tiles" id="pvTiles"></div>
             <div class="rail"></div>
@@ -373,10 +479,7 @@
           <div class="pvbadge" id="pvBadge"></div>
         </div>
       </div>
-      <div class="desc">
-        <p>Klappe zu, Punkte weg! Würfle mit zwei Würfeln und klappe Plättchen um, die zusammen genau deine Augenzahl ergeben – ein einzelnes oder zwei zusammen.</p>
-        <p>Geht keine Kombination mehr, ist die Runde vorbei und alle stehenden Zahlen landen als Strafpunkte auf deinem Konto. Nach 10 Runden gewinnt, wer die wenigsten Punkte hat.</p>
-      </div>
+      <div class="desc" id="modeDesc"></div>
       <button class="resume" id="btnResume" style="display:none"></button>
     </div>
     <div class="bottombar">
@@ -404,13 +507,13 @@
   <section class="screen" id="sGame">
     <div class="topbar">
       <button class="menubtn" id="btnMenu" aria-label="Menü"><i></i><i></i><i></i></button>
-      <div class="opp" id="oppBox">
-        <div class="avatar off" id="oppAvatar">
+      <div class="opp">
+        <div class="avatar off">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
         </div>
         <div class="info">
-          <div class="oname" id="oppName">Gegner</div>
-          <div class="opts"><span id="oppTotal">–</span> <small id="oppRound"></small></div>
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
         </div>
       </div>
     </div>
@@ -429,6 +532,41 @@
       </div>
       <div class="roundlist" id="roundList"></div>
       <div class="totalbar"><span>Gesamt</span><b><span id="myTotal">0</span> <small style="font-size:14px;font-weight:500">Punkte</small></b></div>
+    </div>
+  </section>
+
+  <!-- DUMBY DICES -->
+  <section class="screen" id="sDice">
+    <div class="topbar">
+      <button class="menubtn" id="btnDMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="shead"><span class="rpill" id="ddRound">1/13</span><span class="ttl">Kategorien</span><span class="pk">Punkte</span></div>
+      <div id="ddRows"></div>
+      <div class="stotal"><span>Gesamtpunktzahl:</span><span class="pill" id="ddTotal">0</span></div>
+    </div>
+
+    <div class="ddbox">
+      <div class="ddfelt">
+        <div class="dddice" id="ddDice"></div>
+        <div class="cup" id="ddCup"><svg viewBox="0 0 60 84" aria-hidden="true"><path d="M5 8 L55 8 L49 78 L11 78 Z" fill="#3b2422"/><path d="M5 8 L16 8 L19 78 L11 78 Z" fill="#4c302d"/><rect x="10" y="70" width="40" height="8" rx="2" fill="#2a1918"/><ellipse cx="30" cy="8" rx="25" ry="6.5" fill="#5a3a35"/><ellipse cx="30" cy="8" rx="19.5" ry="4.2" fill="#1d1110"/><path d="M31 18 L30 66" stroke="#a5948f" stroke-width="2.4" stroke-dasharray="3.5 3.5" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="ddtray" id="ddTray"></div>
+    </div>
+
+    <div class="row ddact">
+      <button id="btnDRoll">Würfeln</button>
+      <button id="btnDEnter">Eintragen</button>
     </div>
   </section>
 
@@ -490,8 +628,8 @@
       <div class="panelfoot" id="pauseFoot"></div>
     </div>
     <svg class="wave" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
-      <path fill="var(--panel-shadow)" opacity=".55" d="M0 0H400V22C370 56 330 18 290 34S220 56 180 30 110 10 70 38 20 50 0 30Z" transform="translate(0 10)"/>
-      <path fill="var(--panel)" d="M0 0H400V22C370 56 330 18 290 34S220 56 180 30 110 10 70 38 20 50 0 30Z"/>
+      <path class="w0" opacity=".55" d="M0 0H400V22C370 56 330 18 290 34S220 56 180 30 110 10 70 38 20 50 0 30Z" transform="translate(0 10)"/>
+      <path class="w1" d="M0 0H400V22C370 56 330 18 290 34S220 56 180 30 110 10 70 38 20 50 0 30Z"/>
     </svg>
   </div>
   <div class="resumehint">Tippen zum Weiterspielen</div>
@@ -522,8 +660,18 @@
   const profile = load(LS_PROFILE, null) || { id: Math.random().toString(36).slice(2, 10), name: '' };
   save(LS_PROFILE, profile);
 
-  let S = load(LS_KEY, null); // game state
+  let S = load(LS_KEY, null); // Klappkrawall-Spielstand
   const opponents = {}; // id -> data
+
+  // ---------- Spielmodi ----------
+  const MODES = {
+    klapp: { topic: 'dumbyphones/shutthebox/v1/', lsKey: LS_KEY, screen: 'sGame', theme: '' },
+    dice:  { topic: 'dumbyphones/dumbydices/v1/', lsKey: 'dd_state_v1', screen: 'sDice', theme: 'dice' },
+  };
+  let mode = 'klapp';
+  let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
+  const G = () => (mode === 'dice' ? D : S);
+  const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
   function newCode() {
@@ -576,27 +724,29 @@
   function show(screen) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
+    document.body.dataset.theme = screen === 'sHome' ? '' : MODES[mode].theme;
   }
-  function persist() { save(LS_KEY, S); publish(); }
+  function persist() { save(MODES[mode].lsKey, G()); publish(); }
 
   // ---------- networking (MQTT, retained score per player) ----------
   let client = null, connected = false, curRoom = null;
 
-  function topicFor(code, id) { return TOPIC_ROOT + code + '/' + id; }
+  function topicFor(code, id) { return MODES[mode].topic + code + '/' + id; }
 
   function connect(code) {
     if (!code || typeof mqtt === 'undefined') { updateOpp(); return; }
-    if (client && curRoom === code) return;
+    const roomKey = MODES[mode].topic + code;
+    if (client && curRoom === roomKey) return;
     if (client) { try { client.end(true); } catch {} }
     for (const k in opponents) delete opponents[k];
-    curRoom = code;
+    curRoom = roomKey;
     client = mqtt.connect(BROKER, {
       clientId: 'stb_' + profile.id + '_' + Math.random().toString(16).slice(2, 6),
       reconnectPeriod: 2000, connectTimeout: 8000, clean: true, keepalive: 30,
     });
     client.on('connect', () => {
       connected = true; updateOpp();
-      client.subscribe(TOPIC_ROOT + code + '/+', { qos: 1 });
+      client.subscribe(roomKey + '/+', { qos: 1 });
       publish();
     });
     client.on('close', () => { connected = false; updateOpp(); });
@@ -610,7 +760,7 @@
         if (Date.now() - (d.ts || 0) > 1000 * 60 * 60 * 24 * 3) return; // ignore stale (>3 days)
         opponents[id] = d;
         updateOpp();
-        if (S && S.finished) renderEnd();
+        if (G() && G().finished && $('sEnd').classList.contains('active')) renderEnd();
       } catch {}
     });
   }
@@ -620,44 +770,48 @@
     for (const k in opponents) delete opponents[k];
   }
   function publish() {
-    if (!client || !connected || !S || !S.code) return;
+    const g = G();
+    if (!client || !connected || !g || !g.code) return;
     const data = {
-      name: profile.name || 'Spieler', gameNo: S.gameNo, round: S.round, total: S.total,
-      scores: S.scores, finished: S.finished, ts: Date.now(),
+      name: profile.name || 'Spieler', gameNo: g.gameNo, round: g.round, total: g.total,
+      finished: g.finished, ts: Date.now(),
     };
-    client.publish(topicFor(S.code, profile.id), JSON.stringify(data), { qos: 1, retain: true });
+    if (mode === 'dice') data.sheet = g.sheet; else data.scores = g.scores;
+    client.publish(topicFor(g.code, profile.id), JSON.stringify(data), { qos: 1, retain: true });
   }
 
   // Pick the opponent to display: same game number preferred, newest first
   function currentOpp() {
     const list = Object.values(opponents);
     if (!list.length) return null;
-    list.sort((a, b) => ((b.gameNo === S.gameNo) - (a.gameNo === S.gameNo)) || (b.ts - a.ts));
+    const gn = G() ? G().gameNo : 0;
+    list.sort((a, b) => ((b.gameNo === gn) - (a.gameNo === gn)) || (b.ts - a.ts));
     return list[0];
   }
 
+  // Gegner-Anzeige oben rechts (im jeweils aktiven Spielscreen)
   function updateOpp() {
-    if (!S || !S.code) {
-      $('oppBox').style.display = 'none';
-      return;
-    }
-    $('oppBox').style.display = '';
+    const g = G();
+    const root = $(MODES[mode].screen);
+    const q = s => root.querySelector(s);
+    if (!g || !g.code) { q('.opp').style.display = 'none'; return; }
+    q('.opp').style.display = '';
     const o = currentOpp();
-    $('oppAvatar').classList.toggle('off', !o || o.gameNo !== S.gameNo);
+    q('.avatar').classList.toggle('off', !o || o.gameNo !== g.gameNo);
     if (!o) {
-      $('oppName').textContent = connected ? 'Gegner' : 'verbinde…';
-      $('oppTotal').textContent = '–';
-      $('oppRound').textContent = '';
+      q('.oname').textContent = connected ? 'Gegner' : 'verbinde…';
+      q('.ototal').textContent = '–';
+      q('.oround').textContent = '';
       return;
     }
-    $('oppName').textContent = o.name;
-    if (o.gameNo !== S.gameNo) {
-      $('oppTotal').textContent = '–';
-      $('oppRound').textContent = '';
+    q('.oname').textContent = o.name;
+    if (o.gameNo !== g.gameNo) {
+      q('.ototal').textContent = '–';
+      q('.oround').textContent = '';
       return;
     }
-    $('oppTotal').textContent = o.total;
-    $('oppRound').textContent = o.finished ? 'Pkt · fertig' : `Pkt · R${o.round}`;
+    q('.ototal').textContent = o.total;
+    q('.oround').textContent = o.finished ? 'Pkt · fertig' : `Pkt · R${o.round}`;
   }
 
   // ---------- rendering ----------
@@ -675,7 +829,9 @@
   // Würfel wackeln hin und her, Augen wechseln, dann landen sie auf dem Endwert
   function animateDice(container, values, ms, done) {
     container.innerHTML = values.map(() => dieHTML(d6())).join('');
-    const els = [...container.children];
+    rollEls([...container.children], values, ms, done);
+  }
+  function rollEls(els, values, ms, done) {
     els.forEach(el => {
       el.style.setProperty('--dir', Math.random() < .5 ? 1 : -1);
       el.style.animationDuration = ms + 'ms';
@@ -740,50 +896,63 @@
 
   function renderEnd() {
     show('sEnd');
+    const g = G();
+    const low = lowerWins();
     const o = currentOpp();
-    const sameGame = o && o.gameNo === S.gameNo;
+    const sameGame = o && o.gameNo === g.gameNo;
     $('endMeName').textContent = profile.name || 'Du';
-    $('endMe').textContent = S.total;
+    $('endMe').textContent = g.total;
     $('sideMe').classList.remove('win'); $('sideOpp').classList.remove('win');
-    const solo = !S.code;
+    const solo = !g.code;
     $('sideOpp').style.display = solo ? 'none' : '';
     $('btnRematch').textContent = solo ? 'Nochmal spielen' : 'Neues Spiel im selben Raum';
+    const rule = low ? 'Weniger Punkte gewinnen.' : 'Mehr Punkte gewinnen.';
+    const totalRounds = mode === 'dice' ? DD_ROUNDS : ROUNDS;
 
     let verdict = '', hint = '';
     if (solo) {
-      verdict = '';
-      hint = 'Weniger Punkte ist besser.';
+      hint = rule;
     } else if (!sameGame) {
       $('endOppName').textContent = o ? o.name : 'Gegner';
       $('endOpp').textContent = '–';
       verdict = 'Warte auf Gegner…';
-      hint = o ? 'Der Gegner ist in einem anderen Spiel.' : 'Noch kein Gegner im Raum ' + S.code + '.';
+      hint = o ? 'Der Gegner ist in einem anderen Spiel.' : 'Noch kein Gegner im Raum ' + g.code + '.';
     } else {
       $('endOppName').textContent = o.name;
       $('endOpp').textContent = o.total;
-      const diff = Math.abs(S.total - o.total);
+      const diff = Math.abs(g.total - o.total);
+      const ahead = low ? g.total < o.total : g.total > o.total;
+      const behind = low ? g.total > o.total : g.total < o.total;
       if (!o.finished) {
-        verdict = S.total < o.total ? `Du liegst ${diff} vorne` : S.total > o.total ? `Du liegst ${diff} hinten` : 'Gleichstand';
-        hint = `${o.name} spielt noch (Runde ${o.round} / ${ROUNDS}) – das Ergebnis aktualisiert sich live.`;
-      } else if (S.total < o.total) {
-        verdict = `Gewonnen! 🏆 (${diff} Punkte weniger)`; $('sideMe').classList.add('win');
-      } else if (S.total > o.total) {
-        verdict = `Verloren – ${diff} Punkte mehr`; $('sideOpp').classList.add('win');
+        verdict = ahead ? `Du liegst ${diff} vorne` : behind ? `Du liegst ${diff} hinten` : 'Gleichstand';
+        hint = `${o.name} spielt noch (Runde ${o.round} / ${totalRounds}) – das Ergebnis aktualisiert sich live.`;
       } else {
-        verdict = 'Unentschieden!';
+        if (ahead) { verdict = `Gewonnen! 🏆 (${diff} Punkte ${low ? 'weniger' : 'mehr'})`; $('sideMe').classList.add('win'); }
+        else if (behind) { verdict = `Verloren – ${diff} Punkte ${low ? 'mehr' : 'weniger'}`; $('sideOpp').classList.add('win'); }
+        else verdict = 'Unentschieden!';
+        hint = rule;
       }
-      if (o.finished) hint = 'Weniger Punkte gewinnen.';
     }
     $('verdict').textContent = verdict;
     $('endHint').textContent = hint;
 
-    // table
-    let h = '<tr><th>Runde</th><th>' + esc(profile.name || 'Du') + '</th>' + (!solo && sameGame ? '<th>' + esc(o.name) + '</th>' : '') + '</tr>';
-    for (let r = 0; r < ROUNDS; r++) {
-      h += `<tr><td>${r + 1}</td><td>${S.scores[r] ?? '·'}</td>` +
-        (!solo && sameGame ? `<td>${(o.scores || [])[r] ?? '·'}</td>` : '') + '</tr>';
+    // Tabelle
+    const both = !solo && sameGame;
+    let h = `<tr><th>${mode === 'dice' ? 'Kategorie' : 'Runde'}</th><th>${esc(profile.name || 'Du')}</th>` + (both ? `<th>${esc(o.name)}</th>` : '') + '</tr>';
+    if (mode === 'dice') {
+      const row = (label, mine, theirs) => `<tr><td>${label}</td><td>${mine ?? '·'}</td>` + (both ? `<td>${theirs ?? '·'}</td>` : '') + '</tr>';
+      const os = (o && o.sheet) || {};
+      CATS.forEach((c, i) => {
+        h += row(c.name, g.sheet[c.id], os[c.id]);
+        if (i === 5) h += row('Bonus', ddBonus(g.sheet), ddBonus(os));
+      });
+    } else {
+      for (let r = 0; r < ROUNDS; r++) {
+        h += `<tr><td>${r + 1}</td><td>${g.scores[r] ?? '·'}</td>` +
+          (both ? `<td>${(o.scores || [])[r] ?? '·'}</td>` : '') + '</tr>';
+      }
     }
-    h += `<tr><th>Summe</th><th>${S.total}</th>` + (!solo && sameGame ? `<th>${o.total}</th>` : '') + '</tr>';
+    h += `<tr><th>Summe</th><th>${g.total}</th>` + (both ? `<th>${o.total}</th>` : '') + '</tr>';
     $('endTable').innerHTML = h;
   }
   function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
@@ -866,30 +1035,238 @@
     });
   }
 
-  // ---------- Hauptmenü / Modus-Screen ----------
+  // =====================================================================
+  //  DUMBY DICES
+  // =====================================================================
+  const DD_ROUNDS = 13;
+  const CATS = [
+    { id: '1', name: 'Einsen' }, { id: '2', name: 'Zweien' }, { id: '3', name: 'Dreien' },
+    { id: '4', name: 'Vieren' }, { id: '5', name: 'Fünfen' }, { id: '6', name: 'Sechsen' },
+    { id: '3k', name: 'Dreierpasch' }, { id: '4k', name: 'Viererpasch' }, { id: 'fh', name: 'Volles Haus' },
+    { id: 'ss', name: 'Kleine Gasse' }, { id: 'ls', name: 'Große Straße' }, { id: 'dumby', name: 'DUMBY' },
+    { id: 'ch', name: 'Chance' },
+  ];
+  function ddScore(id, dice) {
+    const c = [0, 0, 0, 0, 0, 0, 0]; dice.forEach(v => c[v]++);
+    const sum = dice.reduce((a, b) => a + b, 0);
+    const max = Math.max(...c);
+    const has = arr => arr.every(v => c[v] > 0);
+    switch (id) {
+      case '3k': return max >= 3 ? sum : 0;
+      case '4k': return max >= 4 ? sum : 0;
+      case 'fh': return c.includes(3) && c.includes(2) ? 25 : 0;
+      case 'ss': return has([1, 2, 3, 4]) || has([2, 3, 4, 5]) || has([3, 4, 5, 6]) ? 30 : 0;
+      case 'ls': return has([1, 2, 3, 4, 5]) || has([2, 3, 4, 5, 6]) ? 40 : 0;
+      case 'dumby': return max === 5 ? 50 : 0;
+      case 'ch': return sum;
+      default: { const n = +id; return c[n] * n; }
+    }
+  }
+  const ddUpper = sh => ['1', '2', '3', '4', '5', '6'].reduce((a, k) => a + (sh[k] || 0), 0);
+  const ddBonus = sh => (ddUpper(sh) >= 63 ? 35 : 0);
+  const ddTotal = sh => CATS.reduce((a, c) => a + (sh[c.id] || 0), 0) + ddBonus(sh);
+  function freshDice(code, gameNo) {
+    return {
+      code, gameNo: gameNo || 1, round: 1, total: 0, sheet: {},
+      dice: [0, 0, 0, 0, 0], held: [false, false, false, false, false], pos: [],
+      rollsLeft: 3, pick: null, finished: false,
+    };
+  }
+  function bestCat(dice) {
+    let best = CATS[0], pts = -1;
+    CATS.forEach(c => { const p = ddScore(c.id, dice); if (p >= pts) { pts = p; best = c; } });
+    return { cat: best, pts };
+  }
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  // kleine Symbole links neben den Kategorien
+  function catIcon(id) {
+    const svg = inner => `<svg viewBox="0 0 20 20" class="cicon" aria-hidden="true">${inner}</svg>`;
+    if (/^[1-6]$/.test(id)) {
+      const P = { 1: [[10, 10]], 2: [[6, 6], [14, 14]], 3: [[6, 6], [10, 10], [14, 14]], 4: [[6, 6], [14, 6], [6, 14], [14, 14]],
+        5: [[6, 6], [14, 6], [10, 10], [6, 14], [14, 14]], 6: [[6, 5], [14, 5], [6, 10], [14, 10], [6, 15], [14, 15]] }[id];
+      return svg('<rect x="1" y="1" width="18" height="18" rx="4" fill="#c9a46a"/>' + P.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.8" fill="#f4e6c8"/>`).join(''));
+    }
+    const sq = { '3k': [[3, 3], [11, 3], [7, 11]], '4k': [[3, 3], [11, 3], [3, 11], [11, 11]], fh: [[4, 3], [10, 3], [1, 11], [7, 11], [13, 11]],
+      ss: [[0, 13], [4, 9], [9, 5], [14, 1]], ls: [[0, 3], [4, 8], [7, 13], [10, 8], [14, 3]], dumby: [[7, 0], [1, 6], [13, 6], [4, 13], [10, 13]],
+      ch: [[1, 1], [13, 1], [7, 7], [1, 13], [13, 13]] }[id];
+    return svg(sq.map(([x, y]) => `<rect x="${x}" y="${y}" width="6" height="6" rx="1.6" fill="#c9a46a"/>`).join(''));
+  }
+
+  function renderDice() {
+    const d = D;
+    $('ddRound').textContent = `${Math.min(d.round, DD_ROUNDS)}/${DD_ROUNDS}`;
+    const rolled = d.rollsLeft < 3 && !isRolling && !d.finished;
+    let h = '';
+    CATS.forEach((c, i) => {
+      const filled = d.sheet[c.id] !== undefined;
+      const val = filled ? d.sheet[c.id] : rolled ? ddScore(c.id, d.dice) : 0;
+      let cls = 'srow';
+      if (filled) cls += ' done';
+      else if (rolled) cls += ' open' + (val > 0 ? ' good' : '');
+      if (d.pick === c.id) cls += ' pick';
+      h += `<div class="${cls}" data-cat="${c.id}">${catIcon(c.id)}<span class="sname">${c.name}</span><span class="sval">${val}</span></div>`;
+      if (i === 5) {
+        const up = ddUpper(d.sheet);
+        h += `<div class="sbonus${up >= 63 ? ' got' : ''}"><span>Bonus +35</span><span class="pill">${up}<small>/63</small></span></div>`;
+      }
+    });
+    $('ddRows').innerHTML = h;
+    $('ddRows').querySelectorAll('.srow').forEach(r => r.onclick = () => pickCat(r.dataset.cat));
+    $('ddTotal').textContent = d.total;
+    if (!isRolling) renderDiceField();
+    $('btnDRoll').textContent = d.rollsLeft === 3 ? 'Würfeln' : `Würfeln (${d.rollsLeft})`;
+    $('btnDRoll').disabled = d.rollsLeft === 0 || isRolling || d.finished;
+    $('btnDEnter').disabled = !d.pick || isRolling;
+    updateOpp();
+  }
+
+  function renderDiceField() {
+    const d = D;
+    const felt = $('ddDice'), tray = $('ddTray');
+    felt.innerHTML = ''; tray.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      tray.appendChild(slot);
+      if (!d.dice[i]) continue;
+      const w = document.createElement('div');
+      w.innerHTML = dieHTML(d.dice[i]);
+      const el = w.firstChild;
+      el.classList.add('beige');
+      el.dataset.i = i;
+      el.onclick = () => toggleHold(i);
+      if (d.held[i]) slot.appendChild(el);
+      else {
+        const p = d.pos[i] || { x: 4 + i * 14, y: 30, r: 0 };
+        el.style.left = p.x + '%'; el.style.top = p.y + '%'; el.style.rotate = p.r + 'deg';
+        felt.appendChild(el);
+      }
+    }
+  }
+
+  function rollDice() {
+    const d = D;
+    if (d.rollsLeft <= 0 || isRolling || d.finished) return;
+    const free = [0, 1, 2, 3, 4].filter(i => !d.held[i] || !d.dice[i]);
+    const slots = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+    free.forEach((i, k) => {
+      d.dice[i] = d6(); d.held[i] = false;
+      const s = slots[k];
+      d.pos[i] = { x: 3 + (s % 4) * 17 + Math.random() * 5, y: 6 + Math.floor(s / 4) * 44 + Math.random() * 10, r: Math.round(Math.random() * 44 - 22) };
+    });
+    d.rollsLeft--; d.pick = null;
+    save(MODES.dice.lsKey, d);
+    isRolling = true;
+    renderDice();
+    renderDiceField();
+    const els = free.map(i => $('ddDice').querySelector(`[data-i="${i}"]`)).filter(Boolean);
+    els.forEach(el => { el.style.visibility = 'hidden'; });
+    const cup = $('ddCup');
+    cup.classList.remove('pour'); void cup.offsetWidth; cup.classList.add('shake');
+    try { navigator.vibrate && navigator.vibrate(30); } catch {}
+    setTimeout(() => {
+      cup.classList.remove('shake'); cup.classList.add('pour');
+      els.forEach(el => { el.style.visibility = ''; });
+      rollEls(els, free.map(i => d.dice[i]), ROLL_MS, () => {
+        isRolling = false;
+        cup.classList.remove('pour');
+        renderDice();
+      });
+    }, 480);
+  }
+
+  function toggleHold(i) {
+    const d = D;
+    if (isRolling || !d.dice[i] || d.rollsLeft === 3 || d.finished) return;
+    d.held[i] = !d.held[i];
+    save(MODES.dice.lsKey, d);
+    renderDiceField();
+  }
+
+  function pickCat(id) {
+    const d = D;
+    if (isRolling || d.rollsLeft === 3 || d.finished || d.sheet[id] !== undefined) return;
+    d.pick = d.pick === id ? null : id;
+    save(MODES.dice.lsKey, d);
+    renderDice();
+  }
+
+  function enterCat() {
+    const d = D;
+    const id = d.pick;
+    if (!id || isRolling) return;
+    const pts = ddScore(id, d.dice);
+    d.sheet[id] = pts;
+    d.total = ddTotal(d.sheet);
+    toast(`${CATS.find(c => c.id === id).name}: ${pts > 0 ? '+' + pts : '0'}`);
+    d.pick = null;
+    if (d.round >= DD_ROUNDS) {
+      d.finished = true;
+      profile.playedDice = (profile.playedDice || 0) + 1; save(LS_PROFILE, profile);
+      persist();
+      renderDice();
+      modal('Fertig!', String(d.total), '', 'Ergebnis ansehen', renderEnd);
+      return;
+    }
+    d.round++;
+    d.dice = [0, 0, 0, 0, 0]; d.held = [false, false, false, false, false]; d.pos = []; d.rollsLeft = 3;
+    persist();
+    renderDice();
+  }
+  $('btnDRoll').onclick = rollDice;
+  $('btnDEnter').onclick = enterCat;
+
+  // =====================================================================
+  //  Hauptmenü / Modus-Screen
+  // =====================================================================
+  const MODE_INFO = {
+    klapp: {
+      title: 'Klappkrawall', playedKey: 'played',
+      desc: ['Klappe zu, Punkte weg! Würfle mit zwei Würfeln und klappe Plättchen um, die zusammen genau deine Augenzahl ergeben – ein einzelnes oder zwei zusammen.',
+        'Geht keine Kombination mehr, ist die Runde vorbei und alle stehenden Zahlen landen als Strafpunkte auf deinem Konto. Nach 10 Runden gewinnt, wer die wenigsten Punkte hat.'],
+    },
+    dice: {
+      title: 'Dumby Dices', playedKey: 'playedDice',
+      desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
+        'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+  };
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : freshGame(code, gameNo));
+  function setG(v) { if (mode === 'dice') D = v; else S = v; }
+  function renderActive() { if (mode === 'dice') renderDice(); else renderGame(); }
+
   function goHome() { stopPreview(); show('sHome'); }
-  function openMode() {
+  function openMode(m) {
+    if (m) mode = m;
+    stopPreview();
     show('sMode');
     renderMode();
     startPreview();
   }
   function renderMode() {
-    const n = profile.played || 0;
+    const info = MODE_INFO[mode];
+    $('modeTitle').textContent = info.title;
+    $('modeDesc').innerHTML = info.desc.map(p => `<p>${p}</p>`).join('');
+    $('pvKlapp').style.display = mode === 'klapp' ? '' : 'none';
+    $('pvDiceBox').style.display = mode === 'dice' ? '' : 'none';
+    const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
     $('seg').classList.toggle('v1', v1);
     $('rowVs').style.display = v1 ? '' : 'none';
     $('rowSolo').style.display = v1 ? 'none' : '';
-    const r = $('btnResume');
-    if (S && !S.finished) {
+    const g = G(), r = $('btnResume');
+    if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = `▶ Fortsetzen · ${S.code ? 'Raum ' + S.code : 'Solo'} · Runde ${S.round}`;
-    } else if (S && S.finished) {
+      r.textContent = `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
+    } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = `Letztes Ergebnis ansehen · ${S.total} Punkte`;
+      r.textContent = `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
-  $('toyKlapp').onclick = openMode;
+  $('toyKlapp').onclick = () => openMode('klapp');
+  $('toyDice').onclick = () => openMode('dice');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -898,7 +1275,7 @@
   // Dialoge
   function openDlg(id) { $(id).classList.add('show'); }
   function closeDlg(id) { $(id).classList.remove('show'); }
-  document.querySelectorAll('.dlg').forEach(d => d.addEventListener('click', e => { if (e.target === d) closeDlg(d.id); }));
+  document.querySelectorAll('.dlg').forEach(dl => dl.addEventListener('click', e => { if (e.target === dl) closeDlg(dl.id); }));
 
   let afterSettings = null;
   function openSettings(hint, cb) {
@@ -926,21 +1303,21 @@
     if (c.length < 4) { toast('Bitte gültigen Raumcode eingeben'); return; }
     closeDlg('dlgJoin');
     stopPreview();
-    S = freshGame(c);
-    save(LS_KEY, S);
+    isRolling = false;
+    setG(freshFor(mode, c));
+    save(MODES[mode].lsKey, G());
     connect(c);
-    show('sGame');
-    renderGame();
+    show(MODES[mode].screen);
+    renderActive();
     toast('Raum ' + c + ' beigetreten');
   };
 
-  // ---------- Mini-Vorschau (läuft in Schleife) ----------
+  // ---------- Mini-Vorschau Klappkrawall ----------
   const pv = { running: false, timer: null, open: [] };
   function pvRender(sel) {
     $('pvTiles').innerHTML = pv.open.map((o, i) =>
       `<div class="tile${!o ? ' shut' : sel && sel.includes(i + 1) ? ' sel' : ''}">${i + 1}</div>`).join('');
   }
-  function pvCombo(t) { return findCombo(pv.open, t); }
   function pvLater(fn, ms) { pv.timer = setTimeout(() => pv.running && fn(), ms); }
   function pvReset() {
     pv.open = Array(TILES).fill(true);
@@ -952,7 +1329,7 @@
     const vals = [d6(), d6()];
     animateDice($('pvDice'), vals, ROLL_MS, () => {
       if (!pv.running) return;
-      const combo = pvCombo(vals[0] + vals[1]);
+      const combo = findCombo(pv.open, vals[0] + vals[1]);
       if (!combo) {
         const pts = pv.open.reduce((a, o, i) => a + (o ? i + 1 : 0), 0);
         $('pvBadge').textContent = '+' + pts;
@@ -975,21 +1352,69 @@
       }, 350);
     });
   }
-  function startPreview() {
-    if (pv.running) return;
-    pv.running = true;
-    pvReset();
-    pvLater(pvStep, 600);
-  }
-  function stopPreview() { pv.running = false; clearTimeout(pv.timer); }
 
+  // ---------- Mini-Vorschau Dumby Dices ----------
+  const pvd = { running: false, timer: null };
+  function pvdLater(fn, ms) { pvd.timer = setTimeout(() => pvd.running && fn(), ms); }
+  function pvdRender(dice, held) {
+    $('pvdDice').innerHTML = dice.map((v, i) => {
+      const h = dieHTML(v || 1).replace('class="die"', `class="die beige${held[i] ? ' held' : ''}" style="left:${3 + i * 13.5}%;top:${held[i] ? 12 : 42}%;rotate:${(i % 2 ? 1 : -1) * (6 + i * 3)}deg${v ? '' : ';visibility:hidden'}"`);
+      return h;
+    }).join('');
+  }
+  function pvdThrow(dice, held, n) {
+    const free = [0, 1, 2, 3, 4].filter(i => !held[i]);
+    free.forEach(i => { dice[i] = d6(); });
+    pvdRender(dice, held);
+    const els = free.map(i => $('pvdDice').children[i]);
+    els.forEach(el => { el.style.visibility = 'hidden'; });
+    const cup = $('pvdCup');
+    cup.classList.remove('pour'); void cup.offsetWidth; cup.classList.add('shake');
+    pvdLater(() => {
+      cup.classList.remove('shake'); cup.classList.add('pour');
+      els.forEach(el => { el.style.visibility = ''; });
+      rollEls(els, free.map(i => dice[i]), ROLL_MS, () => {
+        if (!pvd.running) return;
+        cup.classList.remove('pour');
+        if (n < 3) {
+          const c = [0, 0, 0, 0, 0, 0, 0]; dice.forEach(v => c[v]++);
+          let keep = 6; for (let v = 6; v >= 1; v--) if (c[v] > c[keep]) keep = v;
+          const h2 = dice.map(v => v === keep);
+          pvdLater(() => { pvdRender(dice, h2); pvdLater(() => pvdThrow(dice, h2, n + 1), 700); }, 400);
+        } else {
+          const b = bestCat(dice);
+          $('pvdBadge').innerHTML = `<span>${b.cat.name}<br>+${b.pts}</span>`;
+          $('pvdBadge').classList.add('show');
+          pvdLater(pvdStart, 2200);
+        }
+      });
+    }, 480);
+  }
+  function pvdStart() {
+    $('pvdBadge').classList.remove('show');
+    const dice = [0, 0, 0, 0, 0], held = [false, false, false, false, false];
+    pvdRender(dice, held);
+    pvdLater(() => pvdThrow(dice, held, 1), 700);
+  }
+
+  function startPreview() {
+    if (mode === 'dice') { pvd.running = true; pvdStart(); }
+    else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
+  }
+  function stopPreview() {
+    pv.running = false; clearTimeout(pv.timer);
+    pvd.running = false; clearTimeout(pvd.timer);
+  }
+
+  // ---------- Spielstart / Fortsetzen ----------
   function startGame(code) {
     stopPreview();
-    S = freshGame(code);
-    save(LS_KEY, S);
+    isRolling = false;
+    setG(freshFor(mode, code));
+    save(MODES[mode].lsKey, G());
     if (code) connect(code); else disconnect();
-    show('sGame');
-    renderGame();
+    show(MODES[mode].screen);
+    renderActive();
     publish();
     if (code) {
       modal('Raum erstellt', code, 'Teile diesen Code mit deinem Gegner. Ihr spielt jeder für euch – die Punkte des Gegners siehst du oben rechts.', 'Los geht\'s');
@@ -997,13 +1422,15 @@
   }
   function resumeGame() {
     stopPreview();
-    if (S.code) connect(S.code); else disconnect();
-    if (S.finished) { renderEnd(); return; }
-    show('sGame');
-    // If we reloaded mid-endRound, recompute
+    isRolling = false;
+    const g = G();
+    if (g.code) connect(g.code); else disconnect();
+    if (g.finished) { renderEnd(); return; }
+    show(MODES[mode].screen);
+    if (mode === 'dice') { renderDice(); return; }
+    // Klappkrawall: Reload mitten im Rundenende
     if (S.phase === 'over' || S.phase === 'roundEnd') {
       if (S.scores[S.round - 1] === undefined) { S.phase = 'over'; renderGame(); endRound(); return; }
-      // round already scored; continue to next
       if (S.round >= ROUNDS) { S.finished = true; S.phase = 'done'; persist(); renderEnd(); return; }
       S.round++; S.open = S.open.map(() => true); S.dice = null; S.selected = []; S.phase = 'roll'; persist();
     }
@@ -1018,37 +1445,43 @@
   $('btnRoll1').onclick = () => roll(1);
   $('btnConfirm').onclick = confirmTiles;
   $('btnRematch').onclick = () => {
-    const code = S.code; const g = (S.gameNo || 1) + 1;
-    S = freshGame(code, g);
-    // If opponent already started a newer game, sync to that number
+    const g = G();
+    const next = freshFor(mode, g.code, (g.gameNo || 1) + 1);
+    // Hat der Gegner schon ein neueres Spiel gestartet, dessen Nummer übernehmen
     const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
-    if (o && o.gameNo > S.gameNo) S.gameNo = o.gameNo;
+    if (o && o.gameNo > next.gameNo) next.gameNo = o.gameNo;
+    setG(next);
+    isRolling = false;
     persist();
-    show('sGame');
-    renderGame();
+    show(MODES[mode].screen);
+    renderActive();
   };
   $('btnHome').onclick = () => {
     disconnect();
-    S = null; save(LS_KEY, null);
-    openMode();
+    setG(null); save(MODES[mode].lsKey, null);
+    openMode(mode);
   };
 
-  // ---------- pause menu ----------
+  // ---------- Pause-Menü ----------
   function openPause() {
-    $('pauseFoot').innerHTML = S && S.code ? `<small>Raum</small> ${esc(S.code)}` : '<small>Solo-Spiel</small>';
+    const g = G();
+    $('pauseFoot').innerHTML = g && g.code ? `<small>Raum</small> ${esc(g.code)}` : '<small>Solo-Spiel</small>';
     $('pause').classList.add('show');
   }
   function closePause() { $('pause').classList.remove('show'); }
   $('btnMenu').onclick = openPause;
+  $('btnDMenu').onclick = openPause;
   $('pauseShade').onclick = closePause;
   $('pause').querySelector('.resumehint').onclick = closePause;
   $('btnRestart').onclick = () => {
     closePause();
     $('overlay').classList.remove('show');
-    S = freshGame(S.code, S.gameNo);
+    const g = G();
+    setG(freshFor(mode, g.code, g.gameNo));
+    isRolling = false;
     persist();
-    show('sGame');
-    renderGame();
+    show(MODES[mode].screen);
+    renderActive();
   };
   $('btnMain').onclick = () => {
     closePause();
@@ -1056,13 +1489,16 @@
     goHome();
   };
 
-  // Allow ?room=CODE links
-  const urlRoom = new URLSearchParams(location.search).get('room');
+  // ---------- Start ----------
+  const params = new URLSearchParams(location.search);
+  const urlRoom = params.get('room');
   if (urlRoom) {
+    mode = params.get('mode') === 'dice' ? 'dice' : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
-    openMode();
+    openMode(mode);
     ensureName(openJoin);
-  } else if (S && !S.finished) resumeGame();
+  } else if (S && !S.finished) { mode = 'klapp'; resumeGame(); }
+  else if (D && !D.finished) { mode = 'dice'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
