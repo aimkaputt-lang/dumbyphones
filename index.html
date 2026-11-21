@@ -510,6 +510,62 @@
   .wboard.mini .wname { font-size: 8px; }
   body[data-theme="who"] .modal { background: linear-gradient(120deg, #4a4e8f, #5a5fa8); border-color: #a5794f; }
 
+  /* ---------- Viererkette ---------- */
+  body[data-theme="four"] {
+    --bg: #2c3a32; --bg-dark: #121915; --muted: #b6c6bc;
+    --panel: #e2104c; --panel-card: #a30a36; --panel-shadow: #0b100d; --title: #f4c80f;
+    --bar: #e2104c; --bar-dark: #990a33; --seg-text: #ffc6d6;
+  }
+  body[data-theme="four"] .pv { background: #1f2a24; }
+  body[data-theme="four"] .modal { background: linear-gradient(120deg, #e2104c, #f0386a); border-color: #3a4580; }
+  .c4status { display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .c4dot { width: 16px; height: 16px; border-radius: 50%; flex: 0 0 16px; box-shadow: inset 0 -2px 3px rgba(0,0,0,.25); }
+  .c4dot.r { background: #e2104c; }
+  .c4dot.y { background: #f4c80f; }
+  .c4stage { width: calc(100% + 32px); margin: 14px -16px 0; display: flex; flex-direction: column; align-items: center; }
+  .c4wrap { position: relative; width: calc(100% - 28px); aspect-ratio: 7 / 6; z-index: 1; }
+  .c4chips, .c4cols { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(6, 1fr); }
+  .c4cell { position: relative; }
+  .c4board {
+    position: absolute; inset: 0; border-radius: 8px; pointer-events: none;
+    background: linear-gradient(160deg, rgba(64,76,140,.95), rgba(44,54,108,.95));
+    -webkit-mask: radial-gradient(circle, transparent 0 37%, #000 38.5%) 0 0 / calc(100% / 7) calc(100% / 6);
+    mask: radial-gradient(circle, transparent 0 37%, #000 38.5%) 0 0 / calc(100% / 7) calc(100% / 6);
+  }
+  .c4chip {
+    position: absolute; inset: 12%; border-radius: 50%;
+    box-shadow: inset 0 0 0 4px rgba(0,0,0,.12), inset 0 -4px 7px rgba(0,0,0,.25);
+  }
+  .c4chip.r { background: radial-gradient(circle at 35% 30%, #ff5d87, #e2104c 55%, #a40a37); }
+  .c4chip.y { background: radial-gradient(circle at 35% 30%, #ffe46c, #f4c80f 55%, #b88f08); }
+  .c4chip.drop { animation: c4drop calc(.2s + var(--fall) * .07s) cubic-bezier(.5, 0, .9, .55) both; }
+  @keyframes c4drop {
+    0% { transform: translateY(calc(var(--fall) * -131%)); }
+    78% { transform: translateY(0); }
+    89% { transform: translateY(-10%); }
+    100% { transform: translateY(0); }
+  }
+  .c4chip.win::after {
+    content: ''; position: absolute; inset: -9%; border-radius: 50%; border: 3px solid #fff;
+    animation: c4pulse 1s ease-in-out infinite;
+  }
+  @keyframes c4pulse { 0%, 100% { opacity: .35; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.04); } }
+  .c4cols { grid-template-rows: 1fr; top: -40px; pointer-events: none; z-index: 2; }
+  .c4cols.active { pointer-events: auto; }
+  .c4cols div { cursor: pointer; border-radius: 10px; }
+  .c4cols.active div:active { background: rgba(255,255,255,.08); }
+  .c4floor {
+    width: 100%; height: 54px; margin-top: -26px;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 64px, rgba(92,58,44,.55) 64px 128px),
+      linear-gradient(#d3a47a 0 62%, #6e4b3c 62%);
+  }
+  .c4hint { text-align: center; color: var(--muted); font-size: 14px; margin-top: 12px; min-height: 20px; }
+  .c4end { margin-top: auto; padding-top: 10px; }
+  .c4end button { margin: 0; }
+  .c4end .c4menu { background: var(--bar); color: #fff; box-shadow: 0 6px 0 var(--bar-dark); }
+  .c4wrap.mini { width: 86%; margin: 4px auto; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -573,6 +629,27 @@
           <path d="M136 43 L146 54" stroke="#f6efea" stroke-width="5" stroke-linecap="round"/>
         </svg>
       </button>
+      <button class="toy" id="toyFour" aria-label="Viererkette" style="animation-delay:-2.3s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="66" ry="8" fill="rgba(0,0,0,.28)"/>
+          <rect x="10" y="100" width="140" height="14" rx="3" fill="#c8976e"/>
+          <rect x="10" y="108" width="140" height="6" rx="2" fill="#6e4b3c"/>
+          <rect x="24" y="22" width="112" height="86" rx="6" fill="#3a4580"/>
+          <g fill="#1d2622">
+            <circle cx="40" cy="38" r="8"/><circle cx="60" cy="38" r="8"/><circle cx="80" cy="38" r="8"/><circle cx="100" cy="38" r="8"/><circle cx="120" cy="38" r="8"/>
+            <circle cx="40" cy="58" r="8"/><circle cx="60" cy="58" r="8"/><circle cx="100" cy="58" r="8"/><circle cx="120" cy="58" r="8"/>
+            <circle cx="40" cy="78" r="8"/><circle cx="120" cy="78" r="8"/>
+          </g>
+          <g fill="#e2104c"><circle cx="80" cy="58" r="8"/><circle cx="60" cy="78" r="8"/><circle cx="100" cy="98" r="0"/><circle cx="40" cy="98" r="0"/></g>
+          <g fill="#f4c80f"><circle cx="80" cy="78" r="8"/><circle cx="100" cy="78" r="8"/></g>
+          <circle cx="40" cy="98" r="0"/>
+          <g fill="#e2104c"><circle cx="60" cy="96" r="0"/></g>
+          <rect x="24" y="86" width="112" height="18" fill="#3a4580"/>
+          <g fill="#e2104c"><circle cx="40" cy="95" r="7.5"/><circle cx="80" cy="95" r="7.5"/></g>
+          <g fill="#f4c80f"><circle cx="60" cy="95" r="7.5"/><circle cx="100" cy="95" r="7.5"/><circle cx="120" cy="95" r="7.5"/></g>
+          <circle cx="104" cy="12" r="9" fill="#f4c80f"/><circle cx="104" cy="12" r="5.5" fill="none" stroke="#c9a10a" stroke-width="1.6"/>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -605,6 +682,9 @@
         </div>
         <div class="pv" id="pvWhoBox" style="display:none">
           <div class="wboard mini"><div class="wgrid" id="pvwGrid"></div></div>
+        </div>
+        <div class="pv" id="pvFourBox" style="display:none">
+          <div class="c4wrap mini"><div class="c4chips" id="pvfChips"></div><div class="c4board"></div></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -730,6 +810,36 @@
         <button id="btnWAsk">Frage stellen</button>
         <button id="btnWGuess">Tippen</button>
       </div>
+    </div>
+  </section>
+
+  <!-- VIERERKETTE -->
+  <section class="screen" id="sFour">
+    <div class="topbar">
+      <button class="menubtn" id="btnFMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus c4status" id="c4Status"></div>
+    <div class="c4stage">
+      <div class="c4wrap">
+        <div class="c4chips" id="c4Chips"></div>
+        <div class="c4board"></div>
+        <div class="c4cols" id="c4Cols"></div>
+      </div>
+      <div class="c4floor"></div>
+    </div>
+    <div class="c4hint" id="c4Hint"></div>
+    <div class="row c4end" id="c4End" style="display:none">
+      <button id="btnC4Again">Nochmal</button>
+      <button id="btnC4Menu" class="c4menu">Menü</button>
     </div>
   </section>
 
@@ -864,11 +974,13 @@
     klapp: { topic: 'dumbyphones/shutthebox/v1/', lsKey: LS_KEY, screen: 'sGame', theme: '' },
     dice:  { topic: 'dumbyphones/dumbydices/v1/', lsKey: 'dd_state_v1', screen: 'sDice', theme: 'dice' },
     who:   { topic: 'dumbyphones/dumbydetektiv/v1/', lsKey: 'wi_state_v1', screen: 'sWho', theme: 'who' },
+    four:  { topic: 'dumbyphones/viererkette/v1/', lsKey: 'vk_state_v1', screen: 'sFour', theme: 'four' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
   let W = load(MODES.who.lsKey, null); // Wixer-finden-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : S);
+  let F = load(MODES.four.lsKey, null); // Viererkette-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -963,6 +1075,7 @@
         updateOpp();
         if (G() && G().finished && $('sEnd').classList.contains('active')) renderEnd();
         if (mode === 'who') whoSync();
+        if (mode === 'four') fourSync();
       } catch {}
     });
   }
@@ -985,6 +1098,8 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'four') {
+      Object.assign(data, { host: g.host, moves: g.moves });
     } else data.scores = g.scores;
     client.publish(topicFor(g.code, profile.id), JSON.stringify(data), { qos: 1, retain: true });
   }
@@ -1016,6 +1131,11 @@
     q('.oname').textContent = o.name;
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
+      q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'four') {
+      q('.ototal').textContent = c4MeStarts(g) ? 'Gelb' : 'Rot';
       q('.oround').textContent = '';
       return;
     }
@@ -1798,6 +1918,216 @@
   }
 
   // =====================================================================
+  //  VIERERKETTE (vier in einer Reihe)
+  // =====================================================================
+  const C4W = 7, C4H = 6;
+  function freshFour(code, gameNo, host, meStarts) {
+    return {
+      code, gameNo: gameNo || 1, host: !!host,
+      meStarts: code ? null : (meStarts !== undefined ? meStarts : true), // nur Solo
+      seq: [],      // Solo: alle Züge der Reihe nach
+      moves: [],    // 1v1: nur meine Züge
+      finished: false, result: null, endShown: false, round: 1, total: 0,
+    };
+  }
+  // Fängt in diesem Spiel ich an? (1v1: Starter wechselt jedes Spiel, Ersteller beginnt in Spiel 1)
+  function c4MeStarts(f) { return f.code ? ((f.gameNo % 2 === 1) === f.host) : f.meStarts; }
+  function c4Opp() { const o = currentOpp(); return o && F && o.gameNo === F.gameNo ? o : null; }
+  // komplette Zugfolge (Starter zuerst, dann abwechselnd)
+  function c4Seq(f) {
+    if (!f.code) return f.seq;
+    const o = c4Opp(), mine = f.moves, theirs = (o && o.moves) || [];
+    const a = c4MeStarts(f) ? mine : theirs, b = c4MeStarts(f) ? theirs : mine;
+    const out = [];
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+      if (i < a.length) out.push(a[i]); else break;
+      if (i < b.length) out.push(b[i]); else break;
+    }
+    return out;
+  }
+  // Brett aus Zugfolge: grid[c][r] (r = 0 unten), Wert 0 = Starter (Rot), 1 = Gelb
+  function c4Board(seq) {
+    const grid = Array.from({ length: C4W }, () => []);
+    const pos = [];
+    seq.forEach((c, i) => { if (grid[c].length < C4H) { pos.push([c, grid[c].length]); grid[c].push(i % 2); } });
+    return { grid, pos };
+  }
+  function c4Winner(grid) {
+    const at = (c, r) => (c >= 0 && c < C4W && r >= 0 && r < C4H ? grid[c][r] : undefined);
+    const dirs = [[1, 0], [0, 1], [1, 1], [1, -1]];
+    for (let c = 0; c < C4W; c++) for (let r = 0; r < C4H; r++) {
+      const v = at(c, r); if (v === undefined) continue;
+      for (const [dc, dr] of dirs) {
+        const cells = [[c, r]];
+        for (let k = 1; k < 4 && at(c + dc * k, r + dr * k) === v; k++) cells.push([c + dc * k, r + dr * k]);
+        if (cells.length === 4) return { v, cells };
+      }
+    }
+    return null;
+  }
+  const c4Full = grid => grid.every(col => col.length >= C4H);
+
+  // Computer: gewinnen > blocken > keine Vorlage geben > Mitte bevorzugen
+  function c4CpuMove(seq, jitter = 4) {
+    const me = seq.length % 2, you = 1 - me;
+    const valid = [...Array(C4W).keys()].filter(c => c4Board(seq).grid[c].length < C4H);
+    const winsWith = (s, who) => { const w = c4Winner(c4Board(s).grid); return w && w.v === who; };
+    for (const c of valid) if (winsWith([...seq, c], me)) return c;
+    // Blocken: würde der Gegner mit c gewinnen?
+    for (const c of valid) {
+      const g = c4Board(seq).grid.map(col => [...col]); g[c].push(you);
+      const w = c4Winner(g); if (w && w.v === you) return c;
+    }
+    const safe = valid.filter(c => {
+      const s = [...seq, c];
+      return ![...Array(C4W).keys()].some(c2 => c4Board(s).grid[c2].length < C4H && winsWith([...s, c2], you));
+    });
+    const pool = safe.length ? safe : valid;
+    const score = c => 10 - Math.abs(3 - c) * 2 + Math.random() * jitter;
+    return pool.sort((a, b) => score(b) - score(a))[0];
+  }
+
+  let c4Shown = 0;     // wie viele Chips schon gezeichnet (für Fall-Animation)
+  let c4CpuTimer = null;
+  function c4State() {
+    const f = F, seq = c4Seq(f), { grid, pos } = c4Board(seq), win = c4Winner(grid);
+    const meStarts = c4MeStarts(f);
+    const myV = meStarts ? 0 : 1;
+    const moverV = seq.length % 2;
+    const full = c4Full(grid);
+    return { seq, grid, pos, win, full, myV, myTurn: !win && !full && moverV === myV };
+  }
+  const C4COL = ['#e2104c', '#f4c80f'];
+  const chipHTML = (v, cls, fall) => `<div class="c4chip ${v ? 'y' : 'r'}${cls ? ' ' + cls : ''}"${fall ? ` style="--fall:${fall}"` : ''}></div>`;
+
+  function renderFour() {
+    const f = F, st = c4State();
+    // Chips zeichnen (oberste Reihe zuerst)
+    const winSet = new Set((st.win ? st.win.cells : []).map(([c, r]) => c + ',' + r));
+    let h = '';
+    for (let top = 0; top < C4H; top++) for (let c = 0; c < C4W; c++) {
+      const r = C4H - 1 - top;
+      const v = st.grid[c][r];
+      let chip = '';
+      if (v !== undefined) {
+        const idx = st.pos.findIndex(([pc, pr]) => pc === c && pr === r);
+        const isNew = idx >= c4Shown;
+        chip = chipHTML(v, (isNew ? 'drop' : '') + (winSet.has(c + ',' + r) ? ' win' : ''), isNew ? top + 1 : 0);
+      }
+      h += `<div class="c4cell">${chip}</div>`;
+    }
+    $('c4Chips').innerHTML = h;
+    c4Shown = st.seq.length;
+    // Status
+    const o = f.code ? c4Opp() : null;
+    let txt, turn = false;
+    if (st.win) txt = st.win.v === st.myV ? 'Gewonnen! Vier in einer Reihe.' : (f.code ? 'Verloren – dein Gegner hat vier.' : 'Verloren – der Computer hat vier.');
+    else if (st.full) txt = 'Unentschieden – das Brett ist voll.';
+    else if (f.code && !o) txt = connected ? `Warte auf Gegner … (Raum ${f.code})` : 'Verbinde …';
+    else if (st.myTurn) { txt = 'Du bist dran'; turn = true; }
+    else txt = f.code ? 'Gegner ist dran …' : 'Computer überlegt …';
+    $('c4Status').innerHTML = `<span class="c4dot ${st.myV ? 'y' : 'r'}"></span>${txt}`;
+    $('c4Status').classList.toggle('turn', turn);
+    $('c4Cols').classList.toggle('active', st.myTurn && (!f.code || !!o));
+    const over = !!st.win || st.full;
+    $('c4End').style.display = over ? '' : 'none';
+    $('c4Hint').style.display = over ? 'none' : '';
+    $('c4Hint').textContent = st.myTurn ? 'Tippe auf eine Spalte' : '';
+    updateOpp();
+    if (over && !f.finished) c4Finish(st);
+    // Solo: Computer zieht
+    if (!f.code && !over && !st.myTurn && !c4CpuTimer) {
+      c4CpuTimer = setTimeout(() => {
+        c4CpuTimer = null;
+        if (mode !== 'four' || !F || F.code || F.finished) return;
+        const s2 = c4State(); if (s2.myTurn || s2.win || s2.full) return;
+        F.seq.push(c4CpuMove(F.seq));
+        persist();
+        renderFour();
+      }, 750);
+    }
+  }
+  function c4Drop(c) {
+    const f = F, st = c4State();
+    if (!st.myTurn || st.grid[c].length >= C4H) return;
+    if (f.code && !c4Opp()) return;
+    if (f.code) f.moves.push(c); else f.seq.push(c);
+    f.round = Math.floor(c4Seq(f).length / 2) + 1;
+    try { navigator.vibrate && navigator.vibrate(20); } catch {}
+    persist();
+    renderFour();
+  }
+  function c4Finish(st) {
+    const f = F;
+    f.finished = true;
+    f.result = st.win ? (st.win.v === st.myV ? 'win' : 'lose') : 'draw';
+    if (!f.endShown) {
+      f.endShown = true;
+      profile.playedFour = (profile.playedFour || 0) + 1; save(LS_PROFILE, profile);
+      persist();
+      setTimeout(() => {
+        if (mode !== 'four') return;
+        const t = { win: 'Gewonnen! 🏆', lose: 'Verloren', draw: 'Unentschieden' }[f.result];
+        const sub = { win: 'Vier in einer Reihe – stark!', lose: f.code ? 'Dein Gegner war schneller.' : 'Der Computer war schneller.', draw: 'Das Brett ist voll.' }[f.result];
+        modal(t, f.result === 'win' ? '🔴🟡' : f.result === 'draw' ? '🤝' : '😅', sub, 'Weiter');
+      }, 900);
+    } else persist();
+  }
+  function fourSync() { if (mode === 'four' && F) renderFour(); }
+  function fourRematch() {
+    const f = F;
+    clearTimeout(c4CpuTimer); c4CpuTimer = null;
+    if (!f.code) { F = freshFour(null, (f.gameNo || 1) + 1, true, !f.meStarts); }
+    else {
+      const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+      let g = (f.gameNo || 1) + 1;
+      if (o && o.gameNo > g) g = o.gameNo;
+      F = freshFour(f.code, g, f.host);
+    }
+    c4Shown = 0;
+    persist();
+    renderFour();
+  }
+  // Spalten zum Antippen
+  $('c4Cols').innerHTML = [...Array(C4W).keys()].map(c => `<div data-c="${c}"></div>`).join('');
+  $('c4Cols').querySelectorAll('div').forEach(d => d.onclick = () => c4Drop(+d.dataset.c));
+  $('btnC4Again').onclick = fourRematch;
+  $('btnC4Menu').onclick = () => { disconnect(); openMode('four'); };
+  $('btnFMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Viererkette ----------
+  const pvf = { running: false, timer: null };
+  function pvfLater(fn, ms) { pvf.timer = setTimeout(() => pvf.running && fn(), ms); }
+  function pvfStart() {
+    const seq = [];
+    const draw = (newIdx, win) => {
+      const { grid, pos } = c4Board(seq);
+      const ws = new Set((win ? win.cells : []).map(([c, r]) => c + ',' + r));
+      let h = '';
+      for (let top = 0; top < C4H; top++) for (let c = 0; c < C4W; c++) {
+        const r = C4H - 1 - top, v = grid[c][r];
+        let chip = '';
+        if (v !== undefined) {
+          const idx = pos.findIndex(([pc, pr]) => pc === c && pr === r);
+          chip = chipHTML(v, (idx === newIdx ? 'drop' : '') + (ws.has(c + ',' + r) ? ' win' : ''), idx === newIdx ? top + 1 : 0);
+        }
+        h += `<div class="c4cell">${chip}</div>`;
+      }
+      $('pvfChips').innerHTML = h;
+    };
+    draw(-1);
+    const step = () => {
+      seq.push(c4CpuMove(seq, 12));
+      const { grid } = c4Board(seq);
+      const win = c4Winner(grid);
+      draw(seq.length - 1, win);
+      if (win || c4Full(grid)) pvfLater(pvfStart, 2200);
+      else pvfLater(step, 520);
+    };
+    pvfLater(step, 600);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -1811,15 +2141,20 @@
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
     },
+    four: {
+      title: 'Viererkette', playedKey: 'playedFour',
+      desc: ['Rot gegen Gelb! Lass deine Chips abwechselnd in die Spalten fallen und bilde als Erster eine Reihe aus vier – waagerecht, senkrecht oder schräg.',
+        'Solo spielst du gegen den Computer, im 1v1 gegen deinen Gegner. Wer anfängt, spielt Rot – und nach jedem Spiel wird gewechselt.'],
+    },
     who: {
       title: 'Wixer finden', playedKey: 'playedWho',
       desc: ['Wer steckt dahinter? Ihr sucht euch beide heimlich eine Person aus und fragt euch abwechselnd aus: Brille? Bart? Lange Haare? Die App beantwortet die Fragen und klappt alle Personen um, die nicht mehr passen.',
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : freshGame(code, gameNo));
-  function setG(v) { if (mode === 'dice') D = v; else if (mode === 'who') W = v; else S = v; }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else renderGame(); }
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : freshGame(code, gameNo));
+  function setG(v) { if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; } else S = v; }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -1836,6 +2171,7 @@
     $('pvKlapp').style.display = mode === 'klapp' ? '' : 'none';
     $('pvDiceBox').style.display = mode === 'dice' ? '' : 'none';
     $('pvWhoBox').style.display = mode === 'who' ? '' : 'none';
+    $('pvFourBox').style.display = mode === 'four' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -1845,17 +2181,20 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = mode === 'who'
+      r.textContent = mode === 'four'
+        ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
+        : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = mode === 'who' ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = mode === 'who' || mode === 'four' ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
   $('toyDice').onclick = () => openMode('dice');
   $('toyWho').onclick = () => openMode('who');
+  $('toyFour').onclick = () => openMode('four');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -2006,12 +2345,14 @@
   function startPreview() {
     if (mode === 'dice') { pvd.running = true; pvdStart(); }
     else if (mode === 'who') { pvw.running = true; pvwStart(); }
+    else if (mode === 'four') { pvf.running = true; pvfStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
     pv.running = false; clearTimeout(pv.timer);
     pvd.running = false; clearTimeout(pvd.timer);
     pvw.running = false; clearTimeout(pvw.timer);
+    pvf.running = false; clearTimeout(pvf.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -2026,7 +2367,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'who'
+      const txt = mode === 'four'
+        ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
+        : mode === 'who'
         ? 'Teile diesen Code mit deinem Gegner. Danach sucht ihr euch beide eine geheime Person aus – du fängst an.'
         : 'Teile diesen Code mit deinem Gegner. Ihr spielt jeder für euch – die Punkte des Gegners siehst du oben rechts.';
       modal('Raum erstellt', code, txt, 'Los geht\'s');
@@ -2038,6 +2381,7 @@
     const g = G();
     if (g.code) connect(g.code); else disconnect();
     if (mode === 'who') { show('sWho'); guessMode = false; whoSync(); return; }
+    if (mode === 'four') { show('sFour'); c4Shown = 0; renderFour(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
     if (mode === 'dice') { renderDice(); return; }
@@ -2100,7 +2444,8 @@
   $('btnRestart').onclick = () => {
     closePause();
     $('overlay').classList.remove('show');
-    if (mode === 'who') { whoRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'who') { whoRematch(); return; }
+    if (mode === 'four') { fourRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -2118,13 +2463,14 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
   } else if (S && !S.finished) { mode = 'klapp'; resumeGame(); }
   else if (D && !D.finished) { mode = 'dice'; resumeGame(); }
   else if (W && !W.finished) { mode = 'who'; resumeGame(); }
+  else if (F && !F.finished) { mode = 'four'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
