@@ -583,6 +583,8 @@
     --panel: #3d5688; --panel-card: #26385e; --panel-shadow: #0a0f1d; --title: #c9f2e3;
     --bar: #3d5688; --bar-dark: #223458; --seg-text: #cfe0ff;
   }
+  body { transition: background-color .5s; }
+  body[data-theme="sea"].bs-enemy { --bg: #5e2f44; --bg-dark: #2a1019; }
   body[data-theme="sea"] .pv { background: radial-gradient(ellipse at 50% 25%, #46557f, #26304f); }
   body[data-theme="sea"] .modal { background: linear-gradient(120deg, #3d5688, #4e69a0); border-color: #26385e; }
   body[data-theme="sea"] .modal .big:empty { display: none; }
@@ -606,6 +608,17 @@
   .bsship svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 2px rgba(0,0,0,.35)); }
   .bsship.sel { outline: 2px dashed var(--title); outline-offset: -1px; border-radius: 6px; }
   .bsship.ghost { opacity: .4; }
+  .bsboard.setup .bsgrid, .bstray { touch-action: none; }
+  .bsboard.setup .bsship[data-id] { pointer-events: auto; cursor: grab; touch-action: none; }
+  .bsship.dragging { opacity: .3; }
+  .bsship.dragghost { opacity: .85; z-index: 5; border-radius: 6px; box-shadow: 0 0 0 2px #7ee0b4; }
+  .bsship.dragghost.bad { box-shadow: 0 0 0 2px #e2104c; opacity: .6; }
+  /* Flottenübersicht unter dem Gegnerfeld */
+  .bsfleet { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 12px; }
+  .bsfrow { display: flex; gap: 10px; }
+  .bsfship { transition: opacity .4s, filter .4s; }
+  .bsfship svg { width: 100%; height: 100%; display: block; }
+  .bsfship.sunk { opacity: .22; filter: grayscale(1); }
   .bschip { position: absolute; width: 10%; height: 10%; pointer-events: none; }
   .bschip::before { content: ''; position: absolute; inset: 18%; border-radius: 50%; box-shadow: inset 0 -2px 0 rgba(0,0,0,.18), 0 2px 3px rgba(0,0,0,.3); }
   .bschip::after { content: ''; position: absolute; inset: 34%; border-radius: 50%; box-shadow: inset 0 1.5px 0 rgba(0,0,0,.2); }
@@ -960,8 +973,7 @@
       </div>
     </div>
     <div id="bsBattle" class="bsbattle" style="display:none">
-      <div class="bslog" id="bsLog"></div>
-      <div class="bsscore" id="bsScore"></div>
+      <div class="bsfleet" id="bsFleet"></div>
       <button id="btnBsView" class="bsalt">Gegner-Feld</button>
       <div class="row bsend" id="bsEnd" style="display:none">
         <button id="btnBsAgain">Nochmal</button>
@@ -1167,6 +1179,7 @@
     document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
+    document.body.classList.remove('bs-enemy');
     window.scrollTo(0, 0);
   }
   function persist() { save(MODES[mode].lsKey, G()); publish(); }
@@ -2400,7 +2413,7 @@
     for (let r = 0; r < BS; r++) for (let c = 0; c < BS; c++) grid += `<div class="bscell" data-r="${r}" data-c="${c}"></div>`;
     const place = s => `left:${s.c * 10}%;top:${s.r * 10}%;width:${(s.h ? s.len : 1) * 10}%;height:${(s.h ? 1 : s.len) * 10}%`;
     ghosts.forEach(s => { grid += `<div class="bsship ghost" style="${place(s)}">${shipSVG(s)}</div>`; });
-    ships.forEach(s => { if (s.r !== null) grid += `<div class="bsship${sel === s.id ? ' sel' : ''}" style="${place(s)}">${shipSVG(s)}</div>`; });
+    ships.forEach(s => { if (s.r !== null) grid += `<div class="bsship${sel === s.id ? ' sel' : ''}" data-id="${s.id}" style="${place(s)}">${shipSVG(s)}</div>`; });
     Object.entries(chips).forEach(([k, v]) => {
       const [r, c] = k.split(',').map(Number);
       grid += `<div class="bschip ${v}${k === popKey ? ' pop' : ''}" style="left:${c * 10}%;top:${r * 10}%"></div>`;
@@ -2540,6 +2553,7 @@
       }
     }
     const enemy = b.view === 'enemy';
+    document.body.classList.toggle('bs-enemy', enemy && $('sSea').classList.contains('active'));
     $('bsTitle').textContent = enemy ? 'Gegnerische Flotte' : 'Meine Flotte';
     // Brett
     let html;
@@ -2553,6 +2567,8 @@
     }
     $('bsBoard').innerHTML = html;
     $('bsBoard').classList.toggle('target', enemy && ph === 'me');
+    $('bsBoard').classList.toggle('setup', setup);
+    if (setup) $('bsBoard').querySelectorAll('.bsship[data-id]').forEach(el => el.addEventListener('pointerdown', e => bsStartDrag(e, el.dataset.id, false)));
     $('bsBoard').querySelectorAll('.bscell').forEach(el => el.onclick = () => bsTap(+el.dataset.r, +el.dataset.c));
     // Status
     const st = {
@@ -2571,9 +2587,14 @@
     $('bsBattle').style.display = setup ? 'none' : '';
     if (setup) renderSeaTray();
     else {
-      $('bsLog').innerHTML = [bsLastText(sd.myShots, sd.myShotRes, 'Du'), bsLastText(sd.oppShots, sd.oppShotRes, b.code ? 'Gegner' : 'Computer')]
-        .filter(Boolean).map(t => `<div>${esc(t)}</div>`).join('');
-      $('bsScore').textContent = `Versenkt: ${bsSunkCount(sd.myShotRes)} / ${FLEET.length}  ·  Verloren: ${bsSunkCount(sd.oppShotRes)} / ${FLEET.length}`;
+      // Übersicht der gegnerischen Schiffe: versenkte verblassen
+      const sunkIds = new Set(sd.myShotRes.filter(x => x && x.k === 's').map(x => x.id));
+      $('bsFleet').style.display = enemy ? '' : 'none';
+      $('bsFleet').innerHTML = [['de', 'es', 'fr'], ['s1', 's2', 's3'], ['it', 'jp', 'nl', 'us', 'row']].map(row =>
+        `<div class="bsfrow">${row.map(id => {
+          const f = fleetById(id);
+          return `<div class="bsfship${sunkIds.has(id) ? ' sunk' : ''}" style="width:${f.len * 21}px;height:21px">${shipSVG({ id, len: f.len, r: 0, c: 0, h: true })}</div>`;
+        }).join('')}</div>`).join('');
       $('btnBsView').textContent = enemy ? 'Meine Flotte' : 'Gegner-Feld';
       const over = ph === 'won' || ph === 'lost' || ph === 'end';
       $('bsEnd').style.display = over ? '' : 'none';
@@ -2601,13 +2622,7 @@
       const cls = (s.r !== null ? ' placed' : '') + (bsSel === s.id ? ' sel' : '');
       return `<button class="bstray${cls}" data-id="${s.id}"><span>${f.name}</span><i>${'■'.repeat(s.len)}</i></button>`;
     }).join('');
-    $('bsTray').querySelectorAll('button').forEach(btn => btn.onclick = () => {
-      const s = b.ships.find(x => x.id === btn.dataset.id);
-      if (s.r !== null) { s.r = null; s.c = null; }
-      bsSel = s.id; bsRot = s.h;
-      save(MODES.sea.lsKey, b);
-      renderSea();
-    });
+    $('bsTray').querySelectorAll('button').forEach(btn => btn.addEventListener('pointerdown', e => bsStartDrag(e, btn.dataset.id, true)));
     $('btnBsRot').textContent = bsRot ? 'Drehen ↕' : 'Drehen ↔';
     $('btnBsReady').disabled = !b.ships.every(s => s.r !== null);
   }
@@ -2628,6 +2643,84 @@
     save(MODES.sea.lsKey, b);
     renderSea();
   }
+  // ---------- Drag & Drop beim Aufstellen ----------
+  // Ziehen: Schiff aus der Liste oder vom Feld an eine neue Stelle. Antippen eines Schiffs auf dem Feld: um 90° drehen.
+  let bsDrag = null;
+  function bsGridInfo() {
+    const grid = $('bsBoard').querySelector('.bsgrid');
+    const rect = grid.getBoundingClientRect();
+    return { grid, rect, cell: rect.width / BS };
+  }
+  function bsStartDrag(e, id, fromTray) {
+    if (bsPhase() !== 'setup') return;
+    const s = B.ships.find(x => x.id === id);
+    const { rect, cell } = bsGridInfo();
+    let grab = Math.floor(s.len / 2);
+    let h = fromTray ? bsRot : s.h;
+    if (!fromTray) {
+      const cc = Math.floor((e.clientX - rect.left) / cell), rr = Math.floor((e.clientY - rect.top) / cell);
+      grab = Math.max(0, Math.min(s.len - 1, s.h ? cc - s.c : rr - s.r));
+    }
+    bsDrag = { id, fromTray, x0: e.clientX, y0: e.clientY, moved: false, grab, h, target: null, src: e.currentTarget };
+    e.preventDefault();
+  }
+  window.addEventListener('pointermove', e => {
+    const d = bsDrag; if (!d) return;
+    if (!d.moved && Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 7) return;
+    const s = B.ships.find(x => x.id === d.id);
+    const { grid, rect, cell } = bsGridInfo();
+    if (!d.moved) {
+      d.moved = true;
+      if (d.src) d.src.classList.add('dragging');
+      d.ghost = document.createElement('div');
+      d.ghost.className = 'bsship dragghost';
+      d.ghost.innerHTML = shipSVG({ ...s, h: d.h });
+      grid.appendChild(d.ghost);
+    }
+    // Schiff folgt dem Finger, rastet aber auf Felder ein
+    const cc = Math.floor((e.clientX - rect.left) / cell), rr = Math.floor((e.clientY - rect.top) / cell);
+    const r = d.h ? rr : rr - d.grab, c = d.h ? cc - d.grab : cc;
+    const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+    const cand = { ...s, r, c, h: d.h };
+    const ok = inside && !bsFits(B.ships, cand);
+    d.target = ok ? cand : null;
+    d.ghost.style.display = inside ? '' : 'none';
+    d.ghost.style.left = c * 10 + '%'; d.ghost.style.top = r * 10 + '%';
+    d.ghost.style.width = (d.h ? s.len : 1) * 10 + '%'; d.ghost.style.height = (d.h ? 1 : s.len) * 10 + '%';
+    d.ghost.classList.toggle('bad', !ok);
+  });
+  window.addEventListener('pointerup', e => {
+    const d = bsDrag; if (!d) return;
+    bsDrag = null;
+    const b = B, s = b.ships.find(x => x.id === d.id);
+    if (d.ghost) d.ghost.remove();
+    if (!d.moved) {
+      if (d.fromTray) { // Antippen in der Liste = auswählen (danach Feld antippen)
+        if (s.r !== null) { s.r = null; s.c = null; }
+        bsSel = s.id; bsRot = s.h;
+      } else bsRotate(s);
+    } else if (d.target) {
+      Object.assign(s, { r: d.target.r, c: d.target.c, h: d.target.h });
+      bsSel = (b.ships.find(x => x.r === null) || {}).id || null;
+    } else if (d.moved) {
+      const { rect } = bsGridInfo();
+      const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+      if (inside) toast('Hier ist kein Platz – Schiffe brauchen ein Feld Abstand.');
+    }
+    save(MODES.sea.lsKey, b);
+    renderSea();
+  });
+  window.addEventListener('pointercancel', () => { if (bsDrag && bsDrag.ghost) bsDrag.ghost.remove(); bsDrag = null; if (mode === 'sea' && B) renderSea(); });
+  // Drehen um 90°: bleibt möglichst an der Stelle, rutscht sonst etwas nach, damit es passt
+  function bsRotate(s) {
+    const nh = !s.h;
+    for (let k = 0; k < s.len; k++) {
+      const cand = { ...s, h: nh, r: nh ? s.r : s.r - k, c: nh ? s.c - k : s.c };
+      if (!bsFits(B.ships, cand)) { Object.assign(s, cand); return; }
+    }
+    toast('Hier ist kein Platz zum Drehen.');
+  }
+
   $('btnBsRot').onclick = () => { bsRot = !bsRot; renderSeaTray(); };
   $('btnBsRand').onclick = () => { const f = bsRandomFleet(); if (f) { B.ships = f; bsSel = null; save(MODES.sea.lsKey, B); renderSea(); } };
   $('btnBsReady').onclick = () => {
