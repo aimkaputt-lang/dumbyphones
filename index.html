@@ -773,6 +773,39 @@
   .hgword.mini { margin: 4px 0 0; min-height: 24px; }
   .hgword.mini .hgch { width: 13px; height: 20px; font-size: 14px; border-bottom-width: 3px; }
 
+  /* ---------- Strichduett ---------- */
+  body[data-theme="sd"], body[data-theme="sdgame"] {
+    --bg: #3f0f4c; --bg-dark: #22062a; --muted: #dcc0e6;
+    --panel: #a9cbea; --panel-card: #6f95bd; --panel-shadow: #12031a; --title: #e3a179;
+    --bar: #b8875f; --bar-dark: #85603f; --seg-text: #fff2e4;
+  }
+  body[data-theme="sdgame"] { --bg: #2a2830; --bg-dark: #0f0e13; --muted: #b9b6c4; --panel-card: #2c2a35; }
+  body[data-theme^="sd"] .title { text-shadow: 0 5px 0 #14031a, 0 6px 12px rgba(0,0,0,.3); }
+  body[data-theme="sd"] .pv { background: radial-gradient(ellipse at 40% 40%, #3a3842, #16151b); }
+  body[data-theme^="sd"] .modal { background: linear-gradient(120deg, #3f0f4c, #5a1a6a); border-color: #a9cbea; }
+  body[data-theme^="sd"] .modal .big:empty { display: none; }
+  body[data-theme^="sd"] .modal h2 { font-size: 32px; margin-bottom: 18px; }
+  body[data-theme="sd"] .seg button { color: #5a3a22; }
+  body[data-theme="sd"] .seg:not(.v1) button[data-mode="solo"], body[data-theme="sd"] .seg.v1 button[data-mode="1v1"] { color: var(--btn-text); }
+  #sSd .topbar { margin-bottom: 8px; }
+  .sdscore { width: 100%; display: flex; justify-content: space-between; margin: 10px 0 2px; }
+  .sdsc { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; }
+  .sdsc b { min-width: 40px; text-align: center; font-size: 22px; padding: 2px 10px; border-radius: 12px; color: #1d1a22; }
+  .sdsc.r b { background: #e2104c; color: #fff; }
+  .sdsc.y b { background: #f4c80f; }
+  .sdboard { width: 100%; margin-top: 6px; }
+  .sdboard svg { width: 100%; display: block; }
+  .sdlab { font-family: "Fredoka", sans-serif; font-size: 19px; font-weight: 600; fill: #f3f1f8; }
+  .sdlab.hl { fill: #7fe0d4; }
+  .sdhit { cursor: pointer; }
+  .sdhit:active { stroke: rgba(255,255,255,.12); }
+  .sdlast { animation: sdflash .9s ease-out; }
+  @keyframes sdflash { from { stroke-width: 9; opacity: .6; } to { stroke-width: 4.5; opacity: 1; } }
+  .sdend { margin-top: auto; padding-top: 10px; }
+  .sdend button { margin: 0; }
+  .sdalt { background: #b8875f; color: #fff; box-shadow: 0 6px 0 #85603f; }
+  .sdboard.mini { width: 74%; margin: 0 auto; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -921,6 +954,19 @@
           <rect x="91" y="92" width="9" height="6" rx="2.5" fill="#2d4a36"/><rect x="104" y="92" width="9" height="6" rx="2.5" fill="#2d4a36"/>
         </svg>
       </button>
+      <button class="toy" id="toySd" aria-label="Strichduett" style="animation-delay:-4.6s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="60" ry="7" fill="rgba(0,0,0,.28)"/>
+          <rect x="30" y="16" width="100" height="100" rx="8" fill="#16151d"/>
+          <rect x="40" y="26" width="80" height="80" fill="none" stroke="#5c4a3a" stroke-width="3"/>
+          <path d="M44 32 L76 30 L46 40 L76 38 L46 48 L76 46 L46 56 L74 58" stroke="#e2104c" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+          <path d="M84 72 L116 70 L86 80 L116 78 L86 88 L116 86 L86 96 L114 98" stroke="#f4c80f" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+          <path d="M40 66 L80 66 L80 26" stroke="#e2104c" stroke-width="3.2" fill="none"/>
+          <path d="M80 66 L120 66 M80 66 L80 106" stroke="#f4c80f" stroke-width="3.2" fill="none"/>
+          <g fill="#2b2b36"><circle cx="40" cy="26" r="4"/><circle cx="80" cy="26" r="4"/><circle cx="120" cy="26" r="4"/><circle cx="40" cy="66" r="4"/><circle cx="80" cy="66" r="4"/><circle cx="120" cy="66" r="4"/><circle cx="40" cy="106" r="4"/><circle cx="80" cy="106" r="4"/><circle cx="120" cy="106" r="4"/></g>
+          <g transform="translate(108 34) rotate(40)"><rect x="-6" y="0" width="12" height="28" rx="2" fill="#c8264f"/><path d="M-6 28 L0 39 L6 28Z" fill="#e6d2b0"/><path d="M-2 34 L0 39 L2 34Z" fill="#333"/></g>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -965,6 +1011,9 @@
         </div>
         <div class="pv" id="pvHangBox" style="display:none">
           <div class="hgpv"><div class="hggallow" id="pvhGallow"></div><div class="hgword mini" id="pvhWord"></div></div>
+        </div>
+        <div class="pv" id="pvSdBox" style="display:none">
+          <div class="sdboard mini" id="pvkBoard"></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -1228,6 +1277,29 @@
     </div>
   </section>
 
+  <!-- STRICHDUETT -->
+  <section class="screen" id="sSd">
+    <div class="topbar">
+      <button class="menubtn" id="btnKMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="sdStatus"></div>
+    <div class="sdscore" id="sdScore"></div>
+    <div class="sdboard" id="sdBoard"></div>
+    <div class="row sdend" id="sdEnd" style="display:none">
+      <button id="btnSdAgain">Nochmal</button>
+      <button id="btnSdMenu" class="sdalt">Menü</button>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1363,6 +1435,7 @@
     sea:   { topic: 'dumbyphones/schiffe/v1/', lsKey: 'sv_state_v1', screen: 'sSea', theme: 'sea' },
     cs:    { topic: 'dumbyphones/flotterdreier/v1/', lsKey: 'fd_state_v1', screen: 'sCs', theme: 'cs' },
     hang:  { topic: 'dumbyphones/abhaengen/v1/', lsKey: 'ab_state_v1', screen: 'sHang', theme: 'hang' },
+    sd:    { topic: 'dumbyphones/strichduett/v1/', lsKey: 'sd_state_v1', screen: 'sSd', theme: 'sd' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
@@ -1371,7 +1444,8 @@
   let B = load(MODES.sea.lsKey, null); // Schiffe-versenken-Spielstand
   let C = load(MODES.cs.lsKey, null); // Flotter-Dreier-Spielstand
   let H = load(MODES.hang.lsKey, null); // Abhängen-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : S);
+  let K = load(MODES.sd.lsKey, null);   // Strichduett-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1426,7 +1500,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1472,6 +1546,7 @@
         if (mode === 'sea') seaSync();
         if (mode === 'cs') csSync();
         if (mode === 'hang') hangSync();
+        if (mode === 'sd') sdSync();
       } catch {}
     });
   }
@@ -1494,6 +1569,8 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'sd') {
+      Object.assign(data, { host: g.host, moves: g.moves });
     } else if (mode === 'hang') {
       Object.assign(data, { host: g.host, words: g.words.map(hgEnc), results: g.results, curErrors: g.cur ? g.cur.errors : 0 });
     } else if (mode === 'cs') {
@@ -1535,6 +1612,12 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'sd') {
+      const sim = sdSim(g.moves, o.moves || [], (g.gameNo % 2 === 1) === g.host);
+      q('.ototal').textContent = sim.score.op;
+      q('.oround').textContent = 'Kästchen';
       return;
     }
     if (mode === 'hang') {
@@ -3605,6 +3688,224 @@
   }
 
   // =====================================================================
+  //  STRICHDUETT (Käsekästchen)
+  // =====================================================================
+  const SD_N = 8;                 // Punkte pro Seite -> 7x7 Kästchen
+  const SD_B = SD_N - 1;
+  const SD_ROWS = 'ABCDEFGH';
+  // Kanten: 'h:r:c' (waagerecht, Punkt r/c -> r/c+1), 'v:r:c' (senkrecht, Punkt r/c -> r+1/c)
+  const SD_BORDER = new Set();
+  for (let i = 0; i < SD_B; i++) { SD_BORDER.add(`h:0:${i}`); SD_BORDER.add(`h:${SD_B}:${i}`); SD_BORDER.add(`v:${i}:0`); SD_BORDER.add(`v:${i}:${SD_B}`); }
+  const SD_EDGES = [];
+  for (let r = 0; r < SD_N; r++) for (let c = 0; c < SD_B; c++) SD_EDGES.push(`h:${r}:${c}`);
+  for (let r = 0; r < SD_B; r++) for (let c = 0; c < SD_N; c++) SD_EDGES.push(`v:${r}:${c}`);
+  const SD_FREE = SD_EDGES.filter(e => !SD_BORDER.has(e)); // mit aktivem Rand spielbar
+  function sdBoxesOf(e) {
+    const [t, r, c] = e.split(':'); const R = +r, Cc = +c;
+    const out = t === 'h' ? [[R - 1, Cc], [R, Cc]] : [[R, Cc - 1], [R, Cc]];
+    return out.filter(([a, b]) => a >= 0 && b >= 0 && a < SD_B && b < SD_B);
+  }
+  const sdSides = (edges, r, c) => [`h:${r}:${c}`, `h:${r + 1}:${c}`, `v:${r}:${c}`, `v:${r}:${c + 1}`].filter(e => edges[e]).length;
+
+  function freshSd(code, gameNo, host) {
+    return { code, gameNo: gameNo || 1, host: !!host, meStarts: code ? null : true, moves: [], cpuMoves: code ? null : [],
+      finished: false, result: null, endShown: false, round: 1, total: 0 };
+  }
+  const sdOpp = () => { const o = currentOpp(); return o && K && o.gameNo === K.gameNo ? o : null; };
+  // Spielzustand aus den Zuglisten beider Spieler nachspielen (wer ein Kästchen schließt, ist nochmal dran)
+  function sdSim(myMoves, oppMoves, meStarts) {
+    const edges = {}; SD_BORDER.forEach(e => { edges[e] = 'b'; });
+    const boxes = {}; let cur = meStarts ? 'me' : 'op', i = 0, j = 0, last = null, lastBy = null;
+    const score = { me: 0, op: 0 };
+    for (let guard = 0; guard < 300; guard++) {
+      const list = cur === 'me' ? myMoves : oppMoves, idx = cur === 'me' ? i : j;
+      if (idx >= list.length) break;
+      const e = list[idx];
+      if (cur === 'me') i++; else j++;
+      if (edges[e]) continue;
+      edges[e] = cur; last = e; lastBy = cur;
+      let got = 0;
+      sdBoxesOf(e).forEach(([r, c]) => { if (!boxes[r + ',' + c] && sdSides(edges, r, c) === 4) { boxes[r + ',' + c] = cur; score[cur]++; got++; } });
+      if (!got) cur = cur === 'me' ? 'op' : 'me';
+    }
+    const over = score.me + score.op >= SD_B * SD_B;
+    return { edges, boxes, turn: cur, last, lastBy, score, over };
+  }
+  function sdSides2() {
+    const g = K;
+    if (!g.code) return { my: g.moves, op: g.cpuMoves, meStarts: g.meStarts, here: true };
+    const o = sdOpp();
+    return { my: g.moves, op: (o && o.moves) || [], meStarts: (g.gameNo % 2 === 1) === g.host, here: !!o };
+  }
+  // Computer: Kästchen schließen, sonst keinen dritten Strich an ein Kästchen setzen
+  function sdCpuPick(edges) {
+    const free = SD_FREE.filter(e => !edges[e]);
+    const pick = a => a[Math.floor(Math.random() * a.length)];
+    const closes = free.filter(e => sdBoxesOf(e).some(([r, c]) => sdSides(edges, r, c) === 3));
+    if (closes.length) return pick(closes);
+    const safe = free.filter(e => sdBoxesOf(e).every(([r, c]) => sdSides(edges, r, c) < 2));
+    if (safe.length) return pick(safe);
+    // notfalls die Kante, die dem Gegner am wenigsten Kästchen schenkt
+    let best = [], bestN = 1e9;
+    free.forEach(e => {
+      const ed = { ...edges, [e]: 'x' }; let n = 0, changed = true; const own = {};
+      while (changed) { changed = false; for (let r = 0; r < SD_B; r++) for (let c = 0; c < SD_B; c++) {
+        if (!own[r + ',' + c] && sdSides(ed, r, c) === 3) { [`h:${r}:${c}`, `h:${r + 1}:${c}`, `v:${r}:${c}`, `v:${r}:${c + 1}`].forEach(x => { ed[x] = 'x'; }); own[r + ',' + c] = 1; n++; changed = true; }
+      } }
+      if (n < bestN) { bestN = n; best = [e]; } else if (n === bestN) best.push(e);
+    });
+    return pick(best.length ? best : free);
+  }
+
+  // Kritzel-Schraffur für ein gefülltes Kästchen (immer gleich pro Kästchen)
+  function sdScribble(x, y, s, r, c) {
+    let seed = (r * 31 + c * 17 + 7) % 97;
+    const rnd = () => { seed = (seed * 53 + 29) % 97; return seed / 97; };
+    const m = s * .2, w = s - 2 * m;
+    let d = `M${x + m} ${y + m + rnd() * 4}`;
+    for (let k = 0; k < 7; k++) {
+      const yy = y + m + (k + .6) * (w / 7);
+      d += ` L${x + m + w - rnd() * 3} ${yy - w / 9 + rnd() * 3} L${x + m + rnd() * 3} ${yy + rnd() * 3}`;
+    }
+    return d;
+  }
+  const SD_COL = { r: '#e2104c', y: '#f4c80f' };
+  // Brett als SVG: 40er-Raster, Rand 44 für die Beschriftung
+  function sdBoardSVG(sim, myCol, opts = {}) {
+    const S = 40, O = 44, W = O + S * SD_B + 26;
+    const opCol = myCol === 'r' ? 'y' : 'r';
+    const col = who => (who === 'me' ? SD_COL[myCol] : SD_COL[opCol]);
+    const P = (r, c) => [O + c * S, O + r * S];
+    const ends = e => { const [t, r, c] = e.split(':'); const R = +r, Cc = +c; return t === 'h' ? [P(R, Cc), P(R, Cc + 1)] : [P(R, Cc), P(R + 1, Cc)]; };
+    let s = `<svg viewBox="0 0 ${W} ${W}" aria-hidden="true">`;
+    s += `<rect x="${O - 8}" y="${O - 8}" width="${S * SD_B + 16}" height="${S * SD_B + 16}" rx="6" fill="#121219"/>`;
+    // Beschriftung (letzter Zug in Türkis)
+    let lr = -1, lc = -1;
+    if (sim.last) { const [, r, c] = sim.last.split(':'); lr = +r; lc = +c; }
+    if (!opts.mini) {
+      for (let c = 0; c < SD_N; c++) s += `<text x="${O + c * S}" y="${O - 18}" text-anchor="middle" class="sdlab${c === lc ? ' hl' : ''}">${c + 1}</text>`;
+      for (let r = 0; r < SD_N; r++) s += `<text x="${O - 26}" y="${O + r * S + 6}" text-anchor="middle" class="sdlab${r === lr ? ' hl' : ''}">${SD_ROWS[r]}</text>`;
+    }
+    // Kritzel
+    Object.entries(sim.boxes).forEach(([k, who]) => {
+      const [r, c] = k.split(',').map(Number); const [x, y] = P(r, c);
+      s += `<path d="${sdScribble(x, y, S, r, c)}" fill="none" stroke="${col(who)}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>`;
+    });
+    // Punkte
+    for (let r = 0; r < SD_N; r++) for (let c = 0; c < SD_N; c++) { const [x, y] = P(r, c); s += `<circle cx="${x}" cy="${y}" r="6.5" fill="#2b2b36"/>`; }
+    // Striche
+    Object.entries(sim.edges).forEach(([e, who]) => {
+      const [[x1, y1], [x2, y2]] = ends(e);
+      const isLast = e === sim.last;
+      s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${who === 'b' ? '#5c4a3a' : col(who)}" stroke-width="${who === 'b' ? 5 : 4.5}" stroke-linecap="round"${isLast ? ' class="sdlast"' : ''}/>`;
+    });
+    // Bleistift am letzten Strich
+    if (sim.last && !opts.mini) {
+      const [[x1, y1], [x2, y2]] = ends(sim.last); const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      s += `<g transform="translate(${mx + 6} ${my - 22}) rotate(40)"><rect x="-5" y="0" width="10" height="22" rx="2" fill="${col(sim.lastBy)}"/><rect x="-5" y="0" width="10" height="5" rx="1.5" fill="rgba(0,0,0,.25)"/><path d="M-5 22 L0 31 L5 22Z" fill="#e6d2b0"/><path d="M-1.6 27.5 L0 31 L1.6 27.5Z" fill="#333"/></g>`;
+    }
+    // Tippflächen für freie Striche
+    if (opts.clickable) SD_FREE.forEach(e => {
+      if (sim.edges[e]) return;
+      const [[x1, y1], [x2, y2]] = ends(e);
+      s += `<line class="sdhit" data-e="${e}" x1="${x1 + (x2 > x1 ? 8 : 0)}" y1="${y1 + (y2 > y1 ? 8 : 0)}" x2="${x2 - (x2 > x1 ? 8 : 0)}" y2="${y2 - (y2 > y1 ? 8 : 0)}" stroke="transparent" stroke-width="26" stroke-linecap="round"/>`;
+    });
+    return s + '</svg>';
+  }
+
+  let sdCpuTimer = null;
+  function sdPhase(sim, sides) {
+    const g = K;
+    if (g.finished) return 'end';
+    if (g.code && !sides.here) return 'noopp';
+    if (sim.over) return 'over';
+    return sim.turn === 'me' ? 'me' : 'op';
+  }
+  function renderSd() {
+    const g = K, sides = sdSides2();
+    const sim = sdSim(sides.my, sides.op, sides.meStarts);
+    const ph = sdPhase(sim, sides);
+    const myCol = sides.meStarts ? 'r' : 'y', opCol = myCol === 'r' ? 'y' : 'r';
+    $('sdBoard').innerHTML = sdBoardSVG(sim, myCol, { clickable: ph === 'me' });
+    $('sdBoard').querySelectorAll('.sdhit').forEach(el => el.addEventListener('click', () => sdDraw(el.dataset.e)));
+    $('sdScore').innerHTML = `<span class="sdsc ${myCol}"><b>${sim.score.me}</b> Du</span><span class="sdsc ${opCol}">${g.code ? 'Gegner' : 'Computer'} <b>${sim.score.op}</b></span>`;
+    let st;
+    const extra = sim.lastBy === sim.turn && sim.last && !sim.over;
+    if (ph === 'noopp') st = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
+    else if (ph === 'me') st = extra && sim.lastBy === 'me' ? 'Kästchen! Du bist nochmal dran' : 'Du bist dran – setz einen Strich';
+    else if (ph === 'op') st = g.code ? 'Gegner ist dran …' : 'Computer überlegt …';
+    else { const r = g.result || (sim.score.me > sim.score.op ? 'win' : sim.score.me < sim.score.op ? 'lose' : 'draw'); st = r === 'win' ? 'Gewonnen!' : r === 'lose' ? 'Verloren' : 'Unentschieden'; }
+    $('sdStatus').textContent = st;
+    $('sdStatus').classList.toggle('turn', ph === 'me');
+    $('sdEnd').style.display = ph === 'over' || ph === 'end' ? '' : 'none';
+    updateOpp();
+    if (ph === 'over' && !g.finished) sdFinish(sim);
+    if (!g.code && ph === 'op' && !sdCpuTimer) {
+      sdCpuTimer = setTimeout(() => {
+        sdCpuTimer = null;
+        if (mode !== 'sd' || !K || K.code) return;
+        const s2 = sdSim(K.moves, K.cpuMoves, K.meStarts);
+        if (s2.over || s2.turn !== 'op') return;
+        K.cpuMoves.push(sdCpuPick(s2.edges));
+        persist();
+        renderSd();
+      }, 700);
+    }
+  }
+  function sdDraw(e) {
+    const g = K, sides = sdSides2();
+    const sim = sdSim(sides.my, sides.op, sides.meStarts);
+    if (sdPhase(sim, sides) !== 'me' || sim.edges[e]) return;
+    g.moves.push(e);
+    try { navigator.vibrate && navigator.vibrate(15); } catch {}
+    persist();
+    renderSd();
+  }
+  function sdFinish(sim) {
+    const g = K;
+    g.finished = true;
+    g.result = sim.score.me > sim.score.op ? 'win' : sim.score.me < sim.score.op ? 'lose' : 'draw';
+    g.total = sim.score.me;
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedSd = (profile.playedSd || 0) + 1; save(LS_PROFILE, profile);
+      setTimeout(() => { if (mode === 'sd' && K === g) modal({ win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[g.result], '', '', 'Weiter'); }, 900);
+    }
+    persist();
+    renderSd();
+  }
+  function sdSync() { if (mode === 'sd' && K) renderSd(); }
+  function sdRematch() {
+    const g = K;
+    clearTimeout(sdCpuTimer); sdCpuTimer = null;
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    K = freshSd(g.code, n, g.host);
+    if (!g.code) K.meStarts = !g.meStarts;
+    persist();
+    renderSd();
+  }
+  $('btnSdAgain').onclick = sdRematch;
+  $('btnSdMenu').onclick = () => { disconnect(); openMode('sd'); };
+  $('btnKMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Strichduett ----------
+  const pvk = { running: false, timer: null };
+  function pvkLater(fn, ms) { pvk.timer = setTimeout(() => pvk.running && fn(), ms); }
+  function pvkStart() {
+    const a = [], b = [];
+    const step = () => {
+      const sim = sdSim(a, b, true);
+      $('pvkBoard').innerHTML = sdBoardSVG(sim, 'r', { mini: true });
+      if (sim.over) { pvkLater(pvkStart, 2500); return; }
+      (sim.turn === 'me' ? a : b).push(sdCpuPick(sim.edges));
+      pvkLater(step, 260);
+    };
+    step();
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -3617,6 +3918,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    sd: {
+      title: 'Strichduett', playedKey: 'playedSd',
+      desc: ['Abwechselnd setzt ihr einen Strich zwischen zwei Punkte. Wer den vierten Strich an ein Kästchen setzt, kritzelt es in seiner Farbe voll – und ist gleich nochmal dran.',
+        'Aber Vorsicht: Wer den dritten Strich an ein Kästchen setzt, schenkt es dem Gegner. Der Rand ist schon gezogen. Sind alle Kästchen voll, gewinnt, wer mehr hat.'],
     },
     hang: {
       title: 'Abhängen', playedKey: 'playedHang',
@@ -3644,14 +3950,15 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
     else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
     else if (mode === 'cs') { C = v; csAnimating = false; clearTimeout(csCpuTimer); csCpuTimer = null; }
-    else if (mode === 'hang') H = v; else S = v;
+    else if (mode === 'hang') H = v;
+    else if (mode === 'sd') { K = v; clearTimeout(sdCpuTimer); sdCpuTimer = null; } else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -3672,6 +3979,7 @@
     $('pvSeaBox').style.display = mode === 'sea' ? '' : 'none';
     $('pvCsBox').style.display = mode === 'cs' ? '' : 'none';
     $('pvHangBox').style.display = mode === 'hang' ? '' : 'none';
+    $('pvSdBox').style.display = mode === 'sd' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -3681,14 +3989,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = ['four', 'sea', 'cs', 'hang'].includes(mode)
+      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea', 'cs', 'hang'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -3698,6 +4006,7 @@
   $('toySea').onclick = () => openMode('sea');
   $('toyCs').onclick = () => openMode('cs');
   $('toyHang').onclick = () => openMode('hang');
+  $('toySd').onclick = () => openMode('sd');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -3852,6 +4161,7 @@
     else if (mode === 'sea') { pvs.running = true; pvsStart(); }
     else if (mode === 'cs') { pvc.running = true; pvcStart(); }
     else if (mode === 'hang') { pvh.running = true; pvhStart(); }
+    else if (mode === 'sd') { pvk.running = true; pvkStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -3862,6 +4172,7 @@
     pvs.running = false; clearTimeout(pvs.timer);
     pvc.running = false; clearTimeout(pvc.timer);
     pvh.running = false; clearTimeout(pvh.timer);
+    pvk.running = false; clearTimeout(pvk.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -3876,7 +4187,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'hang'
+      const txt = mode === 'sd'
+        ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
+        : mode === 'hang'
         ? 'Teile diesen Code mit deinem Gegner. Denk dir schon mal dein erstes Wort aus.'
         : mode === 'cs'
         ? 'Teile diesen Code mit deinem Gegner. Du würfelst zuerst.'
@@ -3899,6 +4212,7 @@
     if (mode === 'four') { show('sFour'); c4Shown = 0; renderFour(); return; }
     if (mode === 'sea') { show('sSea'); bsLastTurn = null; seaSync(); return; }
     if (mode === 'hang') { show('sHang'); renderHang(); return; }
+    if (mode === 'sd') { show('sSd'); renderSd(); return; }
     if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
@@ -3966,7 +4280,8 @@
     if (mode === 'four') { fourRematch(); return; }
     if (mode === 'sea') { seaRematch(); return; }
     if (mode === 'cs') { csRematch(); return; }
-    if (mode === 'hang') { hangRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'hang') { hangRematch(); return; }
+    if (mode === 'sd') { sdRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -3984,7 +4299,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -3995,6 +4310,7 @@
   else if (B && !B.finished) { mode = 'sea'; resumeGame(); }
   else if (C && !C.finished) { mode = 'cs'; resumeGame(); }
   else if (H && !H.finished) { mode = 'hang'; resumeGame(); }
+  else if (K && !K.finished) { mode = 'sd'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
