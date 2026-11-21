@@ -445,7 +445,7 @@
   .brand .b2 { color: #f6efea; margin-left: 10px; transform: translateY(-6px) rotate(-3deg); }
   #sHome .iconbtn { top: calc(env(safe-area-inset-top) + 76px); }
 
-  /* ---------- Dumby Detektiv ---------- */
+  /* ---------- Wixer finden ---------- */
   body[data-theme="who"] {
     --bg: #33365f; --bg-dark: #15162b; --muted: #b9bce0;
     --panel: #4a4e8f; --panel-card: #32356a; --panel-shadow: #0c0d1c; --title: #ffd35a;
@@ -453,10 +453,14 @@
   }
   body[data-theme="who"] .pv { background: radial-gradient(ellipse at 50% 30%, #3e4275, #23254a); }
   #sWho .topbar { margin-bottom: 8px; align-items: center; }
-  .wmine { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
-  .wmine span { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.1; width: 44px; }
-  .wmine .wcard { width: 40px; flex: 0 0 40px; cursor: default; }
-  .wmine .wname { font-size: 6.5px; }
+  .wbottom { width: 100%; display: flex; align-items: flex-end; gap: 14px; margin-top: auto; padding-top: 8px; }
+  .wmine { flex: 0 0 96px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .wmine span { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .wmine .wcard { width: 96px; cursor: default; }
+  .wmine .wname { font-size: 12px; margin: 3px 3px 0; }
+  .wmine .wcard.mystery .q { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 52px; font-weight: 700; color: #fff; text-shadow: 0 3px 0 rgba(0,0,0,.2); }
+  .wbtns { flex: 1; display: flex; flex-direction: column; gap: 14px; padding-bottom: 6px; }
+  .wbtns button { margin: 0; }
   .wstatus {
     width: 100%; text-align: center; font-size: 16px; font-weight: 600; padding: 7px 10px; margin-bottom: 8px;
     border-radius: 12px; background: var(--panel-card); color: var(--muted); transition: background .2s, color .2s;
@@ -490,10 +494,8 @@
   .wcard.choosable:active, .wcard.guessable:active { transform: scale(.94); }
   #sWho.guessing .wcard.guessable { box-shadow: 0 4px 0 #6e4e30, 0 0 0 2.5px var(--title); }
   .wcard.found { box-shadow: 0 4px 0 #6e4e30, 0 0 0 3px var(--title); transform: scale(1.06); }
-  .wlog { width: 100%; min-height: 42px; margin-top: 8px; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.5; }
+  .wlog { width: 100%; min-height: 40px; margin-top: 6px; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.5; }
   .wlog div:last-child { color: var(--text); font-weight: 600; }
-  .wact { margin-top: auto; padding-top: 8px; }
-  .wact button { margin: 0; }
   #btnWGuess { background: var(--bar); color: #fff; box-shadow: 0 6px 0 var(--bar-dark); }
   #btnWGuess:active:not(:disabled) { box-shadow: 0 1px 0 var(--bar-dark); }
   .asklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
@@ -543,7 +545,7 @@
           <g transform="rotate(9 96 82)"><rect x="86" y="72" width="20" height="20" rx="4" fill="#faf7f5"/><rect x="86" y="88" width="20" height="4" rx="2" fill="#c3b7b8"/><circle cx="91" cy="77" r="2" fill="#2a2222"/><circle cx="101" cy="77" r="2" fill="#2a2222"/><circle cx="91" cy="87" r="2" fill="#2a2222"/><circle cx="101" cy="87" r="2" fill="#2a2222"/></g>
         </svg>
       </button>
-      <button class="toy" id="toyWho" aria-label="Dumby Detektiv" style="animation-delay:-.8s">
+      <button class="toy" id="toyWho" aria-label="Wixer finden" style="animation-delay:-.8s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="117" rx="62" ry="8" fill="rgba(0,0,0,.28)"/>
           <rect x="22" y="96" width="116" height="16" rx="3" fill="#2f3260"/>
@@ -705,11 +707,10 @@
     </div>
   </section>
 
-  <!-- DUMBY DETEKTIV -->
+  <!-- WIXER FINDEN -->
   <section class="screen" id="sWho">
     <div class="topbar">
       <button class="menubtn" id="btnWMenu" aria-label="Menü"><i></i><i></i><i></i></button>
-      <div class="wmine" id="wMine"></div>
       <div class="opp">
         <div class="avatar off">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
@@ -723,9 +724,12 @@
     <div class="wstatus" id="wStatus"></div>
     <div class="wboard"><div class="wgrid" id="wGrid"></div></div>
     <div class="wlog" id="wLog"></div>
-    <div class="row wact">
-      <button id="btnWAsk">Frage stellen</button>
-      <button id="btnWGuess">Tippen</button>
+    <div class="wbottom">
+      <div class="wmine" id="wMine"></div>
+      <div class="wbtns">
+        <button id="btnWAsk">Frage stellen</button>
+        <button id="btnWGuess">Tippen</button>
+      </div>
     </div>
   </section>
 
@@ -863,7 +867,7 @@
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
-  let W = load(MODES.who.lsKey, null); // Dumby-Detektiv-Spielstand
+  let W = load(MODES.who.lsKey, null); // Wixer-finden-Spielstand
   const G = () => (mode === 'dice' ? D : mode === 'who' ? W : S);
   const lowerWins = () => mode === 'klapp';
 
@@ -1438,7 +1442,7 @@
   $('btnDEnter').onclick = enterCat;
 
   // =====================================================================
-  //  DUMBY DETEKTIV (Personen raten)
+  //  WIXER FINDEN (Personen raten)
   // =====================================================================
   // g: Geschlecht · hs: Frisur · hc: Haarfarbe · long: lange Haare · light: helle Augen · eye: Augenfarbe
   // gl: Brillenfarbe · sun: getönte Brille · beard: Bartform · bc: Bartfarbe · bg: Kartenfarbe (p = rosa, b = blau)
@@ -1455,13 +1459,13 @@
     { n: 'Stracciatella', g: 'f', skin: '#f6dcc6', hs: 'bob', hc: '#e2c58a', long: 0, light: 0, shirt: '#d8343f', bg: 'p' },
     { n: 'Udo', g: 'm', skin: '#d9a77a', hs: 'short', hc: '#1e1a18', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#7a3fb0', bg: 'p' },
     { n: 'Berry', g: 'f', skin: '#6a4028', hs: 'curly', hc: '#1e1a18', long: 0, light: 0, gl: '#f0d030', shirt: '#3fc6d0', bg: 'p' },
-    { n: 'Pepe', g: 'm', skin: '#4a2e20', hs: 'bald', hc: '#1e1a18', long: 0, light: 0, shirt: '#f2d14a', bg: 'b' },
+    { n: 'Pepe', g: 'm', skin: '#4a2e20', hs: 'bald', hc: '#1e1a18', long: 0, light: 0, beard: 'full', bc: '#1e1a18', shirt: '#f2d14a', bg: 'b' },
     { n: 'Jackson', g: 'm', skin: '#f6dcc6', hs: 'spiky', hc: '#f0d070', long: 0, light: 0, shirt: '#d8343f', bg: 'b' },
-    { n: 'Havana', g: 'f', skin: '#6a4028', hs: 'long', hc: '#f5b5d0', long: 1, light: 1, eye: '#3f8fd0', shirt: '#2f3f8f', bg: 'p' },
+    { n: 'Havana', g: 'f', skin: '#6a4028', hs: 'long', hc: '#f5b5d0', long: 1, light: 1, eye: '#3f8fd0', gl: '#f4f4f4', shirt: '#2f3f8f', bg: 'p' },
     { n: 'Jarack', g: 'm', skin: '#8a5a3c', hs: 'curly', hc: '#e8c050', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#f2d14a', bg: 'b' },
-    { n: 'Trixi', g: 'f', skin: '#f6dcc6', hs: 'long', hc: '#e8d3a8', long: 1, light: 1, eye: '#3f9a5a', shirt: '#f08a3a', bg: 'p' },
+    { n: 'Trixi', g: 'f', skin: '#a8724a', hs: 'long', hc: '#e8d3a8', long: 1, light: 1, eye: '#3f9a5a', shirt: '#f08a3a', bg: 'p' },
     { n: 'Jassin', g: 'm', skin: '#f0c8a8', hs: 'long', hc: '#1e1a18', long: 1, light: 1, eye: '#3f8fd0', beard: 'full', bc: '#1e1a18', shirt: '#c0305a', bg: 'p' },
-    { n: 'Saskia', g: 'f', skin: '#f3d2b8', hs: 'bob', hc: '#4a2a4a', long: 0, light: 0, shirt: '#f08a3a', bg: 'p' },
+    { n: 'Saskia', g: 'f', skin: '#a8724a', hs: 'bob', hc: '#4a2a4a', long: 0, light: 0, shirt: '#f08a3a', bg: 'p' },
     { n: 'Flower', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#6b3a2a', long: 1, light: 1, eye: '#3f9a5a', shirt: '#d65ad0', bg: 'b' },
     { n: 'Rino', g: 'm', skin: '#c08a5a', hs: 'spiky', hc: '#e03a2a', long: 0, light: 0, gl: '#1a1a1a', sun: 1, shirt: '#5fd0d8', bg: 'b' },
     { n: 'Doris', g: 'f', skin: '#7a4a30', hs: 'long', hc: '#e0c070', long: 1, light: 1, eye: '#3f9a5a', shirt: '#dddddd', bg: 'p' },
@@ -1472,7 +1476,7 @@
     { n: 'Susanne', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#7a5034', long: 1, light: 1, eye: '#3f8fd0', gl: '#9a8ac8', sun: 1, shirt: '#2f4fb0', bg: 'p' },
     { n: 'Abel', g: 'm', skin: '#6a4028', hs: 'afro', hc: '#1e1a18', long: 0, light: 0, gl: '#222222', beard: 'full', bc: '#1e1a18', shirt: '#d8343f', bg: 'b' },
     { n: 'Mandy', g: 'f', skin: '#d8a070', hs: 'short', hc: '#ece2c8', long: 0, light: 1, eye: '#3f8fd0', shirt: '#3fb0b0', bg: 'p' },
-    { n: 'Happy', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b3a2a', long: 0, light: 0, gl: '#777777', beard: 'full', bc: '#f4f0ea', shirt: '#8a4ac0', bg: 'p' },
+    { n: 'Happy', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b3a2a', long: 0, light: 0, gl: '#777777', beard: 'full', bc: '#cfc8bc', shirt: '#8a4ac0', bg: 'p' },
     { n: 'Waylay', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#1e1a18', long: 1, light: 0, gl: '#d8343f', shirt: '#f2d14a', bg: 'p' },
   ];
   const WHO_Q = [
@@ -1524,7 +1528,11 @@
       ${front}
       <ellipse cx="24" cy="30" rx="3" ry="2.4" fill="#fff"/><ellipse cx="36" cy="30" rx="3" ry="2.4" fill="#fff"/>
       <circle cx="24" cy="30" r="1.7" fill="${eye}"/><circle cx="36" cy="30" r="1.7" fill="${eye}"/>
-      <path d="M20.5 25.5 Q24 24 27 25.5 M33 25.5 Q36 24 39.5 25.5" stroke="${p.hs === 'bald' ? '#3a2a20' : h}" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      ${p.g === 'm'
+        ? `<path d="M20 25.6 Q24 23.6 27.5 25 M32.5 25 Q36 23.6 40 25.6" stroke="${p.hs === 'bald' || p.hc === '#ece2c8' ? '#3a2a20' : h}" stroke-width="2.3" fill="none" stroke-linecap="round"/>`
+        : `<path d="M21 25.4 Q24 24.2 27 25.2 M33 25.2 Q36 24.2 39 25.4" stroke="#3a2a20" stroke-width="1" fill="none" stroke-linecap="round"/>
+           <path d="M21 29 l-1.8 -1.3 M21.6 28.1 l-1.2 -1.6 M39 29 l1.8 -1.3 M38.4 28.1 l1.2 -1.6" stroke="#2a1a14" stroke-width=".9" stroke-linecap="round"/>
+           <ellipse cx="20.5" cy="35" rx="2.4" ry="1.4" fill="#e86a7a" opacity=".35"/><ellipse cx="39.5" cy="35" rx="2.4" ry="1.4" fill="#e86a7a" opacity=".35"/>`}
       ${beard}${mouth}${glasses}</svg>`;
   }
   function cardHTML(i, extra) {
@@ -1699,8 +1707,10 @@
       c.classList.toggle('mine', w.secret === i);
     });
     // eigene Person
+    const mystery = (label, sub) => `<span>${label}</span><div class="wcard mystery"><div class="wface blue"><div class="wname">${sub}</div><div class="q">?</div></div></div>`;
     $('wMine').innerHTML = w.secret !== null && w.secret >= 0
-      ? `<span>Deine Person</span>${cardHTML(w.secret)}` : '';
+      ? `<span>Deine Person</span>${cardHTML(w.secret)}`
+      : !w.code ? mystery('Gesucht', 'Computer') : mystery('Deine Person', 'wählen …');
     // Status
     const name = w.oppSecret !== null && w.oppSecret >= 0 ? PEOPLE[w.oppSecret].n : '';
     const st = {
@@ -1766,7 +1776,7 @@
     renderWho();
   }
 
-  // ---------- Mini-Vorschau Dumby Detektiv ----------
+  // ---------- Mini-Vorschau Wixer finden ----------
   const pvw = { running: false, timer: null };
   function pvwLater(fn, ms) { pvw.timer = setTimeout(() => pvw.running && fn(), ms); }
   function pvwStart() {
@@ -1802,7 +1812,7 @@
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
     },
     who: {
-      title: 'Dumby Detektiv', playedKey: 'playedWho',
+      title: 'Wixer finden', playedKey: 'playedWho',
       desc: ['Wer steckt dahinter? Ihr sucht euch beide heimlich eine Person aus und fragt euch abwechselnd aus: Brille? Bart? Lange Haare? Die App beantwortet die Fragen und klappt alle Personen um, die nicht mehr passen.',
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
