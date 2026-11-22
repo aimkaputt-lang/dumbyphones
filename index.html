@@ -1031,6 +1031,7 @@
   .bkrow button { font-size: 17px; padding: 13px 6px; }
   .bkalt { background: #1e4f4c; color: #fff; box-shadow: 0 6px 0 #11302e; }
   .bkallin { background: #3fae4a; color: #fff; box-shadow: 0 6px 0 #26762e; }
+  .bkred { background: #e2104c; color: #fff; box-shadow: 0 6px 0 #9c0a35; }
   .bksplit { background: #e39a85; color: #3a1a10; box-shadow: 0 6px 0 #a8644f; }
   .bkdraft { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; color: var(--muted); }
   .bkchiprow { display: flex; justify-content: space-between; gap: 4px; }
@@ -5379,9 +5380,9 @@
     } else if (st.ph === 'act') {
       const s = sim.seats[sd.me], h = s.hands[s.cur];
       ctl.innerHTML = `<div class="row bkrow">
-        <button id="bkHit">Ziehen</button>
+        <button id="bkHit" class="bkallin">Ziehen</button>
         <button id="bkDouble" class="bkalt"${bkCanDouble(h, s) ? '' : ' disabled'}>Verdoppeln</button>
-        <button id="bkStand">Halten</button></div>
+        <button id="bkStand" class="bkred">Halten</button></div>
         ${bkCanSplit(h, s) ? '<button id="bkSplit" class="bksplit">Teilen</button>' : ''}`;
       $('bkHit').onclick = () => bkAct('h');
       $('bkStand').onclick = () => bkAct('s');
