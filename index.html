@@ -507,6 +507,8 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
   }
   .askq svg { width: 34px; height: 34px; }
+  .askq.asked { opacity: .28; filter: grayscale(1); box-shadow: 0 2px 0 var(--btn-edge); position: relative; }
+  .askq.asked::after { content: '✓'; position: absolute; top: 2px; right: 6px; font-size: 13px; font-weight: 700; color: #2a2a2a; }
   #dlgAsk .modal { max-height: calc(100vh - 40px); overflow-y: auto; }
   #dlgAsk .modal h2 { margin-bottom: 6px; }
   .askq small { font-size: 10px; font-weight: 600; line-height: 1; }
@@ -864,8 +866,11 @@
   .mmlegend span { display: flex; align-items: center; gap: 6px; }
   .mmlegend .mmpeg { width: 12px; height: 12px; border-radius: 3px; }
   .mmnote { width: 100%; justify-content: center; font-weight: 400; font-size: 12px; }
-  .mmbottom { margin-top: auto; padding-top: 10px; }
+  .mmbottom { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 10px; }
   .mmbottom button { margin: 0; }
+  .optbtn { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .optarrow { color: #e9a400; font-size: 26px; line-height: .6; transform: translateY(-4px); }
+  .mmboard.watch { box-shadow: 0 0 0 3px #b384c2, 0 8px 18px rgba(0,0,0,.4); }
   .mmalt { background: #b08bbd; color: #fff; box-shadow: 0 6px 0 #7b5a8a; }
   .mmwrite { justify-content: center; gap: 14px; padding-bottom: 30px; }
   .mmh { text-align: center; margin: 0; color: var(--title); font-size: 26px; text-shadow: 0 3px 0 rgba(0,0,0,.4); }
@@ -889,11 +894,11 @@
     --bar: #b2244f; --bar-dark: #7d1636; --seg-text: #ffd6e0;
   }
   body[data-theme="hexgame"] {
-    --bg: #6a4635; --bg-dark: #2e1d16; --muted: #e8d2c2; --panel-card: #3e2a20; --title: #f4c80f;
-    background: linear-gradient(180deg, #3e2620 0%, #5a3a2e 30%, #6e4a3a 55%, #8a6250 80%, #a47a62 100%);
+    --bg: #1c2a5a; --bg-dark: #0b1230; --muted: #c3cdf0; --panel-card: #18224a; --title: #f4c80f;
+    background: radial-gradient(ellipse at 50% 25%, #253a78 0%, #172453 45%, #0b1230 100%);
   }
   body[data-theme="hex"] .title { text-shadow: 0 5px 0 #0d1f24, 0 6px 12px rgba(0,0,0,.2); }
-  body[data-theme="hex"] .pv { background: linear-gradient(180deg, #4a3029, #8a6250); }
+  body[data-theme="hex"] .pv { background: radial-gradient(ellipse at 50% 25%, #253a78, #0b1230); }
   body[data-theme="hex"] .played { color: #fff; }
   body[data-theme="hex"] .pause .title { color: #f4c80f; }
   body[data-theme^="hex"] .modal { background: linear-gradient(120deg, #2c5a66, #3d7380); border-color: #b2244f; }
@@ -1185,6 +1190,9 @@
       <div class="row" id="rowSolo" style="display:none">
         <button id="btnSolo">Spiel starten</button>
       </div>
+      <div class="row" id="rowOpt" style="display:none">
+        <button id="btnModeOpt" class="optbtn"></button>
+      </div>
       <div class="row barlow">
         <button class="backbtn" id="btnBack" aria-label="Zurück zum Hauptmenü">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
@@ -1466,8 +1474,8 @@
     </div>
     <div class="wstatus" id="mmStatus"></div>
     <div id="mmWrite" class="mmwrite" style="display:none">
-      <h2 class="mmh">Dein Geheimcode</h2>
-      <p>Wähle vier verschiedene Farben. Antippen eines Steins nimmt ihn wieder heraus.</p>
+      <h2 class="mmh" id="mmWriteH">Dein Geheimcode</h2>
+      <p><span id="mmWriteRule">Wähle vier verschiedene Farben.</span> Antippen eines Steins nimmt ihn wieder heraus.</p>
       <div class="mmdraft" id="mmDraft"></div>
       <div class="mmpal" id="mmDraftPal"></div>
       <button id="btnMmSecret">Code festlegen</button>
@@ -1478,10 +1486,12 @@
       <div class="mmlegend">
         <span><i class="mmpeg g"></i>Farbe &amp; Position</span>
         <span><i class="mmpeg w"></i>Farbe korrekt</span>
-        <span class="mmnote">Jede Farbe maximal einmal</span>
+        <span class="mmnote" id="mmRule">Jede Farbe maximal einmal</span>
       </div>
       <div class="mmbottom">
+        <button id="btnMmWatch" class="mmalt" style="display:none">Gegner zusehen</button>
         <button id="btnMmCheck">Prüfen</button>
+        <button id="btnMmNext" style="display:none">Nächste Runde</button>
         <div class="row" id="mmEnd" style="display:none">
           <button id="btnMmAgain">Nochmal</button>
           <button id="btnMmMenu" class="mmalt">Menü</button>
@@ -1791,8 +1801,9 @@
     } else if (mode === 'hex') {
       Object.assign(data, { host: g.host, moves: g.moves });
     } else if (mode === 'mm') {
-      Object.assign(data, { host: g.host, secret: g.secret ? hgEnc(JSON.stringify(g.secret)) : null,
-        tries: g.guesses.length, solved: mmSolved(g), done: mmDone(g) });
+      mmNorm(g);
+      Object.assign(data, { host: g.host, rep: g.rep, secrets: g.secrets, results: g.results,
+        guesses: g.guesses, fb: g.fb, done: mmDone(g) });
     } else if (mode === 'sd') {
       Object.assign(data, { host: g.host, moves: g.moves });
     } else if (mode === 'hang') {
@@ -1844,8 +1855,9 @@
       return;
     }
     if (mode === 'mm') {
-      q('.ototal').textContent = o.tries || 0;
-      q('.oround').textContent = o.done ? (o.solved ? 'Versuche · geknackt' : 'Versuche · fertig') : 'Versuche';
+      const ores = o.results || [];
+      q('.ototal').textContent = mmTotal(ores) + (o.done ? 0 : (o.guesses || []).length);
+      q('.oround').textContent = o.done ? 'Versuche · fertig' : `Versuche · R${ores.length + 1}`;
       return;
     }
     if (mode === 'sd') {
@@ -2306,23 +2318,23 @@
   const PEOPLE = [
     { n: 'Burgerking', g: 'm', skin: '#8a5a3c', hs: 'bald', hc: '#2a1f1a', long: 0, light: 0, beard: 'full', bc: '#ece6dc', shirt: '#e0559a', bg: 'b' },
     { n: 'Mercedes', g: 'f', skin: '#f3d2b8', hs: 'braids', hc: '#7a4a2e', long: 1, light: 1, eye: '#3f8fd0', shirt: '#7bc96f', bg: 'p' },
-    { n: 'Baklava', g: 'f', skin: '#9b6a45', hs: 'long', hc: '#f0d070', long: 1, light: 0, shirt: '#2f3f8f', bg: 'b' },
+    { n: 'Baklava', g: 'f', skin: '#9b6a45', hs: 'long', hc: '#f0d070', long: 1, light: 0, shirt: '#2f3f8f', bg: 'p' },
     { n: 'Ouioui', g: 'f', skin: '#f6dcc6', hs: 'short', hc: '#e0703a', long: 0, light: 1, eye: '#3f8fd0', gl: '#6a6a6a', shirt: '#f2d14a', bg: 'p' },
     { n: 'Python', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#c8a070', long: 0, light: 1, eye: '#3f8fd0', beard: 'mustache', bc: '#3a2a20', shirt: '#e98ab8', bg: 'b' },
     { n: 'Depri', g: 'f', skin: '#5a3a28', hs: 'curlylong', hc: '#1e1a18', long: 1, light: 0, gl: '#e04050', shirt: '#6fbf5f', bg: 'p' },
     { n: 'Monday', g: 'f', skin: '#6a4028', hs: 'long', hc: '#b5602a', long: 1, light: 1, eye: '#3f9a5a', shirt: '#eeeeee', bg: 'p' },
     { n: 'Miro', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b4a2e', long: 0, light: 0, shirt: '#d9eef5', bg: 'b' },
     { n: 'Stracciatella', g: 'f', skin: '#f6dcc6', hs: 'bob', hc: '#e2c58a', long: 0, light: 0, shirt: '#d8343f', bg: 'p' },
-    { n: 'Udo', g: 'm', skin: '#d9a77a', hs: 'short', hc: '#1e1a18', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#7a3fb0', bg: 'p' },
+    { n: 'Udo', g: 'm', skin: '#d9a77a', hs: 'short', hc: '#1e1a18', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#7a3fb0', bg: 'b' },
     { n: 'Berry', g: 'f', skin: '#6a4028', hs: 'curly', hc: '#1e1a18', long: 0, light: 0, gl: '#f0d030', shirt: '#3fc6d0', bg: 'p' },
     { n: 'Pepe', g: 'm', skin: '#4a2e20', hs: 'bald', hc: '#1e1a18', long: 0, light: 0, beard: 'full', bc: '#1e1a18', shirt: '#f2d14a', bg: 'b' },
     { n: 'Jackson', g: 'm', skin: '#f6dcc6', hs: 'spiky', hc: '#f0d070', long: 0, light: 0, shirt: '#d8343f', bg: 'b' },
     { n: 'Havana', g: 'f', skin: '#6a4028', hs: 'long', hc: '#f5b5d0', long: 1, light: 1, eye: '#3f8fd0', gl: '#f4f4f4', shirt: '#2f3f8f', bg: 'p' },
     { n: 'Jarack', g: 'm', skin: '#8a5a3c', hs: 'curly', hc: '#e8c050', long: 0, light: 0, beard: 'goatee', bc: '#1e1a18', shirt: '#f2d14a', bg: 'b' },
     { n: 'Trixi', g: 'f', skin: '#a8724a', hs: 'long', hc: '#e8d3a8', long: 1, light: 1, eye: '#3f9a5a', shirt: '#f08a3a', bg: 'p' },
-    { n: 'Jassin', g: 'm', skin: '#f0c8a8', hs: 'long', hc: '#1e1a18', long: 1, light: 1, eye: '#3f8fd0', beard: 'full', bc: '#1e1a18', shirt: '#c0305a', bg: 'p' },
+    { n: 'Jassin', g: 'm', skin: '#f0c8a8', hs: 'long', hc: '#1e1a18', long: 1, light: 1, eye: '#3f8fd0', beard: 'full', bc: '#1e1a18', shirt: '#c0305a', bg: 'b' },
     { n: 'Saskia', g: 'f', skin: '#a8724a', hs: 'bob', hc: '#4a2a4a', long: 0, light: 0, shirt: '#f08a3a', bg: 'p' },
-    { n: 'Flower', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#6b3a2a', long: 1, light: 1, eye: '#3f9a5a', shirt: '#d65ad0', bg: 'b' },
+    { n: 'Flower', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#6b3a2a', long: 1, light: 1, eye: '#3f9a5a', shirt: '#d65ad0', bg: 'p' },
     { n: 'Rino', g: 'm', skin: '#c08a5a', hs: 'spiky', hc: '#e03a2a', long: 0, light: 0, gl: '#1a1a1a', sun: 1, shirt: '#5fd0d8', bg: 'b' },
     { n: 'Doris', g: 'f', skin: '#7a4a30', hs: 'long', hc: '#e0c070', long: 1, light: 1, eye: '#3f9a5a', shirt: '#dddddd', bg: 'p' },
     { n: 'Clark', g: 'm', skin: '#f6dcc6', hs: 'bowl', hc: '#6b4a2e', long: 0, light: 0, gl: '#5a7a4a', sun: 1, shirt: '#f08a3a', bg: 'b' },
@@ -2332,7 +2344,7 @@
     { n: 'Susanne', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#7a5034', long: 1, light: 1, eye: '#3f8fd0', gl: '#9a8ac8', sun: 1, shirt: '#2f4fb0', bg: 'p' },
     { n: 'Abel', g: 'm', skin: '#6a4028', hs: 'afro', hc: '#1e1a18', long: 0, light: 0, gl: '#222222', beard: 'full', bc: '#1e1a18', shirt: '#d8343f', bg: 'b' },
     { n: 'Mandy', g: 'f', skin: '#d8a070', hs: 'short', hc: '#ece2c8', long: 0, light: 1, eye: '#3f8fd0', shirt: '#3fb0b0', bg: 'p' },
-    { n: 'Happy', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b3a2a', long: 0, light: 0, gl: '#777777', beard: 'full', bc: '#cfc8bc', shirt: '#8a4ac0', bg: 'p' },
+    { n: 'Happy', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b3a2a', long: 0, light: 0, gl: '#777777', beard: 'full', bc: '#cfc8bc', shirt: '#8a4ac0', bg: 'b' },
     { n: 'Waylay', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#1e1a18', long: 1, light: 0, gl: '#d8343f', shirt: '#f2d14a', bg: 'p' },
   ];
   // Haarfarbe je Figur (none = Glatze)
@@ -2514,6 +2526,7 @@
     const w = W;
     if (whoPhase() !== 'mine') return;
     w.askN++; w.round = w.askN + 1;
+    if (kind === 'attr') w.asked = [...(w.asked || []), data.q]; // gestellte Fragen merken
     const ask = { n: w.askN, kind, done: false, ...data };
     if (kind === 'guess' && w.code) ask.own = w.secret; // Spiel endet mit dem Tipp -> eigene Person mitschicken
     if (kind === 'attr') ask.text = WHO_Q.find(x => x.id === data.q).text;
@@ -2646,7 +2659,8 @@
     // eine Reihe pro Kategorie, quadratische Symbol-Buttons
     $('askList').innerHTML = WHO_ROWS.map(row => `<div class="askrow"><span class="asklab">${row.label}</span><div class="askbtns">${row.ids.map(id => {
       const q = WHO_Q.find(x => x.id === id);
-      return `<button class="askq" data-q="${id}" aria-label="${q.text}">${qIcon(id)}<small>${q.short}</small></button>`;
+      const used = (W.asked || []).includes(id);
+      return `<button class="askq${used ? ' asked' : ''}" data-q="${id}" aria-label="${q.text}"${used ? ' disabled' : ''}>${qIcon(id)}<small>${q.short}</small></button>`;
     }).join('')}</div></div>`).join('');
     $('askList').querySelectorAll('button').forEach(b => b.onclick = () => { closeDlg('dlgAsk'); whoAsk('attr', { q: b.dataset.q }); });
     $('askCustom').style.display = solo ? 'none' : '';
@@ -4209,41 +4223,70 @@
       <polygon points="${oct(24)}" fill="${k.l}" opacity=".55"/><polygon points="${oct(16)}" fill="${k.c}"/>
       <path d="M22 34 L34 22 L40 30 L30 40Z" fill="#fff" opacity=".45"/></svg>`;
   }
+  // Hinweise: Grün = Farbe & Position, Weiß = Farbe stimmt (auch mit Mehrfach-Farben korrekt gezählt)
   function mmFeedback(code, guess) {
-    let g = 0, w = 0;
-    guess.forEach((c, i) => { if (code[i] === c) g++; else if (code.includes(c)) w++; });
+    let g = 0;
+    const cc = {}, gc = {};
+    guess.forEach((c, i) => { if (code[i] === c) g++; else { cc[code[i]] = (cc[code[i]] || 0) + 1; gc[c] = (gc[c] || 0) + 1; } });
+    let w = 0;
+    Object.keys(gc).forEach(c => { w += Math.min(gc[c], cc[c] || 0); });
     return [g, w];
   }
-  const mmRandomCode = () => shuffle([0, 1, 2, 3, 4, 5]).slice(0, MM_SLOTS);
+  // Zufallscode, jede Farbe höchstens rep-mal
+  function mmRandomCode(rep = 1) {
+    if (rep <= 1) return shuffle([0, 1, 2, 3, 4, 5]).slice(0, MM_SLOTS);
+    const out = [];
+    while (out.length < MM_SLOTS) { const c = Math.floor(Math.random() * 6); if (out.filter(x => x === c).length < rep) out.push(c); }
+    return out;
+  }
+  const MM_ROUNDS = 3; // 1v1: drei Runden
   function freshMm(code, gameNo, host) {
-    return { code, gameNo: gameNo || 1, host: !!host, secret: null, cpuCode: code ? null : mmRandomCode(),
-      guesses: [], fb: [], cur: [null, null, null, null], draft: [null, null, null, null],
+    const rep = profile.mmRep || 1;
+    return { code, gameNo: gameNo || 1, host: !!host, rep, secrets: [], results: [],
+      cpuCode: code ? null : mmRandomCode(rep),
+      guesses: [], fb: [], cur: [null, null, null, null], draft: [null, null, null, null], watch: false,
       finished: false, result: null, endShown: false, round: 1, total: 0 };
   }
   const mmOpp = () => { const o = currentOpp(); return o && M && o.gameNo === M.gameNo ? o : null; };
+  function mmNorm(g) { // ältere Spielstände ergänzen
+    if (!g.secrets) g.secrets = g.secret ? [g.secret] : [];
+    if (!g.results) g.results = [];
+    if (!g.rep) g.rep = 1;
+  }
+  // Wie oft darf jede Farbe vorkommen? Im 1v1 gilt die Einstellung des Erstellers.
+  function mmRep(g) {
+    if (g.code && !g.host) { const o = mmOpp(); if (o && o.rep) return o.rep; }
+    return g.rep || 1;
+  }
+  const mmRounds = g => (g.code ? MM_ROUNDS : 1);
   function mmTarget() {
     const g = M;
     if (!g.code) return g.cpuCode;
-    const o = mmOpp();
-    if (!o || !o.secret) return null;
-    try { return JSON.parse(hgDec(o.secret)); } catch { return null; }
+    const o = mmOpp(), r = g.results.length;
+    if (!o || !o.secrets || !o.secrets[r]) return null;
+    try { return JSON.parse(hgDec(o.secrets[r])); } catch { return null; }
   }
   const mmSolved = g => g.fb.some(([gr]) => gr === MM_SLOTS);
-  const mmDone = g => mmSolved(g) || g.guesses.length >= MM_TRIES;
+  const mmRoundOver = g => mmSolved(g) || g.guesses.length >= MM_TRIES;
+  const mmDone = g => g.results.length >= mmRounds(g);
   function mmPhase() {
     const g = M;
+    mmNorm(g);
     if (g.finished) return 'end';
     if (g.code && !mmOpp()) return 'noopp';
-    if (g.code && !g.secret) return 'write';
     if (mmDone(g)) return 'done';
+    const r = g.results.length;
+    if (g.code && g.secrets.length <= r) return 'write';
     if (!mmTarget()) return 'waitcode';
+    if (mmRoundOver(g)) return 'rounddone';
     return 'guess';
   }
   const mmScore = (solved, tries) => (solved ? tries : MM_TRIES + 1);
+  const mmTotal = res => (res || []).reduce((s, x) => s + mmScore(x.solved, x.tries), 0);
 
   function mmBoardHTML(g, target, reveal, opts = {}) {
     const curCol = g.guesses.length;
-    let h = '<div class="mmboard' + (opts.mini ? ' mini' : '') + '"><div class="mmcols">';
+    let h = '<div class="mmboard' + (opts.mini ? ' mini' : '') + (opts.watch ? ' watch' : '') + '"><div class="mmcols">';
     for (let k = 0; k < MM_TRIES; k++) {
       const guess = g.guesses[k], fb = g.fb[k];
       const isCur = !opts.mini && k === curCol && !reveal && opts.active;
@@ -4257,55 +4300,81 @@
       }
       h += `<div class="mmcol${isCur ? ' active' : ''}"><div class="mmnum">${k + 1}</div><div class="mmpegs">${pegs}</div><div class="mmholes"><i class="mmrail"></i>${holes}</div></div>`;
     }
-    // verdeckter Code
     let sec = '';
     for (let s = 0; s < MM_SLOTS; s++) sec += `<div class="mmhole sec">${reveal && target ? mmGem(target[s]) : ''}</div>`;
     h += `<div class="mmcol secret${reveal ? ' open' : ''}"><div class="mmnum">?</div><div class="mmpegs"></div><div class="mmholes">${sec}<div class="mmcover"></div></div></div>`;
     return h + '</div></div>';
   }
-  function mmPaletteHTML(used) {
-    return MM_COLORS.map((_, i) => `<button class="mmpick${used.includes(i) ? ' used' : ''}" data-c="${i}" aria-label="${MM_COLORS[i].n}">${mmGem(i)}</button>`).join('');
+  function mmPaletteHTML(used, rep) {
+    return MM_COLORS.map((_, i) => {
+      const full = used.filter(x => x === i).length >= rep;
+      return `<button class="mmpick${full ? ' used' : ''}" data-c="${i}" aria-label="${MM_COLORS[i].n}">${mmGem(i)}</button>`;
+    }).join('');
   }
 
   function renderMm() {
-    const g = M, ph = mmPhase(), target = mmTarget();
+    const g = M, ph = mmPhase(), target = mmTarget(), rep = mmRep(g);
+    const total = mmRounds(g), r = Math.min(g.results.length + 1, total);
+    const o = g.code ? mmOpp() : null;
     const writing = ph === 'write';
+    // Zuschauen: der Gegner rät gerade meinen Code
+    const oRound = o ? (o.results || []).length : 0;
+    const canWatch = !!(o && !o.done && g.secrets[oRound]);
+    const autoWatch = canWatch && (ph === 'waitcode' || ph === 'done');
+    const watching = canWatch && (g.watch || autoWatch) && !writing;
     $('mmWrite').style.display = writing ? '' : 'none';
     $('mmPlay').style.display = writing ? 'none' : '';
+    const pre = total > 1 ? `Runde ${r}/${total} · ` : '';
     let st;
     if (ph === 'noopp') st = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
-    else if (ph === 'write') st = 'Leg einen Geheimcode für deinen Gegner fest';
-    else if (ph === 'waitcode') st = 'Warte auf den Code deines Gegners …';
-    else if (ph === 'guess') st = `Versuch ${g.guesses.length + 1} von ${MM_TRIES}`;
-    else if (ph === 'done') st = g.code ? 'Warte, bis dein Gegner fertig ist …' : (mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt');
-    else st = { win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden', solo: mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt' }[g.result] || 'Fertig';
+    else if (watching) st = `Du schaust zu: Gegner rät deinen Code (Runde ${oRound + 1})`;
+    else if (ph === 'write') st = `${pre}Leg einen Code für deinen Gegner fest`;
+    else if (ph === 'waitcode') st = `${pre}Warte auf den Code deines Gegners …`;
+    else if (ph === 'guess') st = `${pre}Versuch ${g.guesses.length + 1} von ${MM_TRIES}`;
+    else if (ph === 'rounddone') st = `${pre}${mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt'}`;
+    else if (ph === 'done') st = g.code ? 'Warte, bis dein Gegner fertig ist …' : (g.results[0] && g.results[0].solved ? 'Geknackt!' : 'Nicht geknackt');
+    else st = { win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[g.result] || ((g.results[0] && g.results[0].solved) ? 'Geknackt!' : 'Nicht geknackt');
     $('mmStatus').textContent = st;
-    $('mmStatus').classList.toggle('turn', ph === 'guess' || ph === 'write');
+    $('mmStatus').classList.toggle('turn', !watching && (ph === 'guess' || ph === 'write'));
+    $('mmRule').textContent = rep === 1 ? 'Jede Farbe maximal einmal' : `Jede Farbe maximal ${rep}×`;
     if (writing) {
+      $('mmWriteH').textContent = total > 1 ? `Dein Code · Runde ${r}/${total}` : 'Dein Geheimcode';
+      $('mmWriteRule').textContent = rep === 1 ? 'Wähle vier verschiedene Farben.' : `Jede Farbe darf bis zu ${rep}× vorkommen.`;
       $('mmDraft').innerHTML = g.draft.map((v, s) => `<div class="mmhole cur big" data-s="${s}">${v !== null ? mmGem(v) : ''}</div>`).join('');
       $('mmDraft').querySelectorAll('.mmhole').forEach(el => el.onclick = () => { g.draft[+el.dataset.s] = null; save(MODES.mm.lsKey, g); renderMm(); });
-      $('mmDraftPal').innerHTML = mmPaletteHTML(g.draft.filter(v => v !== null));
+      $('mmDraftPal').innerHTML = mmPaletteHTML(g.draft.filter(v => v !== null), rep);
       $('mmDraftPal').querySelectorAll('.mmpick').forEach(b => b.onclick = () => mmPick(g.draft, +b.dataset.c));
       $('btnMmSecret').disabled = g.draft.some(v => v === null);
       updateOpp();
       return;
     }
-    const reveal = ph === 'done' || ph === 'end';
-    $('mmBoardWrap').innerHTML = mmBoardHTML(g, target, reveal, { active: ph === 'guess' });
-    $('mmBoardWrap').querySelectorAll('.mmhole.cur').forEach(el => el.onclick = () => { g.cur[+el.dataset.s] = null; save(MODES.mm.lsKey, g); renderMm(); });
-    const play = ph === 'guess';
+    if (watching) {
+      const mySec = JSON.parse(hgDec(g.secrets[oRound]) || 'null');
+      $('mmBoardWrap').innerHTML = mmBoardHTML({ guesses: o.guesses || [], fb: o.fb || [], cur: [null, null, null, null] }, mySec, true, { watch: true });
+    } else {
+      const reveal = ph === 'rounddone' || ph === 'done' || ph === 'end';
+      const show = (ph === 'done' || ph === 'end') && g.last ? g.last : g;
+      $('mmBoardWrap').innerHTML = mmBoardHTML(show, (ph === 'done' || ph === 'end') && g.last ? g.last.target : target, reveal, { active: ph === 'guess' });
+      $('mmBoardWrap').querySelectorAll('.mmhole.cur').forEach(el => el.onclick = () => { g.cur[+el.dataset.s] = null; save(MODES.mm.lsKey, g); renderMm(); });
+    }
+    const play = ph === 'guess' && !watching;
     $('mmPal').style.visibility = play ? '' : 'hidden';
-    $('mmPal').innerHTML = mmPaletteHTML(g.cur.filter(v => v !== null));
+    $('mmPal').innerHTML = mmPaletteHTML(g.cur.filter(v => v !== null), rep);
     $('mmPal').querySelectorAll('.mmpick').forEach(b => b.onclick = () => mmPick(g.cur, +b.dataset.c));
     $('btnMmCheck').style.display = play ? '' : 'none';
     $('btnMmCheck').disabled = g.cur.some(v => v === null);
+    $('btnMmNext').style.display = ph === 'rounddone' && !watching ? '' : 'none';
+    $('btnMmNext').textContent = g.results.length + 1 >= total ? 'Ergebnis' : 'Nächste Runde';
+    $('btnMmWatch').style.display = canWatch && !autoWatch ? '' : 'none';
+    $('btnMmWatch').textContent = g.watch ? 'Zurück zu meinem Brett' : 'Gegner zusehen';
     $('mmEnd').style.display = ph === 'end' ? '' : 'none';
     updateOpp();
     if (ph === 'done' || ph === 'end') mmCheckEnd();
   }
-  // Farbe in die nächste freie Stelle setzen (jede Farbe nur einmal)
+  // Farbe in die nächste freie Stelle setzen (höchstens rep-mal je Farbe)
   function mmPick(arr, c) {
-    if (arr.includes(c)) { toast('Jede Farbe nur einmal'); return; }
+    const rep = mmRep(M);
+    if (arr.filter(x => x === c).length >= rep) { toast(rep === 1 ? 'Jede Farbe nur einmal' : `Jede Farbe höchstens ${rep}×`); return; }
     const i = arr.indexOf(null);
     if (i < 0) return;
     arr[i] = c;
@@ -4315,7 +4384,8 @@
   function mmSetSecret() {
     const g = M;
     if (g.draft.some(v => v === null)) return;
-    g.secret = [...g.draft];
+    g.secrets.push(hgEnc(JSON.stringify([...g.draft])));
+    g.draft = [null, null, null, null];
     persist();
     renderMm();
   }
@@ -4326,29 +4396,42 @@
     g.guesses.push(guess);
     g.fb.push(mmFeedback(target, guess));
     g.cur = [null, null, null, null];
-    g.round = g.guesses.length + 1;
     try { navigator.vibrate && navigator.vibrate(20); } catch {}
+    // letzte Runde: direkt abschließen
+    if (mmRoundOver(g) && g.results.length + 1 >= mmRounds(g)) mmNextRound();
+    else { persist(); renderMm(); }
+  }
+  function mmNextRound() {
+    const g = M;
+    if (!mmRoundOver(g)) return;
+    g.last = { guesses: g.guesses, fb: g.fb, cur: [null, null, null, null], target: mmTarget() };
+    g.results.push({ tries: g.guesses.length, solved: mmSolved(g) });
+    g.guesses = []; g.fb = []; g.cur = [null, null, null, null];
+    g.round = g.results.length + 1;
     persist();
     renderMm();
   }
   function mmCheckEnd() {
     const g = M;
     if (g.finished) return;
-    const me = mmScore(mmSolved(g), g.guesses.length);
-    let result;
-    if (!g.code) result = 'solo';
-    else {
+    let result, sub = '';
+    const me = mmTotal(g.results);
+    if (!g.code) {
+      result = 'solo';
+      const x = g.results[0];
+      sub = x && x.solved ? `In ${x.tries} ${x.tries === 1 ? 'Versuch' : 'Versuchen'}` : '';
+    } else {
       const o = mmOpp();
       if (!o || !o.done) return;
-      const op = mmScore(o.solved, o.tries);
+      const op = mmTotal(o.results);
       result = me < op ? 'win' : me > op ? 'lose' : 'draw';
+      sub = `Versuche: Du ${me} · Gegner ${op}`;
     }
-    g.finished = true; g.result = result; g.total = g.guesses.length;
+    g.finished = true; g.result = result; g.total = me;
     if (!g.endShown) {
       g.endShown = true;
       profile.playedMm = (profile.playedMm || 0) + 1; save(LS_PROFILE, profile);
-      const title = result === 'solo' ? (mmSolved(g) ? 'Geknackt!' : 'Nicht geknackt') : { win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[result];
-      const sub = mmSolved(g) ? `In ${g.guesses.length} ${g.guesses.length === 1 ? 'Versuch' : 'Versuchen'}` : '';
+      const title = result === 'solo' ? ((g.results[0] && g.results[0].solved) ? 'Geknackt!' : 'Nicht geknackt') : { win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[result];
       setTimeout(() => { if (mode === 'mm' && M === g) modal(title, '', sub, 'Weiter'); }, 900);
     }
     persist();
@@ -4361,11 +4444,14 @@
     const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
     if (g.code && o && o.gameNo > n) n = o.gameNo;
     M = freshMm(g.code, n, g.host);
+    M.rep = g.rep;
     persist();
     renderMm();
   }
   $('btnMmSecret').onclick = mmSetSecret;
   $('btnMmCheck').onclick = mmCheck;
+  $('btnMmNext').onclick = mmNextRound;
+  $('btnMmWatch').onclick = () => { M.watch = !M.watch; renderMm(); };
   $('btnMmAgain').onclick = mmRematch;
   $('btnMmMenu').onclick = () => { disconnect(); openMode('mm'); };
   $('btnMMenu').onclick = () => openPause();
@@ -4493,7 +4579,7 @@
     const xs = f.map(p => p[0]), ys = f.map(p => p[1]);
     const minX = Math.min(...xs) - 2, minY = Math.min(...ys) - 2, W = Math.max(...xs) - minX + 2, Hh = Math.max(...ys) - minY + 2;
     const pl = a => a.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ');
-    const colR = myCol === 'r' ? HX_COL.r : HX_COL.r; // Rot bleibt Rot, Gelb bleibt Gelb
+    const colR = '#b5435f'; // Rahmen-Rot etwas gedämpfter als die Steine
     let s2 = `<svg viewBox="${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${Hh.toFixed(1)}" aria-hidden="true">`;
     // Rahmen: rote Seiten (Reihe 0 / 10), gelbe Seiten (Spalte 0 / 10), mit schrägen Ecken
     s2 += `<polygon points="${pl([O, f[0], f[1]])}" fill="${colR}"/><polygon points="${pl([O, f[2], f[3]])}" fill="${colR}"/>`;
@@ -4623,8 +4709,8 @@
     },
     mm: {
       title: 'Farbcodeknacker', playedKey: 'playedMm',
-      desc: ['Knack den geheimen Farbcode aus vier Steinen – jede Farbe kommt höchstens einmal vor. Du hast acht Versuche.',
-        'Nach jedem Versuch gibt es Hinweise: Grün heißt Farbe und Position stimmen, Weiß heißt die Farbe stimmt, steht aber woanders. Welcher Stein gemeint ist, musst du selbst herausfinden. Im 1v1 gewinnt, wer weniger Versuche braucht.'],
+      desc: ['Knack den geheimen Farbcode aus vier Steinen in acht Versuchen. Unten stellst du ein, wie oft jede Farbe vorkommen darf (1× bis 4×).',
+        'Nach jedem Versuch gibt es Hinweise: Grün heißt Farbe und Position stimmen, Weiß heißt die Farbe stimmt, steht aber woanders. Im 1v1 baut ihr euch drei Runden lang gegenseitig Codes, schaut euch beim Knacken zu – wer insgesamt weniger Versuche braucht, gewinnt.'],
     },
     sd: {
       title: 'Strichduett', playedKey: 'playedSd',
@@ -4691,6 +4777,9 @@
     $('pvSdBox').style.display = mode === 'sd' ? '' : 'none';
     $('pvMmBox').style.display = mode === 'mm' ? '' : 'none';
     $('pvHexBox').style.display = mode === 'hex' ? '' : 'none';
+    // Zusatz-Einstellung je Modus (Farbcodeknacker: wie oft jede Farbe vorkommen darf)
+    $('rowOpt').style.display = mode === 'mm' ? '' : 'none';
+    if (mode === 'mm') { const rp = profile.mmRep || 1; $('btnModeOpt').innerHTML = `${rp === 1 ? 'Jede Farbe 1×' : `Jede Farbe bis ${rp}×`} <span class="optarrow">⌄</span>`; }
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -4719,6 +4808,9 @@
   $('toyHang').onclick = () => openMode('hang');
   $('toySd').onclick = () => openMode('sd');
   $('toyMm').onclick = () => openMode('mm');
+  $('btnModeOpt').onclick = () => {
+    if (mode === 'mm') { profile.mmRep = ((profile.mmRep || 1) % 4) + 1; save(LS_PROFILE, profile); renderMode(); }
+  };
   $('toyHex').onclick = () => openMode('hex');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
