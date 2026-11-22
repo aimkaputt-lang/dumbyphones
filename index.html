@@ -498,8 +498,21 @@
   .wlog div:last-child { color: var(--text); font-weight: 600; }
   #btnWGuess { background: var(--bar); color: #fff; box-shadow: 0 6px 0 var(--bar-dark); }
   #btnWGuess:active:not(:disabled) { box-shadow: 0 1px 0 var(--bar-dark); }
-  .asklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-  .asklist button { margin: 0; font-size: 16px; padding: 12px 6px; }
+  .asklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .askrow { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .asklab { font-size: 12px; font-weight: 600; color: #dfe2ff; }
+  .askbtns { display: flex; gap: 8px; justify-content: center; }
+  .askq {
+    width: 58px; height: 58px; flex: 0 0 58px; margin: 0; padding: 4px 2px 3px; border-radius: 14px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  }
+  .askq svg { width: 34px; height: 34px; }
+  #dlgAsk .modal { max-height: calc(100vh - 40px); overflow-y: auto; }
+  #dlgAsk .modal h2 { margin-bottom: 6px; }
+  .askq small { font-size: 10px; font-weight: 600; line-height: 1; }
+  .wcard.noname .wface svg { flex: 1; }
+  #dlgAsk .modal { padding: 18px 14px; }
+  #dlgAsk .modal p { display: none; }
   .ansq { font-size: 20px; font-weight: 600; color: #fff !important; margin-bottom: 12px !important; }
   .ansmine { display: flex; justify-content: center; margin-bottom: 16px; }
   .ansmine .wcard { width: 70px; cursor: default; }
@@ -2237,16 +2250,59 @@
     { n: 'Happy', g: 'm', skin: '#f3d2b8', hs: 'short', hc: '#6b3a2a', long: 0, light: 0, gl: '#777777', beard: 'full', bc: '#cfc8bc', shirt: '#8a4ac0', bg: 'p' },
     { n: 'Waylay', g: 'f', skin: '#f3d2b8', hs: 'long', hc: '#1e1a18', long: 1, light: 0, gl: '#d8343f', shirt: '#f2d14a', bg: 'p' },
   ];
+  // Haarfarbe je Figur (none = Glatze)
+  const HAIR_CAT = { Burgerking: 'none', Mercedes: 'braun', Baklava: 'blond', Ouioui: 'rot', Python: 'blond', Depri: 'schwarz',
+    Monday: 'rot', Miro: 'braun', Stracciatella: 'blond', Udo: 'schwarz', Berry: 'schwarz', Pepe: 'none', Jackson: 'blond',
+    Havana: 'rot', Jarack: 'blond', Trixi: 'blond', Jassin: 'schwarz', Saskia: 'schwarz', Flower: 'braun', Rino: 'rot',
+    Doris: 'blond', Clark: 'braun', Nike: 'schwarz', Adalbert: 'blond', Berrick: 'schwarz', Susanne: 'braun', Abel: 'schwarz',
+    Mandy: 'blond', Happy: 'braun', Waylay: 'schwarz' };
+  const hairCat = p => HAIR_CAT[p.n] || 'braun';
   const WHO_Q = [
-    { id: 'm', text: 'Ist deine Person männlich?', short: 'männlich?', test: p => p.g === 'm' },
-    { id: 'f', text: 'Ist deine Person weiblich?', short: 'weiblich?', test: p => p.g === 'f' },
-    { id: 'gl', text: 'Trägt deine Person eine Brille?', short: 'Brille?', test: p => !!p.gl },
-    { id: 'bd', text: 'Hat deine Person einen Bart?', short: 'Bart?', test: p => !!p.beard },
-    { id: 'lh', text: 'Hat deine Person lange Haare?', short: 'lange Haare?', test: p => !!p.long },
-    { id: 'kh', text: 'Hat deine Person kurze Haare?', short: 'kurze Haare?', test: p => !p.long },
-    { id: 'he', text: 'Hat deine Person helle Augen?', short: 'helle Augen?', test: p => !!p.light },
-    { id: 'de', text: 'Hat deine Person dunkle Augen?', short: 'dunkle Augen?', test: p => !p.light },
+    { id: 'm', text: 'Ist deine Person männlich?', short: 'Mann', test: p => p.g === 'm' },
+    { id: 'f', text: 'Ist deine Person weiblich?', short: 'Frau', test: p => p.g === 'f' },
+    { id: 'hbl', text: 'Hat deine Person blonde Haare?', short: 'Blond', test: p => hairCat(p) === 'blond' },
+    { id: 'hbr', text: 'Hat deine Person braune Haare?', short: 'Braun', test: p => hairCat(p) === 'braun' },
+    { id: 'hsw', text: 'Hat deine Person schwarze Haare?', short: 'Schwarz', test: p => hairCat(p) === 'schwarz' },
+    { id: 'hrt', text: 'Hat deine Person rote oder bunte Haare?', short: 'Rot/Bunt', test: p => hairCat(p) === 'rot' },
+    { id: 'lh', text: 'Hat deine Person lange Haare?', short: 'Lang', test: p => !!p.long },
+    { id: 'kh', text: 'Hat deine Person kurze Haare?', short: 'Kurz', test: p => !p.long && p.hs !== 'bald' },
+    { id: 'bald', text: 'Hat deine Person eine Glatze?', short: 'Glatze', test: p => p.hs === 'bald' },
+    { id: 'bd', text: 'Hat deine Person einen Bart?', short: 'Bart', test: p => !!p.beard },
+    { id: 'nbd', text: 'Hat deine Person keinen Bart?', short: 'Ohne', test: p => !p.beard },
+    { id: 'gl', text: 'Trägt deine Person eine Brille?', short: 'Brille', test: p => !!p.gl },
+    { id: 'ngl', text: 'Trägt deine Person keine Brille?', short: 'Ohne', test: p => !p.gl },
+    { id: 'he', text: 'Hat deine Person helle Augen?', short: 'Hell', test: p => !!p.light },
+    { id: 'de', text: 'Hat deine Person dunkle Augen?', short: 'Dunkel', test: p => !p.light },
   ];
+  const WHO_ROWS = [
+    { label: 'Geschlecht', ids: ['m', 'f'] },
+    { label: 'Haarfarbe', ids: ['hbl', 'hbr', 'hsw', 'hrt'] },
+    { label: 'Haare', ids: ['lh', 'kh', 'bald'] },
+    { label: 'Bart', ids: ['bd', 'nbd'] },
+    { label: 'Brille', ids: ['gl', 'ngl'] },
+    { label: 'Augen', ids: ['he', 'de'] },
+  ];
+  // Symbole für die Frage-Buttons
+  function qIcon(id) {
+    const head = (hair = '', extra = '') => `<circle cx="20" cy="22" r="10" fill="#f3d2b8"/>${hair}<circle cx="16.5" cy="22" r="1.4" fill="#3a2618"/><circle cx="23.5" cy="22" r="1.4" fill="#3a2618"/>${extra}`;
+    const cap = col => `<path d="M9.5 21 Q9 10 20 10 Q31 10 30.5 21 Q27 15 20 15 Q13 15 9.5 21Z" fill="${col}"/>`;
+    const slash = '<path d="M8 32 L32 8" stroke="#e2104c" stroke-width="3.5" stroke-linecap="round"/>';
+    const glasses = '<g fill="none" stroke="#2a2a2a" stroke-width="2.4"><circle cx="13" cy="21" r="5.5"/><circle cx="27" cy="21" r="5.5"/><path d="M18.5 21 L21.5 21 M7.5 20 L4 18 M32.5 20 L36 18"/></g>';
+    const eye = col => `<path d="M5 20 Q20 6 35 20 Q20 34 5 20Z" fill="#fff" stroke="#3a3a3a" stroke-width="2"/><circle cx="20" cy="20" r="6.5" fill="${col}"/><circle cx="20" cy="20" r="2.8" fill="#1a1a1a"/><circle cx="22" cy="18" r="1.4" fill="#fff"/>`;
+    const beard = '<path d="M10 23 Q10 34 20 34 Q30 34 30 23 Q27 29 20 29 Q13 29 10 23Z" fill="#5a3a22"/>';
+    const svgs = {
+      m: '<g fill="none" stroke="#3f8fd0" stroke-width="3.4" stroke-linecap="round"><circle cx="17" cy="23" r="9"/><path d="M23.5 16.5 L32 8 M24 8 L32 8 L32 16"/></g>',
+      f: '<g fill="none" stroke="#e2508a" stroke-width="3.4" stroke-linecap="round"><circle cx="20" cy="15" r="9"/><path d="M20 24 L20 36 M14 30 L26 30"/></g>',
+      hbl: head(cap('#f0c850')), hbr: head(cap('#7a4a2e')), hsw: head(cap('#1e1a18')), hrt: head(cap('#e0583a')),
+      lh: `<path d="M8 22 Q7 9 20 9 Q33 9 32 22 L34 36 L6 36Z" fill="#7a4a2e"/>${head(cap('#7a4a2e'))}`,
+      kh: head(cap('#7a4a2e')),
+      bald: head('', '<path d="M14 15 Q18 12 22 13" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>'),
+      bd: head(cap('#5a3a22'), beard), nbd: head(cap('#5a3a22'), slash),
+      gl: glasses, ngl: glasses + slash,
+      he: eye('#3f8fd0'), de: eye('#6a3e1e'),
+    };
+    return `<svg viewBox="0 0 40 40" aria-hidden="true">${svgs[id] || ''}</svg>`;
+  }
 
   // Figur als SVG zeichnen (eigener, schlichter Stil)
   function avatarSVG(p) {
@@ -2293,9 +2349,11 @@
            <ellipse cx="20.5" cy="35" rx="2.4" ry="1.4" fill="#e86a7a" opacity=".35"/><ellipse cx="39.5" cy="35" rx="2.4" ry="1.4" fill="#e86a7a" opacity=".35"/>`}
       ${beard}${mouth}${glasses}</svg>`;
   }
-  function cardHTML(i, extra) {
+  // withName: Namensschild zeigen (eigene Person, Antwort-Dialog); auf dem Brett ohne Namen und mit größerer Figur
+  function cardHTML(i, extra, withName) {
     const p = PEOPLE[i];
-    return `<div class="wcard${extra ? ' ' + extra : ''}" data-i="${i}"><div class="wface ${p.bg === 'p' ? 'pink' : 'blue'}"><div class="wname">${p.n}</div>${avatarSVG(p)}</div></div>`;
+    const svg = withName ? avatarSVG(p) : avatarSVG(p).replace('viewBox="0 0 60 64"', 'viewBox="5 4 50 58"');
+    return `<div class="wcard${extra ? ' ' + extra : ''}${withName ? '' : ' noname'}" data-i="${i}"><div class="wface ${p.bg === 'p' ? 'pink' : 'blue'}">${withName ? `<div class="wname">${p.n}</div>` : ''}${svg}</div></div>`;
   }
 
   function freshWho(code, gameNo, host) {
@@ -2402,7 +2460,7 @@
     if (answerOpen === ask.n) return;
     answerOpen = ask.n;
     $('ansText').textContent = ask.text;
-    $('ansMine').innerHTML = W.secret !== null && W.secret >= 0 ? cardHTML(W.secret) : '';
+    $('ansMine').innerHTML = W.secret !== null && W.secret >= 0 ? cardHTML(W.secret, '', true) : '';
     openDlg('dlgAnswer');
     const done = ans => { closeDlg('dlgAnswer'); answerOpen = 0; answerOpp(ask, ans); };
     $('btnAnsYes').onclick = () => done(true);
@@ -2467,7 +2525,7 @@
     // eigene Person
     const mystery = (label, sub) => `<span>${label}</span><div class="wcard mystery"><div class="wface blue"><div class="wname">${sub}</div><div class="q">?</div></div></div>`;
     $('wMine').innerHTML = w.secret !== null && w.secret >= 0
-      ? `<span>Deine Person</span>${cardHTML(w.secret)}`
+      ? `<span>Deine Person</span>${cardHTML(w.secret, '', true)}`
       : !w.code ? mystery('Gesucht', 'Computer') : mystery('Deine Person', 'wählen …');
     // Status
     const name = w.oppSecret !== null && w.oppSecret >= 0 ? PEOPLE[w.oppSecret].n : '';
@@ -2500,7 +2558,11 @@
 
   function openAsk() {
     const solo = !W.code;
-    $('askList').innerHTML = WHO_Q.map(q => `<button data-q="${q.id}">${q.short}</button>`).join('');
+    // eine Reihe pro Kategorie, quadratische Symbol-Buttons
+    $('askList').innerHTML = WHO_ROWS.map(row => `<div class="askrow"><span class="asklab">${row.label}</span><div class="askbtns">${row.ids.map(id => {
+      const q = WHO_Q.find(x => x.id === id);
+      return `<button class="askq" data-q="${id}" aria-label="${q.text}">${qIcon(id)}<small>${q.short}</small></button>`;
+    }).join('')}</div></div>`).join('');
     $('askList').querySelectorAll('button').forEach(b => b.onclick = () => { closeDlg('dlgAsk'); whoAsk('attr', { q: b.dataset.q }); });
     $('askCustom').style.display = solo ? 'none' : '';
     $('askCustomText').value = '';
