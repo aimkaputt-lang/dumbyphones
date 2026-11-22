@@ -919,6 +919,46 @@
   .hxalt { background: #b2244f; color: #fff; box-shadow: 0 6px 0 #7d1636; }
   .hxboard.mini svg { height: 230px; }
 
+  /* ---------- Pärchensammler ---------- */
+  body[data-theme="ps"], body[data-theme="psgame"] {
+    --bg: #3e1013; --bg-dark: #1e0507; --muted: #e8c8c8;
+    --panel: #1f9a72; --panel-card: #157255; --panel-shadow: #07261c; --title: #f3e79a;
+    --bar: #1d8a63; --bar-dark: #11593f; --seg-text: #d4f5e6;
+  }
+  body[data-theme="psgame"] {
+    --bg: #3a3d44; --bg-dark: #1e2024; --muted: #c8cbd2; --panel-card: #2c2f35;
+    background:
+      linear-gradient(90deg, transparent 47%, rgba(255,255,255,.05) 47% 53%, transparent 53%) 0 0 / 120px 120px,
+      linear-gradient(transparent 47%, rgba(255,255,255,.05) 47% 53%, transparent 53%) 0 0 / 120px 120px,
+      radial-gradient(ellipse at 50% 30%, #464a52, #24262b);
+  }
+  body[data-theme^="ps"] .title { text-shadow: 0 5px 0 #140304, 0 6px 12px rgba(0,0,0,.3); }
+  body[data-theme="ps"] .pv { background: radial-gradient(ellipse at 50% 30%, #4a4e56, #2a2c31); }
+  body[data-theme^="ps"] .modal { background: linear-gradient(120deg, #1f9a72, #27b085); border-color: #3e1013; }
+  body[data-theme^="ps"] .modal .big:empty { display: none; }
+  body[data-theme^="ps"] .modal h2 { font-size: 32px; margin-bottom: 8px; }
+  body[data-theme^="ps"] .modal p { margin: 0 0 18px; color: #fff; }
+  #sPs .topbar { margin-bottom: 8px; }
+  .psgrid { width: 100%; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+  .pscard { aspect-ratio: 1; cursor: pointer; border-radius: 9px; transition: box-shadow .2s; }
+  .pscard > div { width: 100%; height: 100%; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+  .psback { background: linear-gradient(145deg, #34316a, #24224c); box-shadow: inset 0 -3px 0 rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.35); }
+  .psback span { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 17px; color: #d77fc0; letter-spacing: -1px; opacity: .9; }
+  .psface { box-shadow: inset 0 -3px 0 rgba(0,0,0,.18), 0 3px 5px rgba(0,0,0,.35); }
+  .psface.tan { background: #e7cf8c; }
+  .psface.red { background: #c8574d; }
+  .psface svg { width: 72%; height: 72%; }
+  .pscard.flip { animation: psflip .28s ease-in-out; }
+  @keyframes psflip { 0% { transform: scaleX(1); } 50% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+  .pscard.got { cursor: default; }
+  .pscard.got-r > div { box-shadow: 0 0 0 3px #e2104c, 0 3px 5px rgba(0,0,0,.35); }
+  .pscard.got-y > div { box-shadow: 0 0 0 3px #f4c80f, 0 3px 5px rgba(0,0,0,.35); }
+  .psend { margin-top: auto; padding-top: 10px; }
+  .psend button { margin: 0; }
+  .psalt { background: #1d8a63; color: #fff; box-shadow: 0 6px 0 #11593f; }
+  .psgrid.mini { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 70%; margin: 0 auto; gap: 5px; }
+  .psgrid.mini .psback span { font-size: 13px; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -1116,6 +1156,14 @@
           <polygon points="22,80 30,80 34,87 30,94 22,94 18,87" fill="#3f8a90"/>
         </svg>
       </button>
+      <button class="toy" id="toyPs" aria-label="Pärchensammler" style="animation-delay:-6.4s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="60" ry="7" fill="rgba(0,0,0,.28)"/>
+          <g transform="rotate(-8 52 70)"><rect x="24" y="40" width="44" height="54" rx="7" fill="#2a2850"/><rect x="24" y="90" width="44" height="5" rx="2" fill="#1a183a"/><text x="46" y="74" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="20" fill="#d77fc0">DP</text></g>
+          <g transform="rotate(4 80 62)"><rect x="58" y="30" width="44" height="54" rx="7" fill="#e7cf8c"/><path d="M80 44 L69 51 Q65 56 69 62 L80 72 L91 62 Q95 56 91 51Z" fill="#d8264f"/></g>
+          <g transform="rotate(12 114 70)"><rect x="92" y="42" width="44" height="54" rx="7" fill="#e7cf8c"/><path d="M114 56 L103 63 Q99 68 103 74 L114 84 L125 74 Q129 68 125 63Z" fill="#d8264f"/></g>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -1169,6 +1217,9 @@
         </div>
         <div class="pv" id="pvHexBox" style="display:none">
           <div class="hxboard mini" id="pvxBoard"></div>
+        </div>
+        <div class="pv" id="pvPsBox" style="display:none">
+          <div class="psgrid mini" id="pvpGrid"></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -1523,6 +1574,29 @@
     </div>
   </section>
 
+  <!-- PÄRCHENSAMMLER -->
+  <section class="screen" id="sPs">
+    <div class="topbar">
+      <button class="menubtn" id="btnPMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="psStatus"></div>
+    <div class="sdscore" id="psScore"></div>
+    <div class="psgrid" id="psGrid"></div>
+    <div class="row psend" id="psEnd" style="display:none">
+      <button id="btnPsAgain">Nochmal</button>
+      <button id="btnPsMenu" class="psalt">Menü</button>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1661,6 +1735,7 @@
     sd:    { topic: 'dumbyphones/strichduett/v1/', lsKey: 'sd_state_v1', screen: 'sSd', theme: 'sd' },
     mm:    { topic: 'dumbyphones/farbcode/v1/', lsKey: 'fc_state_v1', screen: 'sMm', theme: 'mm' },
     hex:   { topic: 'dumbyphones/route6/v1/', lsKey: 'r6_state_v1', screen: 'sHex', theme: 'hex' },
+    ps:    { topic: 'dumbyphones/paerchen/v1/', lsKey: 'ps_state_v1', screen: 'sPs', theme: 'ps' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
@@ -1672,7 +1747,8 @@
   let K = load(MODES.sd.lsKey, null);   // Strichduett-Spielstand
   let M = load(MODES.mm.lsKey, null);   // Farbcodeknacker-Spielstand
   let X = load(MODES.hex.lsKey, null);  // Route-6-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : mode === 'hex' ? X : S);
+  let Z = load(MODES.ps.lsKey, null);   // Pärchensammler-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : mode === 'hex' ? X : mode === 'ps' ? Z : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1727,7 +1803,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : screen === 'sHex' ? 'hexgame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : screen === 'sHex' ? 'hexgame' : screen === 'sPs' ? 'psgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1776,6 +1852,7 @@
         if (mode === 'sd') sdSync();
         if (mode === 'mm') mmSync();
         if (mode === 'hex') hexSync();
+        if (mode === 'ps') psSync();
       } catch {}
     });
   }
@@ -1798,6 +1875,9 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'ps') {
+      Object.assign(data, { host: g.host, moves: g.moves, pend: g.pend });
+      if (g.host) data.deck = g.deck; // Ersteller mischt für beide
     } else if (mode === 'hex') {
       Object.assign(data, { host: g.host, moves: g.moves });
     } else if (mode === 'mm') {
@@ -1847,6 +1927,12 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'ps') {
+      const sd = psSides();
+      q('.ototal').textContent = sd.deck ? psSim(sd.deck, sd.my, sd.op, sd.meStarts).score.op : 0;
+      q('.oround').textContent = 'Paare';
       return;
     }
     if (mode === 'hex') {
@@ -4689,6 +4775,226 @@
   }
 
   // =====================================================================
+  //  PÄRCHENSAMMLER (Memory)
+  // =====================================================================
+  const PS_PAIRS = 24, PS_N = PS_PAIRS * 2;
+  // 12 Symbole x 2 Kartenfarben = 24 Paare
+  const PS_SYM = {
+    plus: '<path d="M17 7 h6 v10 h10 v6 h-10 v10 h-6 v-10 h-10 v-6 h10z" fill="#f2b51e" stroke="#b07d0a" stroke-width="1"/>',
+    tri: '<path d="M8 11 L32 11 L20 32Z" fill="#7b4fc9"/>',
+    note: '<path d="M15 28 V12 L30 9 V25" stroke="#a8243a" stroke-width="2.6" fill="none"/><ellipse cx="12.5" cy="28.5" rx="4" ry="3" fill="#a8243a"/><ellipse cx="27.5" cy="25.5" rx="4" ry="3" fill="#a8243a"/>',
+    sword: '<g transform="rotate(-45 20 20)"><path d="M18 5 L22 5 L22 25 L18 25Z" fill="#c8ccd2"/><path d="M18 5 L20 2 L22 5Z" fill="#e4e7ea"/><rect x="13" y="25" width="14" height="3" rx="1" fill="#7a5a3a"/><rect x="18.5" y="28" width="3" height="8" fill="#5a3a22"/></g>',
+    umbrella: '<path d="M6 21 Q20 4 34 21 Q30 18 27 21 Q23 18 20 21 Q17 18 13 21 Q10 18 6 21Z" fill="#4a2a5a"/><path d="M20 21 V31 q0 3 -3 3 q-3 0 -3 -3" stroke="#4a2a5a" stroke-width="2.2" fill="none"/>',
+    balloon: '<ellipse cx="20" cy="16" rx="8" ry="10" fill="#b0602e"/><path d="M18 26 L22 26 L20 28Z" fill="#8a4a22"/><path d="M20 28 Q17 32 21 35" stroke="#5a3a22" stroke-width="1.2" fill="none"/>',
+    arrow: '<g transform="rotate(40 20 20)"><rect x="19" y="8" width="2.4" height="26" fill="#7a5a3a"/><path d="M15 9 L20.2 1 L25.4 9Z" fill="#8a8f98"/><path d="M17 33 L20.2 29 L23.4 33 L23.4 37 L20.2 34 L17 37Z" fill="#a8243a"/></g>',
+    heart: '<path d="M20 33 L8 20 Q4 14 9 10 Q15 6 20 13 Q25 6 31 10 Q36 14 32 20Z" fill="#d8264f"/>',
+    star: '<path d="M20 5 L24 15 L35 15.5 L26.5 22.5 L29.5 33 L20 27 L10.5 33 L13.5 22.5 L5 15.5 L16 15Z" fill="#f4c80f" stroke="#b08a08" stroke-width="1"/>',
+    moon: '<path d="M25 6 A14 14 0 1 0 33 28 A11 11 0 1 1 25 6Z" fill="#3f6fc0"/>',
+    bolt: '<path d="M23 4 L10 22 L19 22 L16 36 L30 16 L21 16Z" fill="#e88a10"/>',
+    key: '<circle cx="13" cy="14" r="7" fill="none" stroke="#b08a08" stroke-width="3.2"/><path d="M18 19 L32 33 M27 28 L30 25 M30 31 L33 28" stroke="#b08a08" stroke-width="3.2" stroke-linecap="round"/>',
+  };
+  const PS_KEYS = Object.keys(PS_SYM);
+  const psSym = id => ({ sym: PS_KEYS[id % 12], bg: id < 12 ? 'tan' : 'red' });
+  const psFace = id => { const s = psSym(id); return `<div class="psface ${s.bg}"><svg viewBox="0 0 40 40" aria-hidden="true">${PS_SYM[s.sym]}</svg></div>`; };
+  const psBack = () => '<div class="psback"><span>DP</span></div>';
+  function psNewDeck() { const d = []; for (let i = 0; i < PS_PAIRS; i++) d.push(i, i); return shuffle(d); }
+  function freshPs(code, gameNo, host) {
+    return { code, gameNo: gameNo || 1, host: !!host, meStarts: code ? null : true,
+      deck: (!code || host) ? psNewDeck() : null, moves: [], pend: null, cpuMoves: code ? null : [], cpuPend: null,
+      finished: false, result: null, endShown: false, round: 1, total: 0 };
+  }
+  const psOpp = () => { const o = currentOpp(); return o && Z && o.gameNo === Z.gameNo ? o : null; };
+  function psSides() {
+    const g = Z;
+    if (!g.code) return { deck: g.deck, my: g.moves, op: g.cpuMoves, meStarts: g.meStarts, here: true, opPend: g.cpuPend };
+    const o = psOpp();
+    const deck = g.host ? g.deck : (o && o.deck) || null;
+    return { deck, my: g.moves, op: (o && o.moves) || [], meStarts: (g.gameNo % 2 === 1) === g.host, here: !!o, opPend: o ? o.pend : null };
+  }
+  // Spiel nachspielen: wer ein Paar findet, ist nochmal dran
+  function psSim(deck, my, op, meStarts) {
+    const matched = {}; const score = { me: 0, op: 0 };
+    let cur = meStarts ? 'me' : 'op', i = 0, j = 0, last = null, count = 0;
+    for (let guard = 0; guard < 400; guard++) {
+      const list = cur === 'me' ? my : op, idx = cur === 'me' ? i : j;
+      if (idx >= list.length) break;
+      const [a, b] = list[idx];
+      if (cur === 'me') i++; else j++;
+      if (a === b || matched[a] || matched[b]) continue;
+      count++;
+      const match = deck[a] === deck[b];
+      last = { a, b, by: cur, match, n: count };
+      if (match) { matched[a] = matched[b] = cur; score[cur]++; } else cur = cur === 'me' ? 'op' : 'me';
+    }
+    return { matched, score, turn: cur, last, over: score.me + score.op >= PS_PAIRS };
+  }
+
+  let psShowKey = null, psShowUntil = 0, psTimer = null, psCpuTimer = null, psLastUp = {};
+  const PS_SHOW_MS = 1500;
+  function psPhase(sim, sd) {
+    if (Z.finished) return 'end';
+    if (Z.code && !sd.here) return 'noopp';
+    if (!sd.deck) return 'nodeck';
+    if (sim.over) return 'over';
+    return sim.turn === 'me' ? 'me' : 'op';
+  }
+  function psBuildGrid() {
+    $('psGrid').innerHTML = [...Array(PS_N)].map((_, i) => `<div class="pscard" data-i="${i}"></div>`).join('');
+    $('psGrid').querySelectorAll('.pscard').forEach(el => el.onclick = () => psFlip(+el.dataset.i));
+    psLastUp = {};
+  }
+  function renderPs() {
+    const g = Z, sd = psSides();
+    if (!sd.deck) { $('psStatus').textContent = sd.here ? 'Karten werden gemischt …' : (connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …'); updateOpp(); return; }
+    const sim = psSim(sd.deck, sd.my, sd.op, sd.meStarts);
+    const ph = psPhase(sim, sd);
+    // zuletzt aufgedecktes Nicht-Paar kurz offen lassen
+    const lk = sim.last ? `${sim.last.n}` : null;
+    if (lk && lk !== psShowKey) { psShowKey = lk; psShowUntil = sim.last.match ? 0 : Date.now() + PS_SHOW_MS; }
+    const showLast = sim.last && !sim.last.match && Date.now() < psShowUntil;
+    const myCol = sd.meStarts ? 'r' : 'y', opCol = myCol === 'r' ? 'y' : 'r';
+    if (!$('psGrid').children.length) psBuildGrid();
+    const pendMine = ph === 'me' ? g.pend : null;
+    const pendOp = ph === 'op' ? sd.opPend : null;
+    $('psGrid').querySelectorAll('.pscard').forEach(el => {
+      const i = +el.dataset.i;
+      const owner = sim.matched[i];
+      const up = !!owner || (showLast && (i === sim.last.a || i === sim.last.b)) || i === pendMine || i === pendOp;
+      const html = up ? psFace(sd.deck[i]) : psBack();
+      if (psLastUp[i] !== up) {
+        const first = psLastUp[i] === undefined;
+        psLastUp[i] = up;
+        if (first) el.innerHTML = html;
+        else { el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip'); setTimeout(() => { el.innerHTML = html; }, 140); }
+      }
+      el.classList.toggle('got', !!owner);
+      el.classList.toggle('got-r', !!owner && (owner === 'me' ? myCol : opCol) === 'r');
+      el.classList.toggle('got-y', !!owner && (owner === 'me' ? myCol : opCol) === 'y');
+    });
+    $('psScore').innerHTML = `<span class="sdsc ${myCol}"><b>${sim.score.me}</b> Du</span><span class="sdsc ${opCol}">${g.code ? 'Gegner' : 'Computer'} <b>${sim.score.op}</b></span>`;
+    let st;
+    if (ph === 'noopp') st = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
+    else if (ph === 'me') st = sim.last && sim.last.match && sim.last.by === 'me' ? 'Paar! Du bist nochmal dran' : (g.pend === null ? 'Du bist dran – deck eine Karte auf' : 'Und die zweite Karte …');
+    else if (ph === 'op') st = g.code ? 'Gegner ist dran …' : 'Computer ist dran …';
+    else { const r = g.result || (sim.score.me > sim.score.op ? 'win' : sim.score.me < sim.score.op ? 'lose' : 'draw'); st = r === 'win' ? 'Gewonnen!' : r === 'lose' ? 'Verloren' : 'Unentschieden'; }
+    $('psStatus').textContent = st;
+    $('psStatus').classList.toggle('turn', ph === 'me');
+    $('psEnd').style.display = ph === 'over' || ph === 'end' ? '' : 'none';
+    updateOpp();
+    clearTimeout(psTimer);
+    if (showLast) psTimer = setTimeout(renderPs, psShowUntil - Date.now() + 30);
+    if (ph === 'over' && !g.finished) psFinish(sim);
+    if (!g.code && ph === 'op' && !psCpuTimer) psCpuTimer = setTimeout(psCpuStep, showLast ? psShowUntil - Date.now() + 500 : 800);
+  }
+  function psFlip(i) {
+    const g = Z, sd = psSides();
+    if (!sd.deck) return;
+    const sim = psSim(sd.deck, sd.my, sd.op, sd.meStarts);
+    if (psPhase(sim, sd) !== 'me' || sim.matched[i] || i === g.pend) return;
+    if (sim.last && !sim.last.match && Date.now() < psShowUntil) return; // erst warten, bis die Karten wieder liegen
+    if (g.pend === null) g.pend = i;
+    else { g.moves.push([g.pend, i]); g.pend = null; }
+    try { navigator.vibrate && navigator.vibrate(12); } catch {}
+    persist();
+    renderPs();
+  }
+  // Computer: merkt sich aufgedeckte Karten nicht immer (70 %)
+  const psMem = {};
+  function psKnown(sd, sim) {
+    const k = {};
+    [...sd.my, ...sd.op].forEach(([a, b]) => [a, b].forEach(x => {
+      if (psMem[x] === undefined) psMem[x] = Math.random() < .7;
+      if (psMem[x] && !sim.matched[x]) k[x] = sd.deck[x];
+    }));
+    return k;
+  }
+  function psCpuStep() {
+    psCpuTimer = null;
+    const g = Z;
+    if (mode !== 'ps' || !g || g.code) return;
+    const sd = psSides(), sim = psSim(sd.deck, sd.my, sd.op, sd.meStarts);
+    if (psPhase(sim, sd) !== 'op') return;
+    const known = psKnown(sd, sim);
+    const hidden = [...Array(PS_N).keys()].filter(i => !sim.matched[i]);
+    const pick = a => a[Math.floor(Math.random() * a.length)];
+    let a = null, b = null;
+    const bySym = {};
+    Object.entries(known).forEach(([i, s]) => { (bySym[s] = bySym[s] || []).push(+i); });
+    const pair = Object.values(bySym).find(l => l.length >= 2);
+    if (pair) { a = pair[0]; b = pair[1]; }
+    else {
+      const unknown = hidden.filter(i => known[i] === undefined);
+      a = pick(unknown.length ? unknown : hidden);
+      const partner = Object.entries(known).find(([i, s]) => +i !== a && s === sd.deck[a]);
+      const pool = hidden.filter(i => i !== a && known[i] === undefined);
+      b = partner ? +partner[0] : pick(pool.length ? pool : hidden.filter(i => i !== a));
+    }
+    g.cpuPend = a; renderPs();
+    psCpuTimer = setTimeout(() => {
+      g.cpuPend = null;
+      g.cpuMoves.push([a, b]);
+      psCpuTimer = null;
+      persist();
+      renderPs();
+    }, 750);
+  }
+  function psFinish(sim) {
+    const g = Z;
+    g.finished = true;
+    g.result = sim.score.me > sim.score.op ? 'win' : sim.score.me < sim.score.op ? 'lose' : 'draw';
+    g.total = sim.score.me;
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedPs = (profile.playedPs || 0) + 1; save(LS_PROFILE, profile);
+      setTimeout(() => { if (mode === 'ps' && Z === g) modal({ win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[g.result], '', `${sim.score.me} : ${sim.score.op} Paare`, 'Weiter'); }, 900);
+    }
+    persist();
+    renderPs();
+  }
+  function psSync() { if (mode === 'ps' && Z) renderPs(); }
+  function psRematch() {
+    const g = Z;
+    clearTimeout(psCpuTimer); psCpuTimer = null;
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    Z = freshPs(g.code, n, g.host);
+    if (!g.code) Z.meStarts = !g.meStarts;
+    for (const k in psMem) delete psMem[k];
+    psShowKey = null; $('psGrid').innerHTML = '';
+    persist();
+    renderPs();
+  }
+  $('btnPsAgain').onclick = psRematch;
+  $('btnPsMenu').onclick = () => { disconnect(); openMode('ps'); };
+  $('btnPMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Pärchensammler ----------
+  const pvp = { running: false, timer: null };
+  function pvpLater(fn, ms) { pvp.timer = setTimeout(() => pvp.running && fn(), ms); }
+  function pvpStart() {
+    const deck = shuffle([0, 0, 3, 3, 14, 14, 7, 7, 19, 19, 22, 22]);
+    const got = {};
+    const draw = (open = []) => {
+      $('pvpGrid').innerHTML = deck.map((s, i) => `<div class="pscard${got[i] ? ' got' : ''}">${got[i] || open.includes(i) ? psFace(s) : psBack()}</div>`).join('');
+    };
+    draw();
+    const step = () => {
+      const hidden = deck.map((_, i) => i).filter(i => !got[i]);
+      if (!hidden.length) { pvpLater(pvpStart, 2000); return; }
+      const a = hidden[Math.floor(Math.random() * hidden.length)];
+      const lucky = Math.random() < .45;
+      const b = lucky ? hidden.find(i => i !== a && deck[i] === deck[a]) : hidden.filter(i => i !== a)[Math.floor(Math.random() * (hidden.length - 1))];
+      draw([a]);
+      pvpLater(() => {
+        draw([a, b]);
+        pvpLater(() => { if (deck[a] === deck[b]) got[a] = got[b] = 1; draw(); pvpLater(step, 350); }, 900);
+      }, 550);
+    };
+    pvpLater(step, 700);
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -4701,6 +5007,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    ps: {
+      title: 'Pärchensammler', playedKey: 'playedPs',
+      desc: ['Wer dran ist, deckt zwei Kärtchen auf. Gleiches Symbol auf gleicher Farbe? Dann gehört das Pärchen dir – und du darfst gleich weitersuchen.',
+        'Passen die beiden nicht, werden sie wieder umgedreht und der Nächste ist dran. Gut merken, wo was liegt! Wer am Ende die meisten Pärchen hat, gewinnt.'],
     },
     hex: {
       title: 'Route 6', playedKey: 'playedHex',
@@ -4743,7 +5054,7 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : m === 'hex' ? freshHex(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : m === 'hex' ? freshHex(code, gameNo, whoHost) : m === 'ps' ? freshPs(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
     else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
@@ -4751,9 +5062,10 @@
     else if (mode === 'hang') H = v;
     else if (mode === 'sd') { K = v; clearTimeout(sdCpuTimer); sdCpuTimer = null; }
     else if (mode === 'mm') M = v;
-    else if (mode === 'hex') { X = v; clearTimeout(hxCpuTimer); hxCpuTimer = null; } else S = v;
+    else if (mode === 'hex') { X = v; clearTimeout(hxCpuTimer); hxCpuTimer = null; }
+    else if (mode === 'ps') { Z = v; clearTimeout(psCpuTimer); psCpuTimer = null; psShowKey = null; for (const k in psMem) delete psMem[k]; $('psGrid').innerHTML = ''; } else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else if (mode === 'hex') renderHex(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else if (mode === 'hex') renderHex(); else if (mode === 'ps') renderPs(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -4777,6 +5089,7 @@
     $('pvSdBox').style.display = mode === 'sd' ? '' : 'none';
     $('pvMmBox').style.display = mode === 'mm' ? '' : 'none';
     $('pvHexBox').style.display = mode === 'hex' ? '' : 'none';
+    $('pvPsBox').style.display = mode === 'ps' ? '' : 'none';
     // Zusatz-Einstellung je Modus (Farbcodeknacker: wie oft jede Farbe vorkommen darf)
     $('rowOpt').style.display = mode === 'mm' ? '' : 'none';
     if (mode === 'mm') { const rp = profile.mmRep || 1; $('btnModeOpt').innerHTML = `${rp === 1 ? 'Jede Farbe 1×' : `Jede Farbe bis ${rp}×`} <span class="optarrow">⌄</span>`; }
@@ -4789,14 +5102,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex'].includes(mode)
+      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -4812,6 +5125,7 @@
     if (mode === 'mm') { profile.mmRep = ((profile.mmRep || 1) % 4) + 1; save(LS_PROFILE, profile); renderMode(); }
   };
   $('toyHex').onclick = () => openMode('hex');
+  $('toyPs').onclick = () => openMode('ps');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -4969,6 +5283,7 @@
     else if (mode === 'sd') { pvk.running = true; pvkStart(); }
     else if (mode === 'mm') { pvm.running = true; pvmStart(); }
     else if (mode === 'hex') { pvx.running = true; pvxStart(); }
+    else if (mode === 'ps') { pvp.running = true; pvpStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -4982,6 +5297,7 @@
     pvk.running = false; clearTimeout(pvk.timer);
     pvm.running = false; clearTimeout(pvm.timer);
     pvx.running = false; clearTimeout(pvx.timer);
+    pvp.running = false; clearTimeout(pvp.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -4996,7 +5312,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'hex'
+      const txt = mode === 'ps'
+        ? 'Teile diesen Code mit deinem Gegner. Du deckst zuerst auf.'
+        : mode === 'hex'
         ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
         : mode === 'mm'
         ? 'Teile diesen Code mit deinem Gegner. Leg schon mal deinen Geheimcode fest.'
@@ -5028,6 +5346,7 @@
     if (mode === 'sd') { show('sSd'); renderSd(); return; }
     if (mode === 'mm') { show('sMm'); renderMm(); return; }
     if (mode === 'hex') { show('sHex'); renderHex(); return; }
+    if (mode === 'ps') { show('sPs'); g.cpuPend = null; $('psGrid').innerHTML = ''; renderPs(); return; }
     if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
@@ -5098,7 +5417,8 @@
     if (mode === 'hang') { hangRematch(); return; }
     if (mode === 'sd') { sdRematch(); return; }
     if (mode === 'mm') { mmRematch(); return; }
-    if (mode === 'hex') { hexRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'hex') { hexRematch(); return; }
+    if (mode === 'ps') { psRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -5116,7 +5436,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -5130,6 +5450,7 @@
   else if (K && !K.finished) { mode = 'sd'; resumeGame(); }
   else if (M && !M.finished) { mode = 'mm'; resumeGame(); }
   else if (X && !X.finished) { mode = 'hex'; resumeGame(); }
+  else if (Z && !Z.finished) { mode = 'ps'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
