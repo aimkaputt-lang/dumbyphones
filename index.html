@@ -1039,8 +1039,8 @@
     background: #f1f1f1; border: 5px dashed #9aa0a8; box-shadow: 0 4px 0 rgba(0,0,0,.35);
   }
   .bkchip.big { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: #fff; }
-  .bkchip.v10 { border-color: #2f5a5a; } .bkchip.v50 { border-color: #3aa0d8; } .bkchip.v100 { border-color: #555; }
-  .bkchip.v500 { border-color: #a87ab8; } .bkchip.v1000 { border-color: #d89a3a; } .bkchip.v5000 { border-color: #3fae4a; }
+  .bkchip.v1 { border-color: #2f5a5a; } .bkchip.v10 { border-color: #3aa0d8; } .bkchip.v100 { border-color: #555; }
+  .bkchip.v1000 { border-color: #a87ab8; } .bkchip.v10000 { border-color: #d89a3a; } .bkchip.v100000 { border-color: #3fae4a; }
   .bksum { text-align: center; font-size: 22px; font-weight: 700; color: #fff; }
   .bksum.plus { color: #7fe08a; } .bksum.minus { color: #ff7d8a; }
   .bktable.mini { width: 100%; margin: 0; min-height: 0; padding: 10px 8px 12px; border-width: 6px; border-radius: 0 0 120px 120px / 0 0 40px 40px; }
@@ -5160,8 +5160,8 @@
   // =====================================================================
   //  BLACKKECK (Blackjack gegen den Dealer, 10 Runden, 10.000 Chips)
   // =====================================================================
-  const BK_ROUNDS = 10, BK_START = 10000, BK_MIN = 10;
-  const BK_CHIPS = [10, 50, 100, 500, 1000, 5000];
+  const BK_ROUNDS = 10, BK_START = 10000, BK_MIN = 1;
+  const BK_CHIPS = [1, 10, 100, 1000, 10000, 100000];
   const BK_RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'D', 'K'];
   // gleicher Zufall auf beiden Handys: Startwert aus Raumcode, Spielnummer und Runde
   function bkRng(str) {
