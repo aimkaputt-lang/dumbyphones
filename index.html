@@ -964,6 +964,91 @@
   .psgrid.mini .pscard.got .psface svg { filter: brightness(0) invert(1); }
   .psgrid.mini .psback span { font-size: 13px; }
 
+  /* ---------- Blackkeck ---------- */
+  body[data-theme="bk"], body[data-theme="bkgame"] {
+    --bg: #12301a; --bg-dark: #071509; --muted: #c8dccc;
+    --panel: #1e4f4c; --panel-card: #133836; --panel-shadow: #04100c; --title: #e39a85;
+    --bar: #1e4f4c; --bar-dark: #11302e; --seg-text: #cfeee8;
+  }
+  body[data-theme="bkgame"] { --bg: #4a2b22; --bg-dark: #1f110c; --muted: #e0cfc4; --panel-card: #2e5b45; --title: #f4c80f; }
+  body[data-theme^="bk"] .title { text-shadow: 0 5px 0 #06140a, 0 6px 12px rgba(0,0,0,.3); }
+  body[data-theme="bk"] .pv { background: #2e6b4f; }
+  body[data-theme^="bk"] .modal { background: linear-gradient(120deg, #1e4f4c, #2b6b66); border-color: #e39a85; }
+  body[data-theme^="bk"] .modal .big:empty { display: none; }
+  body[data-theme^="bk"] .modal h2 { font-size: 32px; margin-bottom: 8px; }
+  body[data-theme^="bk"] .modal p { margin: 0 0 18px; color: #fff; }
+  #sBk .topbar { margin-bottom: 8px; }
+  .bktable {
+    position: relative; width: calc(100% + 32px); margin: 0 -16px; padding: 14px 12px 16px; min-height: 380px;
+    background: radial-gradient(ellipse at 50% 70%, #3f7a5c, #2a5a42 60%, #1f4a35);
+    border-radius: 0 0 180px 180px / 0 0 60px 60px; border: 10px solid #5a3426; border-top: none;
+    box-shadow: inset 0 6px 14px rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.4);
+  }
+  .bkround { position: absolute; left: 16px; top: 10px; font-size: 22px; font-weight: 700; color: #f4c80f; text-shadow: 0 2px 0 rgba(0,0,0,.4); }
+  .bkdealer { display: flex; justify-content: center; min-height: 82px; }
+  .bkdealer .bkcard + .bkcard { margin-left: -22px; }
+  .bkdtot { width: 46px; margin: 4px auto 0; text-align: center; font-weight: 700; font-size: 17px; background: rgba(0,0,0,.28); border-radius: 12px; color: #fff; }
+  .bkarc { display: block; width: 100%; height: 46px; margin-top: -4px; }
+  .bkseats { display: flex; gap: 10px; justify-content: space-between; align-items: flex-start; margin-top: 2px; }
+  .bkseat { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 4px; border-radius: 14px; transition: background .25s; }
+  .bkseat.active { background: rgba(255,255,255,.08); box-shadow: 0 0 0 2px rgba(244,200,15,.5); }
+  .bkseat.empty { opacity: .6; }
+  .bklabel { font-size: 13px; font-weight: 700; color: #fff; }
+  .bkout { font-size: 12px; color: var(--muted); }
+  .bkhand { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 2px 4px; border-radius: 10px; }
+  .bkhand.cur { background: rgba(244,200,15,.14); }
+  .bkhandtop { display: flex; gap: 6px; align-items: center; }
+  .bkbet { font-size: 11px; font-weight: 700; color: #2a2a2a; background: #e8e8e8; border: 2px dashed #999; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; }
+  .bktot { min-width: 34px; text-align: center; font-weight: 700; font-size: 16px; color: #fff; background: rgba(0,0,0,.3); border-radius: 10px; padding: 1px 6px; }
+  .bktot.bust { background: #b8323c; }
+  .bkcards { display: flex; }
+  .bkcards .bkcard + .bkcard { margin-left: -24px; }
+  .bkhand.multi .bkcard { width: 34px; height: 48px; }
+  .bkhand.multi .bkcards .bkcard + .bkcard { margin-left: -20px; }
+  .bkcard {
+    position: relative; width: 52px; height: 74px; border-radius: 6px; background: #f3efe6; color: #2a2a2a; flex: 0 0 auto;
+    box-shadow: 0 3px 6px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center;
+  }
+  .bkcard.red { color: #b8323c; }
+  .bkcard svg { width: 58%; height: 58%; fill: currentColor; }
+  .bkr { position: absolute; left: 4px; top: 2px; font-size: 12px; font-weight: 700; line-height: 1; }
+  .bkr.b { left: auto; top: auto; right: 4px; bottom: 2px; transform: rotate(180deg); }
+  .bkcard.back { background: linear-gradient(145deg, #8a3a34, #6a2a26); box-shadow: inset 0 0 0 3px #f3efe6, 0 3px 6px rgba(0,0,0,.35); }
+  .bkcard.back b { font-family: "Fredoka", sans-serif; color: #f3efe6; font-size: 16px; }
+  .bkres { font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 10px; background: rgba(0,0,0,.35); color: #fff; }
+  .bkres.win, .bkres.bj { background: #2fa36a; }
+  .bkres.lose, .bkres.bust { background: #b8323c; }
+  .bkbank { width: 100%; display: flex; justify-content: space-between; margin: 10px 0 6px; }
+  .bkpile { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px; }
+  .bkpile span { padding: 6px 12px; border-radius: 20px; border: 3px dashed rgba(255,255,255,.7); color: #fff; }
+  .bkpile.r span { background: #c8304a; }
+  .bkpile.y span { background: #e0a800; }
+  .bkpile.y { flex-direction: row-reverse; }
+  .bkpile small { color: var(--muted); font-size: 12px; }
+  .bkctl { width: 100%; margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 6px; }
+  .bkctl button { margin: 0; }
+  .bkrow { gap: 8px; }
+  .bkrow button { font-size: 17px; padding: 13px 6px; }
+  .bkalt { background: #1e4f4c; color: #fff; box-shadow: 0 6px 0 #11302e; }
+  .bkallin { background: #3fae4a; color: #fff; box-shadow: 0 6px 0 #26762e; }
+  .bksplit { background: #e39a85; color: #3a1a10; box-shadow: 0 6px 0 #a8644f; }
+  .bkdraft { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; color: var(--muted); }
+  .bkchiprow { display: flex; justify-content: space-between; gap: 4px; }
+  .bkchip {
+    width: 52px; height: 52px; flex: 0 0 52px; padding: 0; margin: 0; border-radius: 50%; font-size: 14px; font-weight: 700; color: #222;
+    background: #f1f1f1; border: 5px dashed #9aa0a8; box-shadow: 0 4px 0 rgba(0,0,0,.35);
+  }
+  .bkchip.big { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: #fff; }
+  .bkchip.v10 { border-color: #2f5a5a; } .bkchip.v50 { border-color: #3aa0d8; } .bkchip.v100 { border-color: #555; }
+  .bkchip.v500 { border-color: #a87ab8; } .bkchip.v1000 { border-color: #d89a3a; } .bkchip.v5000 { border-color: #3fae4a; }
+  .bksum { text-align: center; font-size: 22px; font-weight: 700; color: #fff; }
+  .bksum.plus { color: #7fe08a; } .bksum.minus { color: #ff7d8a; }
+  .bktable.mini { width: 100%; margin: 0; min-height: 0; padding: 10px 8px 12px; border-width: 6px; border-radius: 0 0 120px 120px / 0 0 40px 40px; }
+  .bktable.mini .bkcard { width: 34px; height: 48px; }
+  .bktable.mini .bkr { font-size: 9px; }
+  .bktable.mini .bkbet { width: 26px; height: 26px; font-size: 9px; }
+  .bktable.mini .bktot { font-size: 12px; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -1169,6 +1254,18 @@
           <g transform="rotate(12 114 70)"><rect x="92" y="42" width="44" height="54" rx="7" fill="#e7cf8c"/><path d="M114 56 L103 63 Q99 68 103 74 L114 84 L125 74 Q129 68 125 63Z" fill="#d8264f"/></g>
         </svg>
       </button>
+      <button class="toy" id="toyBk" aria-label="Blackkeck" style="animation-delay:-7s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="62" ry="7" fill="rgba(0,0,0,.28)"/>
+          <path d="M10 30 Q80 0 150 30 L150 100 Q80 124 10 100Z" fill="#6a3a2a"/>
+          <path d="M18 34 Q80 8 142 34 L142 96 Q80 116 18 96Z" fill="#2e6b4f"/>
+          <path d="M34 50 Q80 74 126 50" fill="none" stroke="#c9a24a" stroke-width="2.4"/>
+          <g transform="rotate(-10 62 72)"><rect x="44" y="52" width="32" height="44" rx="4" fill="#f3efe6"/><text x="49" y="64" font-family="Fredoka,sans-serif" font-weight="700" font-size="11" fill="#2a2a2a">A</text><path d="M60 68 Q68 75 67 79 Q66 82 62 81 L63 86 L57 86 L58 81 Q54 82 53 79 Q52 75 60 68Z" fill="#2a2a2a"/></g>
+          <g transform="rotate(8 96 72)"><rect x="80" y="52" width="32" height="44" rx="4" fill="#f3efe6"/><text x="85" y="64" font-family="Fredoka,sans-serif" font-weight="700" font-size="11" fill="#b8323c">K</text><path d="M96 86 L88 77 Q85 72 89 69 Q93 67 96 72 Q99 67 103 69 Q107 72 104 77Z" fill="#b8323c"/></g>
+          <circle cx="126" cy="90" r="12" fill="#c8304a"/><circle cx="126" cy="90" r="8" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/>
+          <circle cx="34" cy="92" r="10" fill="#f4c80f"/><circle cx="34" cy="92" r="6.5" fill="none" stroke="#fff" stroke-width="1.8" stroke-dasharray="2.6 2.6"/>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -1225,6 +1322,9 @@
         </div>
         <div class="pv" id="pvPsBox" style="display:none">
           <div class="psgrid mini" id="pvpGrid"></div>
+        </div>
+        <div class="pv" id="pvBkBox" style="display:none">
+          <div class="bktable mini"><div class="bkdealer" id="pvbDealer"></div><div class="bkseats" id="pvbSeats"></div></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -1602,6 +1702,40 @@
     </div>
   </section>
 
+  <!-- BLACKKECK -->
+  <section class="screen" id="sBk">
+    <div class="topbar">
+      <button class="menubtn" id="btnBMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus" id="bkStatus"></div>
+    <div class="bktable">
+      <div class="bkround" id="bkRound">1/10</div>
+      <div class="bkdealer" id="bkDealer"></div>
+      <div class="bkdtot" id="bkDealerTot">0</div>
+      <svg class="bkarc" viewBox="0 0 300 60" aria-hidden="true">
+        <path id="bkArcPath" d="M20 10 Q150 70 280 10" fill="none"/>
+        <path d="M14 4 Q150 76 286 4" fill="none" stroke="#c9a24a" stroke-width="2.5"/>
+        <path d="M24 4 Q150 64 276 4" fill="none" stroke="#c9a24a" stroke-width="1.5" opacity=".7"/>
+        <text font-size="10.5" fill="#e8d9a8" font-family="Georgia,serif"><textPath href="#bkArcPath" startOffset="50%" text-anchor="middle">Dealer zieht bis 16 und bleibt ab 17</textPath></text>
+      </svg>
+      <div class="bkseats" id="bkSeats"></div>
+    </div>
+    <div class="bkbank">
+      <div class="bkpile r"><span id="bkMyChips">10.000</span><small>Du</small></div>
+      <div class="bkpile y"><span id="bkOpChips">10.000</span><small>Gegner</small></div>
+    </div>
+    <div class="bkctl" id="bkCtl"></div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1741,6 +1875,7 @@
     mm:    { topic: 'dumbyphones/farbcode/v1/', lsKey: 'fc_state_v1', screen: 'sMm', theme: 'mm' },
     hex:   { topic: 'dumbyphones/route6/v1/', lsKey: 'r6_state_v1', screen: 'sHex', theme: 'hex' },
     ps:    { topic: 'dumbyphones/paerchen/v1/', lsKey: 'ps_state_v1', screen: 'sPs', theme: 'ps' },
+    bk:    { topic: 'dumbyphones/blackkeck/v1/', lsKey: 'bk_state_v1', screen: 'sBk', theme: 'bk' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
@@ -1753,7 +1888,8 @@
   let M = load(MODES.mm.lsKey, null);   // Farbcodeknacker-Spielstand
   let X = load(MODES.hex.lsKey, null);  // Route-6-Spielstand
   let Z = load(MODES.ps.lsKey, null);   // Pärchensammler-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : mode === 'hex' ? X : mode === 'ps' ? Z : S);
+  let Y = load(MODES.bk.lsKey, null);   // Blackkeck-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : mode === 'hex' ? X : mode === 'ps' ? Z : mode === 'bk' ? Y : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1808,7 +1944,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : screen === 'sHex' ? 'hexgame' : screen === 'sPs' ? 'psgame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : screen === 'sHex' ? 'hexgame' : screen === 'sPs' ? 'psgame' : screen === 'sBk' ? 'bkgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1858,6 +1994,7 @@
         if (mode === 'mm') mmSync();
         if (mode === 'hex') hexSync();
         if (mode === 'ps') psSync();
+        if (mode === 'bk') bkSync();
       } catch {}
     });
   }
@@ -1880,6 +2017,8 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'bk') {
+      Object.assign(data, { host: g.host, bets: g.bets, acts: g.acts, seen: g.seen });
     } else if (mode === 'ps') {
       Object.assign(data, { host: g.host, moves: g.moves, pend: g.pend });
       if (g.host) data.deck = g.deck; // Ersteller mischt für beide
@@ -1932,6 +2071,12 @@
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
       q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'bk') {
+      const st = bkState();
+      q('.ototal').textContent = bkShort(st.opChips);
+      q('.oround').textContent = 'Chips';
       return;
     }
     if (mode === 'ps') {
@@ -5013,6 +5158,324 @@
   }
 
   // =====================================================================
+  //  BLACKKECK (Blackjack gegen den Dealer, 10 Runden, 10.000 Chips)
+  // =====================================================================
+  const BK_ROUNDS = 10, BK_START = 10000, BK_MIN = 10;
+  const BK_CHIPS = [10, 50, 100, 500, 1000, 5000];
+  const BK_RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'D', 'K'];
+  // gleicher Zufall auf beiden Handys: Startwert aus Raumcode, Spielnummer und Runde
+  function bkRng(str) {
+    let h = 1779033703 ^ str.length;
+    for (let i = 0; i < str.length; i++) { h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); }
+    return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; };
+  }
+  function bkShoe(seed) {
+    const rng = bkRng(seed), d = [];
+    for (let k = 0; k < 2; k++) for (let c = 0; c < 52; c++) d.push(c); // 2 Kartenspiele
+    for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
+    return d;
+  }
+  const bkRank = c => c % 13;
+  const bkVal = c => { const r = bkRank(c); return r === 0 ? 11 : r >= 9 ? 10 : r + 1; };
+  function bkTotal(cards) {
+    let t = 0, aces = 0;
+    cards.forEach(c => { t += bkVal(c); if (bkRank(c) === 0) aces++; });
+    while (t > 21 && aces) { t -= 10; aces--; }
+    return t;
+  }
+  const bkSoft = cards => { let t = 0, aces = 0; cards.forEach(c => { t += bkVal(c); if (bkRank(c) === 0) aces++; }); while (t > 21 && aces) { t -= 10; aces--; } return aces > 0; };
+  const bkCanSplit = (h, s) => h.cards.length === 2 && bkVal(h.cards[0]) === bkVal(h.cards[1]) && s.hands.length < 4 && s.chips - s.spent >= h.bet;
+  const bkCanDouble = (h, s) => h.cards.length === 2 && s.chips - s.spent >= h.bet;
+
+  // Eine Runde nachspielen. players[0] = Platz A (spielt zuerst), players[1] = Platz B.
+  function bkSimRound(seed, players) {
+    const deck = bkShoe(seed); let p = 0;
+    const draw = () => deck[p++ % deck.length];
+    const seats = players.map(pl => (pl && pl.bet > 0
+      ? { hands: [{ cards: [], bet: pl.bet, done: false }], spent: pl.bet, chips: pl.chips, acts: pl.acts || [], ai: 0, cur: 0 }
+      : null));
+    const dealer = [];
+    for (let k = 0; k < 2; k++) { seats.forEach(s => { if (s) s.hands[0].cards.push(draw()); }); dealer.push(draw()); }
+    const dBJ = bkTotal(dealer) === 21;
+    let turn = 'done';
+    if (!dBJ) {
+      for (let si = 0; si < seats.length; si++) {
+        const s = seats[si]; if (!s) continue;
+        if (bkTotal(s.hands[0].cards) === 21) { s.hands[0].bj = true; s.hands[0].done = true; }
+        let hi = 0;
+        while (hi < s.hands.length) {
+          const h = s.hands[hi];
+          if (h.cards.length === 1) { h.cards.push(draw()); if (h.splitAce || bkTotal(h.cards) === 21) h.done = true; }
+          if (h.done) { hi++; continue; }
+          if (s.ai >= s.acts.length) { turn = si === 0 ? 'A' : 'B'; s.cur = hi; break; }
+          const a = s.acts[s.ai++];
+          if (a === 'h') { h.cards.push(draw()); if (bkTotal(h.cards) >= 21) h.done = true; }
+          else if (a === 's') h.done = true;
+          else if (a === 'd' && bkCanDouble(h, s)) { s.spent += h.bet; h.bet *= 2; h.doubled = true; h.cards.push(draw()); h.done = true; }
+          else if (a === 'p' && bkCanSplit(h, s)) {
+            s.spent += h.bet;
+            const ace = bkRank(h.cards[0]) === 0;
+            const c2 = h.cards.pop();
+            h.split = true; h.splitAce = ace;
+            s.hands.splice(hi + 1, 0, { cards: [c2], bet: h.bet, done: false, split: true, splitAce: ace });
+            h.cards.push(draw());
+            if (ace || bkTotal(h.cards) === 21) h.done = true;
+          }
+        }
+        if (turn !== 'done') break;
+      }
+    }
+    const res = { seats, dealer, turn, dBJ, done: turn === 'done' };
+    if (turn === 'done') {
+      const live = seats.some(s => s && s.hands.some(h => bkTotal(h.cards) <= 21 && !h.bj));
+      if (!dBJ && live) while (bkTotal(dealer) < 17) dealer.push(draw());
+      const dt = bkTotal(dealer);
+      seats.forEach(s => {
+        if (!s) return;
+        s.ret = 0;
+        s.hands.forEach(h => {
+          const t = bkTotal(h.cards), bj = h.bj && !h.split;
+          let r;
+          if (t > 21) r = 'bust';
+          else if (dBJ) r = bj ? 'push' : 'lose';
+          else if (bj) r = 'bj';
+          else if (dt > 21 || t > dt) r = 'win';
+          else if (t === dt) r = 'push';
+          else r = 'lose';
+          h.result = r;
+          h.ret = r === 'bj' ? Math.floor(h.bet * 2.5) : r === 'win' ? h.bet * 2 : r === 'push' ? h.bet : 0;
+          s.ret += h.ret;
+        });
+        s.end = s.chips - s.spent + s.ret;
+      });
+    }
+    return res;
+  }
+
+  function freshBk(code, gameNo, host) {
+    return { code, gameNo: gameNo || 1, host: !!host, seedBase: code ? null : Math.random().toString(36).slice(2),
+      bets: [], acts: [], cpuBets: code ? null : [], cpuActs: code ? null : [], seen: 0, draft: 0,
+      finished: false, result: null, endShown: false, round: 1, total: BK_START };
+  }
+  const bkOpp = () => { const o = currentOpp(); return o && Y && o.gameNo === Y.gameNo ? o : null; };
+  const bkSeed = (g, r) => (g.code ? `${g.code}|${g.gameNo}|${r}` : `${g.seedBase}|${r}`);
+  // Daten beider Plätze: A spielt zuerst (Ersteller bzw. du im Solo), B danach
+  function bkSides() {
+    const g = Y;
+    if (!g.code) return { me: 0, A: { bets: g.bets, acts: g.acts }, B: { bets: g.cpuBets, acts: g.cpuActs }, here: true };
+    const o = bkOpp();
+    const mine = { bets: g.bets, acts: g.acts }, theirs = { bets: (o && o.bets) || [], acts: (o && o.acts) || [] };
+    return g.host ? { me: 0, A: mine, B: theirs, here: !!o } : { me: 1, A: theirs, B: mine, here: !!o };
+  }
+  // Chipstand vor Runde r (alle vorherigen Runden nachrechnen)
+  function bkChipsAt(g, sd, r) {
+    let ca = BK_START, cb = BK_START;
+    for (let k = 0; k < r; k++) {
+      const ba = sd.A.bets[k], bb = sd.B.bets[k];
+      if (ba === undefined || bb === undefined) break;
+      const sim = bkSimRound(bkSeed(g, k), [{ bet: ba, acts: sd.A.acts[k], chips: ca }, { bet: bb, acts: sd.B.acts[k], chips: cb }]);
+      if (!sim.done) break;
+      if (sim.seats[0]) ca = sim.seats[0].end;
+      if (sim.seats[1]) cb = sim.seats[1].end;
+    }
+    return [ca, cb];
+  }
+  function bkState() {
+    const g = Y, sd = bkSides(), r = g.seen;
+    const chips = bkChipsAt(g, sd, Math.min(r, BK_ROUNDS));
+    const st = { sd, r, chips, myChips: chips[sd.me], opChips: chips[1 - sd.me] };
+    if (g.finished) { st.ph = 'end'; return st; }
+    if (g.code && !sd.here) { st.ph = 'noopp'; return st; }
+    if (r >= BK_ROUNDS) { st.ph = 'final'; return st; }
+    const mySide = sd.me === 0 ? sd.A : sd.B, opSide = sd.me === 0 ? sd.B : sd.A;
+    if (mySide.bets[r] === undefined) { st.ph = st.myChips < BK_MIN ? 'broke' : 'bet'; return st; }
+    if (opSide.bets[r] === undefined) { st.ph = 'waitbet'; return st; }
+    st.sim = bkSimRound(bkSeed(g, r), [{ bet: sd.A.bets[r], acts: sd.A.acts[r], chips: chips[0] }, { bet: sd.B.bets[r], acts: sd.B.acts[r], chips: chips[1] }]);
+    if (st.sim.done) st.ph = 'result';
+    else st.ph = (st.sim.turn === 'A') === (sd.me === 0) ? 'act' : 'wait';
+    return st;
+  }
+  const bkFmt = n => n.toLocaleString('de-DE');
+  const bkShort = n => (n >= 1000 ? (n % 1000 === 0 ? n / 1000 + 'k' : (n / 1000).toFixed(1).replace('.', ',') + 'k') : String(n));
+  // Computer: Einsatz ~10 %, spielt nach einfacher Grundstrategie
+  function bkCpuBet(chips) { return Math.max(BK_MIN, Math.min(chips, Math.round(chips * (.06 + Math.random() * .08) / 50) * 50 || BK_MIN)); }
+  function bkCpuAct(h, s, up) {
+    const t = bkTotal(h.cards), u = bkVal(up), soft = bkSoft(h.cards);
+    if (h.cards.length === 2 && bkCanSplit(h, s)) { const v = bkVal(h.cards[0]); if (v === 11 || v === 8 || (v === 9 && ![7, 10, 11].includes(u))) return 'p'; }
+    if (h.cards.length === 2 && bkCanDouble(h, s) && !soft && (t === 11 || (t === 10 && u < 10) || (t === 9 && u >= 3 && u <= 6))) return 'd';
+    if (soft) return t >= 19 || (t === 18 && u <= 8) ? 's' : 'h';
+    if (t >= 17) return 's';
+    if (t >= 13 && u <= 6) return 's';
+    if (t === 12 && u >= 4 && u <= 6) return 's';
+    return 'h';
+  }
+
+  // ---------- Darstellung ----------
+  const BK_SUIT = [
+    '<path d="M20 34 L7 20 Q3 13 9 9 Q15 6 20 13 Q25 6 31 9 Q37 13 33 20Z"/>',                     // Herz
+    '<path d="M20 4 L32 20 L20 36 L8 20Z"/>',                                                    // Karo
+    '<circle cx="20" cy="12" r="6.5"/><circle cx="12" cy="21" r="6.5"/><circle cx="28" cy="21" r="6.5"/><path d="M18 20 L22 20 L24 34 L16 34Z"/>', // Kreuz
+    '<path d="M20 4 Q34 16 32 23 Q30 29 22 26 L24 34 L16 34 L18 26 Q10 29 8 23 Q6 16 20 4Z"/>',  // Pik
+  ];
+  function bkCard(c, hidden) {
+    if (hidden) return '<div class="bkcard back"><b>DP</b></div>';
+    const suit = Math.floor(c / 13) % 4, red = suit < 2, rk = BK_RANKS[bkRank(c)];
+    return `<div class="bkcard${red ? ' red' : ''}"><span class="bkr">${rk}</span><svg viewBox="0 0 40 40" aria-hidden="true">${BK_SUIT[suit]}</svg><span class="bkr b">${rk}</span></div>`;
+  }
+  const BK_RES = { bj: 'Blackkeck!', win: 'Gewonnen', push: 'Unentschieden', lose: 'Verloren', bust: 'Überkauft' };
+  function bkSeatHTML(seat, label, mine, active) {
+    if (!seat) return `<div class="bkseat empty"><div class="bklabel">${label}</div><div class="bkout">setzt aus</div></div>`;
+    return `<div class="bkseat${active ? ' active' : ''}"><div class="bklabel">${label}</div>${seat.hands.map((h, i) => {
+      const t = bkTotal(h.cards), cur = active && i === seat.cur;
+      return `<div class="bkhand${cur ? ' cur' : ''}${seat.hands.length > 1 ? ' multi' : ''}">
+        <div class="bkhandtop"><span class="bkbet">${bkShort(h.bet)}</span><span class="bktot${t > 21 ? ' bust' : ''}">${t}</span></div>
+        <div class="bkcards">${h.cards.map(c => bkCard(c)).join('')}</div>
+        ${h.result ? `<div class="bkres ${h.result}">${BK_RES[h.result]}${h.ret ? ' +' + bkShort(h.ret) : ''}</div>` : ''}
+      </div>`;
+    }).join('')}</div>`;
+  }
+  let bkCpuTimer = null;
+  function renderBk() {
+    const g = Y, st = bkState(), sd = st.sd;
+    const meLbl = 'Du', opLbl = g.code ? ((bkOpp() || {}).name || 'Gegner') : 'Computer';
+    $('bkRound').textContent = `${Math.min(st.r + 1, BK_ROUNDS)}/${BK_ROUNDS}`;
+    $('bkMyChips').textContent = bkFmt(st.myChips);
+    $('bkOpChips').textContent = bkFmt(st.opChips);
+    const sim = st.sim;
+    // Dealer
+    if (sim) {
+      const hide = !sim.done;
+      $('bkDealer').innerHTML = sim.dealer.map((c, i) => bkCard(c, hide && i === 1)).join('');
+      $('bkDealerTot').textContent = hide ? bkTotal([sim.dealer[0]]) : bkTotal(sim.dealer);
+      $('bkDealerTot').style.visibility = '';
+      const mine = sim.seats[sd.me], theirs = sim.seats[1 - sd.me];
+      const myActive = !sim.done && ((sim.turn === 'A') === (sd.me === 0));
+      const opActive = !sim.done && !myActive;
+      $('bkSeats').innerHTML = bkSeatHTML(mine, meLbl, true, myActive) + bkSeatHTML(theirs, opLbl, false, opActive);
+    } else {
+      $('bkDealer').innerHTML = '';
+      $('bkDealerTot').style.visibility = 'hidden';
+      $('bkSeats').innerHTML = '';
+    }
+    // Status
+    const txt = {
+      noopp: connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …',
+      bet: 'Setz deinen Einsatz', broke: 'Keine Chips mehr – du setzt aus', waitbet: `${opLbl} setzt …`,
+      act: 'Du bist dran', wait: `${opLbl} ist dran …`, result: 'Runde vorbei', final: 'Spiel vorbei', end: 'Spiel vorbei',
+    }[st.ph];
+    $('bkStatus').textContent = txt;
+    $('bkStatus').classList.toggle('turn', st.ph === 'bet' || st.ph === 'act');
+    // Steuerung
+    const ctl = $('bkCtl');
+    if (st.ph === 'bet') {
+      g.draft = Math.min(g.draft || 0, st.myChips);
+      ctl.innerHTML = `<div class="bkdraft"><span class="bkchip big">${bkShort(g.draft)}</span><span>Einsatz</span></div>
+        <div class="bkchiprow">${BK_CHIPS.map(v => `<button class="bkchip v${v}" data-v="${v}"${v > st.myChips - g.draft ? ' disabled' : ''}>${bkShort(v)}</button>`).join('')}</div>
+        <div class="row bkrow"><button class="bkalt" id="bkClear">Löschen</button><button class="bkallin" id="bkAllIn">All in</button><button id="bkConfirm"${g.draft >= BK_MIN ? '' : ' disabled'}>Bestätigen</button></div>`;
+      ctl.querySelectorAll('.bkchip[data-v]').forEach(b => b.onclick = () => { g.draft = Math.min(st.myChips, (g.draft || 0) + +b.dataset.v); save(MODES.bk.lsKey, g); renderBk(); });
+      $('bkClear').onclick = () => { g.draft = 0; renderBk(); };
+      $('bkAllIn').onclick = () => { g.draft = st.myChips; renderBk(); };
+      $('bkConfirm').onclick = () => bkBet(g.draft);
+    } else if (st.ph === 'act') {
+      const s = sim.seats[sd.me], h = s.hands[s.cur];
+      ctl.innerHTML = `<div class="row bkrow">
+        <button id="bkHit">Ziehen</button>
+        <button id="bkDouble" class="bkalt"${bkCanDouble(h, s) ? '' : ' disabled'}>Verdoppeln</button>
+        <button id="bkStand">Halten</button></div>
+        ${bkCanSplit(h, s) ? '<button id="bkSplit" class="bksplit">Teilen</button>' : ''}`;
+      $('bkHit').onclick = () => bkAct('h');
+      $('bkStand').onclick = () => bkAct('s');
+      $('bkDouble').onclick = () => bkAct('d');
+      if ($('bkSplit')) $('bkSplit').onclick = () => bkAct('p');
+    } else if (st.ph === 'result') {
+      const s = sim.seats[sd.me];
+      const diff = s ? s.end - st.myChips : 0;
+      ctl.innerHTML = `<div class="bksum ${diff > 0 ? 'plus' : diff < 0 ? 'minus' : ''}">${s ? (diff > 0 ? '+' : '') + bkFmt(diff) + ' Chips' : 'ausgesetzt'}</div>
+        <button id="bkNext">${st.r + 1 >= BK_ROUNDS ? 'Ergebnis' : 'Nächste Runde'}</button>`;
+      $('bkNext').onclick = () => { g.seen++; g.round = g.seen + 1; persist(); renderBk(); };
+    } else if (st.ph === 'broke') {
+      ctl.innerHTML = '<button id="bkSkip">Runde aussetzen</button>';
+      $('bkSkip').onclick = () => bkBet(0);
+    } else if (st.ph === 'final' || st.ph === 'end') {
+      ctl.innerHTML = '<div class="row bkrow"><button id="bkAgain">Nochmal</button><button id="bkMenu" class="bkalt">Menü</button></div>';
+      $('bkAgain').onclick = bkRematch;
+      $('bkMenu').onclick = () => { disconnect(); openMode('bk'); };
+    } else ctl.innerHTML = '';
+    updateOpp();
+    if (st.ph === 'final' && !g.finished) bkFinish(st);
+    // Solo: Computer setzt und spielt
+    if (!g.code && !bkCpuTimer) {
+      const r = st.r;
+      if (r < BK_ROUNDS && g.cpuBets[r] === undefined && st.opChips >= 0) {
+        bkCpuTimer = setTimeout(() => { bkCpuTimer = null; if (Y !== g || g.cpuBets[r] !== undefined) return; g.cpuBets[r] = st.opChips >= BK_MIN ? bkCpuBet(st.opChips) : 0; g.cpuActs[r] = []; persist(); renderBk(); }, 600);
+      } else if (st.ph === 'wait' && sim && sim.turn === 'B') {
+        bkCpuTimer = setTimeout(() => {
+          bkCpuTimer = null; if (Y !== g) return;
+          const s2 = bkState(); if (s2.ph !== 'wait' || !s2.sim || s2.sim.turn !== 'B') return;
+          const s = s2.sim.seats[1], h = s.hands[s.cur];
+          (g.cpuActs[s2.r] = g.cpuActs[s2.r] || []).push(bkCpuAct(h, s, s2.sim.dealer[0]));
+          persist(); renderBk();
+        }, 850);
+      }
+    }
+  }
+  function bkBet(v) {
+    const g = Y, st = bkState();
+    if (st.ph !== 'bet' && st.ph !== 'broke') return;
+    if (st.ph === 'bet' && (v < BK_MIN || v > st.myChips)) return;
+    g.bets[st.r] = v; g.acts[st.r] = []; g.draft = Math.min(v, BK_START);
+    persist(); renderBk();
+  }
+  function bkAct(a) {
+    const g = Y, st = bkState();
+    if (st.ph !== 'act') return;
+    (g.acts[st.r] = g.acts[st.r] || []).push(a);
+    try { navigator.vibrate && navigator.vibrate(12); } catch {}
+    persist(); renderBk();
+  }
+  function bkFinish(st) {
+    const g = Y;
+    const me = st.myChips, op = st.opChips;
+    g.finished = true; g.result = me > op ? 'win' : me < op ? 'lose' : 'draw'; g.total = me;
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedBk = (profile.playedBk || 0) + 1; save(LS_PROFILE, profile);
+      setTimeout(() => { if (mode === 'bk' && Y === g) modal({ win: 'Gewonnen!', lose: 'Verloren', draw: 'Unentschieden' }[g.result], '', `Du ${bkFmt(me)} · ${g.code ? 'Gegner' : 'Computer'} ${bkFmt(op)}`, 'Weiter'); }, 500);
+    }
+    persist();
+  }
+  function bkSync() { if (mode === 'bk' && Y) renderBk(); }
+  function bkRematch() {
+    const g = Y;
+    clearTimeout(bkCpuTimer); bkCpuTimer = null;
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    Y = freshBk(g.code, n, g.host);
+    persist();
+    renderBk();
+  }
+  $('btnBMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Blackkeck ----------
+  const pvb = { running: false, timer: null };
+  function pvbLater(fn, ms) { pvb.timer = setTimeout(() => pvb.running && fn(), ms); }
+  function pvbStart() {
+    const seed = Math.random().toString(36);
+    const actsA = [], actsB = [];
+    const step = () => {
+      const sim = bkSimRound(seed, [{ bet: 100, acts: actsA, chips: 10000 }, { bet: 200, acts: actsB, chips: 10000 }]);
+      $('pvbDealer').innerHTML = sim.dealer.map((c, i) => bkCard(c, !sim.done && i === 1)).join('');
+      $('pvbSeats').innerHTML = bkSeatHTML(sim.seats[0], 'Du', true, sim.turn === 'A') + bkSeatHTML(sim.seats[1], 'Gegner', false, sim.turn === 'B');
+      if (sim.done) { pvbLater(pvbStart, 2600); return; }
+      const s = sim.seats[sim.turn === 'A' ? 0 : 1], h = s.hands[s.cur];
+      (sim.turn === 'A' ? actsA : actsB).push(bkCpuAct(h, s, sim.dealer[0]));
+      pvbLater(step, 800);
+    };
+    step();
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -5025,6 +5488,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    bk: {
+      title: 'Blackkeck', playedKey: 'playedBk',
+      desc: ['Schnapp dir die 21, aber hüte dich vorm Überkaufen! Ihr sitzt beide am selben Tisch und spielt gegen den Dealer – jeder startet mit 10.000 Chips.',
+        'Ein Sieg verdoppelt deinen Einsatz, Blackkeck (21 mit zwei Karten) zahlt 3:2. Du kannst verdoppeln und gleiche Karten teilen. Der Dealer zieht bis 16 und bleibt ab 17. Nach 10 Runden gewinnt, wer mehr Chips hat. Solo sitzt ein Computer neben dir.'],
     },
     ps: {
       title: 'Pärchensammler', playedKey: 'playedPs',
@@ -5072,7 +5540,7 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : m === 'hex' ? freshHex(code, gameNo, whoHost) : m === 'ps' ? freshPs(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : m === 'hex' ? freshHex(code, gameNo, whoHost) : m === 'ps' ? freshPs(code, gameNo, whoHost) : m === 'bk' ? freshBk(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
     else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
@@ -5081,9 +5549,10 @@
     else if (mode === 'sd') { K = v; clearTimeout(sdCpuTimer); sdCpuTimer = null; }
     else if (mode === 'mm') M = v;
     else if (mode === 'hex') { X = v; clearTimeout(hxCpuTimer); hxCpuTimer = null; }
+    else if (mode === 'bk') { Y = v; clearTimeout(bkCpuTimer); bkCpuTimer = null; }
     else if (mode === 'ps') { Z = v; clearTimeout(psCpuTimer); psCpuTimer = null; psShowKey = null; for (const k in psMem) delete psMem[k]; $('psGrid').innerHTML = ''; } else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else if (mode === 'hex') renderHex(); else if (mode === 'ps') renderPs(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else if (mode === 'hex') renderHex(); else if (mode === 'ps') renderPs(); else if (mode === 'bk') renderBk(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -5108,6 +5577,7 @@
     $('pvMmBox').style.display = mode === 'mm' ? '' : 'none';
     $('pvHexBox').style.display = mode === 'hex' ? '' : 'none';
     $('pvPsBox').style.display = mode === 'ps' ? '' : 'none';
+    $('pvBkBox').style.display = mode === 'bk' ? '' : 'none';
     // Zusatz-Einstellung je Modus (Farbcodeknacker: wie oft jede Farbe vorkommen darf)
     $('rowOpt').style.display = mode === 'mm' ? '' : 'none';
     if (mode === 'mm') { const rp = profile.mmRep || 1; $('btnModeOpt').innerHTML = `${rp === 1 ? 'Jede Farbe 1×' : `Jede Farbe bis ${rp}×`} <span class="optarrow">⌄</span>`; }
@@ -5120,14 +5590,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps'].includes(mode)
+      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps', 'bk'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps', 'bk'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -5144,6 +5614,7 @@
   };
   $('toyHex').onclick = () => openMode('hex');
   $('toyPs').onclick = () => openMode('ps');
+  $('toyBk').onclick = () => openMode('bk');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -5302,6 +5773,7 @@
     else if (mode === 'mm') { pvm.running = true; pvmStart(); }
     else if (mode === 'hex') { pvx.running = true; pvxStart(); }
     else if (mode === 'ps') { pvp.running = true; pvpStart(); }
+    else if (mode === 'bk') { pvb.running = true; pvbStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -5316,6 +5788,7 @@
     pvm.running = false; clearTimeout(pvm.timer);
     pvx.running = false; clearTimeout(pvx.timer);
     pvp.running = false; clearTimeout(pvp.timer);
+    pvb.running = false; clearTimeout(pvb.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -5330,7 +5803,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'ps'
+      const txt = mode === 'bk'
+        ? 'Teile diesen Code mit deinem Gegner. Setzt eure Chips, dann geht es gegen den Dealer.'
+        : mode === 'ps'
         ? 'Teile diesen Code mit deinem Gegner. Du deckst zuerst auf.'
         : mode === 'hex'
         ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
@@ -5364,6 +5839,7 @@
     if (mode === 'sd') { show('sSd'); renderSd(); return; }
     if (mode === 'mm') { show('sMm'); renderMm(); return; }
     if (mode === 'hex') { show('sHex'); renderHex(); return; }
+    if (mode === 'bk') { show('sBk'); renderBk(); return; }
     if (mode === 'ps') { show('sPs'); g.cpuPend = null; $('psGrid').innerHTML = ''; renderPs(); return; }
     if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
@@ -5436,7 +5912,8 @@
     if (mode === 'sd') { sdRematch(); return; }
     if (mode === 'mm') { mmRematch(); return; }
     if (mode === 'hex') { hexRematch(); return; }
-    if (mode === 'ps') { psRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'ps') { psRematch(); return; }
+    if (mode === 'bk') { bkRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -5454,7 +5931,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex', 'ps', 'bk'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -5469,6 +5946,7 @@
   else if (M && !M.finished) { mode = 'mm'; resumeGame(); }
   else if (X && !X.finished) { mode = 'hex'; resumeGame(); }
   else if (Z && !Z.finished) { mode = 'ps'; resumeGame(); }
+  else if (Y && !Y.finished) { mode = 'bk'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
