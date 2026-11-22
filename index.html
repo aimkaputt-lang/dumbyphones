@@ -882,6 +882,38 @@
   .mmboard.mini .mmpeg { width: 6px; height: 6px; }
   .mmboard.mini .mmpegs { height: 15px; margin: 4px 0 5px; }
 
+  /* ---------- Route 6 ---------- */
+  body[data-theme="hex"], body[data-theme="hexgame"] {
+    --bg: #d8952e; --bg-dark: #b87616; --muted: #fff0d8; --text: #fff8ec;
+    --panel: #2c5a66; --panel-card: #1f434c; --panel-shadow: #0d1f24; --title: #2c5a66;
+    --bar: #b2244f; --bar-dark: #7d1636; --seg-text: #ffd6e0;
+  }
+  body[data-theme="hexgame"] {
+    --bg: #6a4635; --bg-dark: #2e1d16; --muted: #e8d2c2; --panel-card: #3e2a20; --title: #f4c80f;
+    background: linear-gradient(180deg, #3e2620 0%, #5a3a2e 30%, #6e4a3a 55%, #8a6250 80%, #a47a62 100%);
+  }
+  body[data-theme="hex"] .title { text-shadow: 0 5px 0 #0d1f24, 0 6px 12px rgba(0,0,0,.2); }
+  body[data-theme="hex"] .pv { background: linear-gradient(180deg, #4a3029, #8a6250); }
+  body[data-theme="hex"] .played { color: #fff; }
+  body[data-theme="hex"] .pause .title { color: #f4c80f; }
+  body[data-theme^="hex"] .modal { background: linear-gradient(120deg, #2c5a66, #3d7380); border-color: #b2244f; }
+  body[data-theme^="hex"] .modal .big:empty { display: none; }
+  body[data-theme^="hex"] .modal h2 { font-size: 32px; margin-bottom: 18px; }
+  #sHex .topbar { margin-bottom: 8px; }
+  .hxgoal { text-align: center; font-size: 14px; color: var(--muted); margin: 8px 0 4px; }
+  .hxgoal .hr { color: #ff5a85; } .hxgoal .hy { color: #f4c80f; }
+  .hxboard { width: 100%; display: flex; justify-content: center; }
+  .hxboard svg { height: min(580px, calc(100vh - 230px)); max-width: 100%; display: block; filter: drop-shadow(0 10px 14px rgba(0,0,0,.4)); }
+  .hxboard.play .hxcell { cursor: pointer; }
+  .hxboard.play .hxcell:active { fill: #5fb2b8; }
+  .hxstone.last polygon:nth-child(2) { stroke: #fff; stroke-width: .9; }
+  .hxstone.win { animation: hxblink .25s ease-in-out .3s 8 alternate both; }
+  @keyframes hxblink { from { opacity: 1; } to { opacity: .35; } }
+  .hxend { margin-top: auto; padding-top: 10px; }
+  .hxend button { margin: 0; }
+  .hxalt { background: #b2244f; color: #fff; box-shadow: 0 6px 0 #7d1636; }
+  .hxboard.mini svg { height: 230px; }
+
   /* Hauptmenü: zwei Symbole */
   .toys { gap: 14px; padding: 10px; }
   .toy { width: 150px; }
@@ -1062,6 +1094,23 @@
           <text x="122" y="20" font-family="Fredoka,sans-serif" font-weight="700" font-size="20" fill="#fff4c2" text-anchor="middle">?</text>
         </svg>
       </button>
+      <button class="toy" id="toyHex" aria-label="Route 6" style="animation-delay:-5.8s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse cx="80" cy="118" rx="62" ry="7" fill="rgba(0,0,0,.28)"/>
+          <polygon points="46,12 150,12 114,112 10,112" fill="#f4c80f"/>
+          <polygon points="46,12 150,12 80,62" fill="#e2104c"/><polygon points="10,112 114,112 80,62" fill="#e2104c"/>
+          <polygon points="50,20 140,20 110,104 20,104" fill="#2a585f"/>
+          <g fill="#3f8a90">
+            <polygon points="58,26 66,26 70,33 66,40 58,40 54,33"/><polygon points="76,26 84,26 88,33 84,40 76,40 72,33"/><polygon points="94,26 102,26 106,33 102,40 94,40 90,33"/><polygon points="112,26 120,26 124,33 120,40 112,40 108,33"/>
+            <polygon points="52,44 60,44 64,51 60,58 52,58 48,51"/><polygon points="70,44 78,44 82,51 78,58 70,58 66,51"/><polygon points="106,44 114,44 118,51 114,58 106,58 102,51"/>
+            <polygon points="46,62 54,62 58,69 54,76 46,76 42,69"/><polygon points="82,62 90,62 94,69 90,76 82,76 78,69"/><polygon points="100,62 108,62 112,69 108,76 100,76 96,69"/>
+            <polygon points="40,80 48,80 52,87 48,94 40,94 36,87"/><polygon points="58,80 66,80 70,87 66,94 58,94 54,87"/><polygon points="76,80 84,80 88,87 84,94 76,94 72,87"/><polygon points="94,80 102,80 106,87 102,94 94,94 90,87"/>
+          </g>
+          <polygon points="88,44 96,44 100,51 96,58 88,58 84,51" fill="#f4c80f"/>
+          <polygon points="64,62 72,62 76,69 72,76 64,76 60,69" fill="#e2104c"/>
+          <polygon points="22,80 30,80 34,87 30,94 22,94 18,87" fill="#3f8a90"/>
+        </svg>
+      </button>
       <button class="toy" id="toyDice" aria-label="Dumby Dices" style="animation-delay:-1.6s">
         <svg viewBox="0 0 160 130" aria-hidden="true">
           <ellipse cx="80" cy="116" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>
@@ -1112,6 +1161,9 @@
         </div>
         <div class="pv" id="pvMmBox" style="display:none">
           <div id="pvmBoard"></div>
+        </div>
+        <div class="pv" id="pvHexBox" style="display:none">
+          <div class="hxboard mini" id="pvxBoard"></div>
         </div>
         <div class="pv" id="pvKlapp">
           <div class="box"><div class="felt">
@@ -1438,6 +1490,29 @@
     </div>
   </section>
 
+  <!-- ROUTE 6 -->
+  <section class="screen" id="sHex">
+    <div class="topbar">
+      <button class="menubtn" id="btnXMenu" aria-label="Menü"><i></i><i></i><i></i></button>
+      <div class="opp">
+        <div class="avatar off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f6efea" d="M12 2.5a3.6 3.6 0 0 1 2.2 6.45c1.2.75 2 2.08 2 3.55 0 .6-.13 1.17-.37 1.7L17.6 19H6.4l1.77-4.8a4.1 4.1 0 0 1-.37-1.7c0-1.47.8-2.8 2-3.55A3.6 3.6 0 0 1 12 2.5ZM5 20.2h14a1 1 0 0 1 1 1v.8H4v-.8a1 1 0 0 1 1-1Z"/></svg>
+        </div>
+        <div class="info">
+          <div class="oname">Gegner</div>
+          <div class="opts"><span class="ototal">–</span> <small class="oround"></small></div>
+        </div>
+      </div>
+    </div>
+    <div class="wstatus c4status" id="hxStatus"></div>
+    <div class="hxgoal" id="hxGoal"></div>
+    <div class="hxboard" id="hxBoard"></div>
+    <div class="row hxend" id="hxEnd" style="display:none">
+      <button id="btnHxAgain">Nochmal</button>
+      <button id="btnHxMenu" class="hxalt">Menü</button>
+    </div>
+  </section>
+
   <!-- END -->
   <section class="screen" id="sEnd">
     <h1 class="title">Spielende</h1>
@@ -1575,6 +1650,7 @@
     hang:  { topic: 'dumbyphones/abhaengen/v1/', lsKey: 'ab_state_v1', screen: 'sHang', theme: 'hang' },
     sd:    { topic: 'dumbyphones/strichduett/v1/', lsKey: 'sd_state_v1', screen: 'sSd', theme: 'sd' },
     mm:    { topic: 'dumbyphones/farbcode/v1/', lsKey: 'fc_state_v1', screen: 'sMm', theme: 'mm' },
+    hex:   { topic: 'dumbyphones/route6/v1/', lsKey: 'r6_state_v1', screen: 'sHex', theme: 'hex' },
   };
   let mode = 'klapp';
   let D = load(MODES.dice.lsKey, null); // Dumby-Dices-Spielstand
@@ -1585,7 +1661,8 @@
   let H = load(MODES.hang.lsKey, null); // Abhängen-Spielstand
   let K = load(MODES.sd.lsKey, null);   // Strichduett-Spielstand
   let M = load(MODES.mm.lsKey, null);   // Farbcodeknacker-Spielstand
-  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : S);
+  let X = load(MODES.hex.lsKey, null);  // Route-6-Spielstand
+  const G = () => (mode === 'dice' ? D : mode === 'who' ? W : mode === 'four' ? F : mode === 'sea' ? B : mode === 'cs' ? C : mode === 'hang' ? H : mode === 'sd' ? K : mode === 'mm' ? M : mode === 'hex' ? X : S);
   const lowerWins = () => mode === 'klapp';
 
   // ---------- helpers ----------
@@ -1640,7 +1717,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(screen).classList.add('active');
     // Vierer König: Menüs im Bordeaux-Stil, das Spielfeld selbst vor grüner Wand
-    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : MODES[mode].theme;
+    document.body.dataset.theme = screen === 'sHome' ? '' : screen === 'sFour' ? 'fourgame' : screen === 'sCs' ? 'csgame' : screen === 'sHang' ? 'hanggame' : screen === 'sSd' ? 'sdgame' : screen === 'sMm' ? 'mmgame' : screen === 'sHex' ? 'hexgame' : MODES[mode].theme;
     // Vollbild-Screens: Seite selbst darf nicht verschoben werden (iOS-Gummiband)
     document.documentElement.classList.toggle('lock', $(screen).classList.contains('fixed'));
     document.body.classList.remove('bs-enemy');
@@ -1688,6 +1765,7 @@
         if (mode === 'hang') hangSync();
         if (mode === 'sd') sdSync();
         if (mode === 'mm') mmSync();
+        if (mode === 'hex') hexSync();
       } catch {}
     });
   }
@@ -1710,6 +1788,8 @@
         open: g.down.filter(x => !x).length,
       });
       if (g.finished) data.secret = g.secret; // erst nach Spielende verraten
+    } else if (mode === 'hex') {
+      Object.assign(data, { host: g.host, moves: g.moves });
     } else if (mode === 'mm') {
       Object.assign(data, { host: g.host, secret: g.secret ? hgEnc(JSON.stringify(g.secret)) : null,
         tries: g.guesses.length, solved: mmSolved(g), done: mmDone(g) });
@@ -1755,6 +1835,11 @@
     q('.oname').textContent = o.name;
     if (o.gameNo !== g.gameNo) {
       q('.ototal').textContent = '–';
+      q('.oround').textContent = '';
+      return;
+    }
+    if (mode === 'hex') {
+      q('.ototal').textContent = hxMeStarts(g) ? 'Gelb' : 'Rot';
       q('.oround').textContent = '';
       return;
     }
@@ -4309,6 +4394,215 @@
   }
 
   // =====================================================================
+  //  ROUTE 6 (Hex: Waben-Verbindung)
+  // =====================================================================
+  const HX = 11;
+  // Nachbarn einer Wabe (r, c)
+  const HX_NB = [[0, 1], [0, -1], [1, 0], [-1, 0], [-1, 1], [1, -1]];
+  // Rot (v=0) verbindet Reihe 0 mit Reihe 10, Gelb (v=1) verbindet Spalte 0 mit Spalte 10
+  function freshHex(code, gameNo, host) {
+    return { code, gameNo: gameNo || 1, host: !!host, meStarts: code ? null : true, seq: [], moves: [],
+      finished: false, result: null, endShown: false, round: 1, total: 0 };
+  }
+  const hxMeStarts = g => (g.code ? (g.gameNo % 2 === 1) === g.host : g.meStarts);
+  const hxOpp = () => { const o = currentOpp(); return o && X && o.gameNo === X.gameNo ? o : null; };
+  function hxSeq(g) {
+    if (!g.code) return g.seq;
+    const o = hxOpp(), mine = g.moves, theirs = (o && o.moves) || [];
+    const a = hxMeStarts(g) ? mine : theirs, b = hxMeStarts(g) ? theirs : mine;
+    const out = [];
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+      if (i < a.length) out.push(a[i]); else break;
+      if (i < b.length) out.push(b[i]); else break;
+    }
+    return out;
+  }
+  // Brett: Map "r,c" -> 0 (Rot) / 1 (Gelb)
+  function hxBoard(seq) { const b = {}; seq.forEach((k, i) => { if (b[k] === undefined) b[k] = i % 2; }); return b; }
+  // Gewinner prüfen und den Siegesweg liefern
+  function hxWinner(b) {
+    for (const v of [0, 1]) {
+      const start = [];
+      for (let i = 0; i < HX; i++) { const k = v === 0 ? `0,${i}` : `${i},0`; if (b[k] === v) start.push(k); }
+      const prev = {}; start.forEach(k => { prev[k] = null; });
+      const q = [...start];
+      while (q.length) {
+        const k = q.shift(); const [r, c] = k.split(',').map(Number);
+        if ((v === 0 && r === HX - 1) || (v === 1 && c === HX - 1)) {
+          const path = []; let x = k; while (x !== null) { path.push(x); x = prev[x]; }
+          return { v, path };
+        }
+        HX_NB.forEach(([dr, dc]) => {
+          const rr = r + dr, cc = c + dc, kk = rr + ',' + cc;
+          if (rr >= 0 && cc >= 0 && rr < HX && cc < HX && b[kk] === v && !(kk in prev)) { prev[kk] = k; q.push(kk); }
+        });
+      }
+    }
+    return null;
+  }
+  // Kürzeste Verbindung für Farbe v: eigene Steine kosten 0, freie 1, fremde sind gesperrt
+  function hxDist(b, v) {
+    const dist = {}; const dq = [];
+    for (let i = 0; i < HX; i++) {
+      const k = v === 0 ? `0,${i}` : `${i},0`;
+      if (b[k] === 1 - v) continue;
+      const d = b[k] === v ? 0 : 1;
+      if (dist[k] === undefined || d < dist[k]) { dist[k] = d; d ? dq.push(k) : dq.unshift(k); }
+    }
+    let best = 99;
+    while (dq.length) {
+      const k = dq.shift(); const [r, c] = k.split(',').map(Number); const d = dist[k];
+      if ((v === 0 && r === HX - 1) || (v === 1 && c === HX - 1)) best = Math.min(best, d);
+      HX_NB.forEach(([dr, dc]) => {
+        const rr = r + dr, cc = c + dc; if (rr < 0 || cc < 0 || rr >= HX || cc >= HX) return;
+        const kk = rr + ',' + cc; if (b[kk] === 1 - v) return;
+        const nd = d + (b[kk] === v ? 0 : 1);
+        if (dist[kk] === undefined || nd < dist[kk]) { dist[kk] = nd; nd === d ? dq.unshift(kk) : dq.push(kk); }
+      });
+    }
+    return best;
+  }
+  // Computer: Zug, der die eigene Verbindung am meisten verkürzt und die gegnerische verlängert
+  function hxCpuPick(seq, jitter = .3) {
+    const b = hxBoard(seq), me = seq.length % 2, you = 1 - me;
+    const empties = [];
+    for (let r = 0; r < HX; r++) for (let c = 0; c < HX; c++) if (b[r + ',' + c] === undefined) empties.push(r + ',' + c);
+    if (seq.length < 2) { const mid = [`5,5`, `4,6`, `6,4`, `5,4`, `4,5`].filter(k => b[k] === undefined); return mid[Math.floor(Math.random() * mid.length)]; }
+    let best = null, bs = -1e9;
+    empties.forEach(k => {
+      b[k] = me;
+      const myD = hxDist(b, me), opD = hxDist(b, you);
+      delete b[k];
+      if (myD === 0) { bs = 1e9; best = k; return; }
+      const [r, c] = k.split(',').map(Number);
+      const s = opD * 1.05 - myD - (Math.abs(r - 5) + Math.abs(c - 5)) * .02 + Math.random() * jitter;
+      if (s > bs) { bs = s; best = k; }
+    });
+    return best;
+  }
+
+  // ---------- Darstellung: Raute hochkant (flache Waben) ----------
+  const HX_COL = { r: '#e2104c', y: '#f4c80f' };
+  function hxSVG(b, myCol, opts = {}) {
+    const s = 10, w = Math.sqrt(3) * s;
+    const P = (r, c) => [1.5 * s * r, w * (c + r / 2)];   // gedrehte Lage: Reihen laufen nach rechts
+    const pts = [P(0, 0), P(0, HX - 1), P(HX - 1, HX - 1), P(HX - 1, 0)];
+    const O = [pts.reduce((a, p) => a + p[0], 0) / 4, pts.reduce((a, p) => a + p[1], 0) / 4];
+    const ex = (p, k) => [O[0] + (p[0] - O[0]) * k, O[1] + (p[1] - O[1]) * k];
+    const f = pts.map(p => ex(p, 1.2)), g = pts.map(p => ex(p, 1.09));
+    const xs = f.map(p => p[0]), ys = f.map(p => p[1]);
+    const minX = Math.min(...xs) - 2, minY = Math.min(...ys) - 2, W = Math.max(...xs) - minX + 2, Hh = Math.max(...ys) - minY + 2;
+    const pl = a => a.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ');
+    const colR = myCol === 'r' ? HX_COL.r : HX_COL.r; // Rot bleibt Rot, Gelb bleibt Gelb
+    let s2 = `<svg viewBox="${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${Hh.toFixed(1)}" aria-hidden="true">`;
+    // Rahmen: rote Seiten (Reihe 0 / 10), gelbe Seiten (Spalte 0 / 10), mit schrägen Ecken
+    s2 += `<polygon points="${pl([O, f[0], f[1]])}" fill="${colR}"/><polygon points="${pl([O, f[2], f[3]])}" fill="${colR}"/>`;
+    s2 += `<polygon points="${pl([O, f[1], f[2]])}" fill="${HX_COL.y}"/><polygon points="${pl([O, f[3], f[0]])}" fill="${HX_COL.y}"/>`;
+    s2 += `<polygon points="${pl(g)}" fill="#2a585f"/>`;
+    const hexPts = (x, y, rad) => [...Array(6)].map((_, i) => { const a = Math.PI / 3 * i; return `${(x + rad * Math.cos(a)).toFixed(2)},${(y + rad * Math.sin(a)).toFixed(2)}`; }).join(' ');
+    const winSet = new Set(opts.win ? opts.win.path : []);
+    for (let r = 0; r < HX; r++) for (let c = 0; c < HX; c++) {
+      const [x, y] = P(r, c), k = r + ',' + c, v = b[k];
+      s2 += `<polygon class="hxcell" data-k="${k}" points="${hexPts(x, y, s * .93)}" fill="#3f8a90"/>`;
+      s2 += `<polygon points="${hexPts(x - 1.2, y - 1.6, s * .62)}" fill="#4f9da3" opacity=".45" pointer-events="none"/>`;
+      if (v !== undefined) {
+        const col = v === 0 ? HX_COL.r : HX_COL.y, dark = v === 0 ? '#a40a37' : '#c29a08';
+        const last = opts.last === k;
+        s2 += `<g class="hxstone${winSet.has(k) ? ' win' : ''}${last ? ' last' : ''}" pointer-events="none"><polygon points="${hexPts(x, y, s * .84)}" fill="${dark}"/><polygon points="${hexPts(x, y - .8, s * .76)}" fill="${col}"/><polygon points="${hexPts(x, y - .8, s * .44)}" fill="${dark}" opacity=".35"/></g>`;
+      }
+    }
+    return s2 + '</svg>';
+  }
+
+  let hxCpuTimer = null, hxBlinkUntil = 0;
+  function hxState() {
+    const g = X, seq = hxSeq(g), b = hxBoard(seq), win = hxWinner(b);
+    const myV = hxMeStarts(g) ? 0 : 1;
+    return { seq, b, win, myV, myTurn: !win && seq.length % 2 === myV };
+  }
+  function renderHex() {
+    const g = X, st = hxState();
+    const o = g.code ? hxOpp() : null;
+    const myCol = st.myV === 0 ? 'r' : 'y';
+    const last = st.seq.length ? st.seq[st.seq.length - 1] : null;
+    $('hxBoard').innerHTML = hxSVG(st.b, myCol, { win: st.win, last });
+    $('hxBoard').classList.toggle('play', st.myTurn && (!g.code || !!o));
+    $('hxBoard').querySelectorAll('.hxcell').forEach(el => el.addEventListener('click', () => hxPlace(el.dataset.k)));
+    let txt, turn = false;
+    if (st.win) txt = st.win.v === st.myV ? 'Gewonnen!' : 'Verloren';
+    else if (g.code && !o) txt = connected ? `Warte auf Gegner … (Raum ${g.code})` : 'Verbinde …';
+    else if (st.myTurn) { txt = 'Du bist dran'; turn = true; }
+    else txt = g.code ? 'Gegner ist dran …' : 'Computer überlegt …';
+    $('hxStatus').innerHTML = `<span class="c4dot ${myCol}"></span>${txt}`;
+    $('hxStatus').classList.toggle('turn', turn);
+    $('hxGoal').innerHTML = myCol === 'r'
+      ? 'Verbinde die beiden <b class="hr">roten</b> Seiten'
+      : 'Verbinde die beiden <b class="hy">gelben</b> Seiten';
+    $('hxEnd').style.display = st.win ? '' : 'none';
+    updateOpp();
+    if (st.win && !g.finished) hxFinish(st);
+    if (!g.code && !st.win && !st.myTurn && !hxCpuTimer) {
+      hxCpuTimer = setTimeout(() => {
+        hxCpuTimer = null;
+        if (mode !== 'hex' || !X || X.code) return;
+        const s2 = hxState(); if (s2.win || s2.myTurn) return;
+        X.seq.push(hxCpuPick(X.seq));
+        persist();
+        renderHex();
+      }, 650);
+    }
+  }
+  function hxPlace(k) {
+    const g = X, st = hxState();
+    if (!st.myTurn || st.b[k] !== undefined) return;
+    if (g.code && !hxOpp()) return;
+    if (g.code) g.moves.push(k); else g.seq.push(k);
+    try { navigator.vibrate && navigator.vibrate(15); } catch {}
+    persist();
+    renderHex();
+  }
+  function hxFinish(st) {
+    const g = X;
+    g.finished = true; g.result = st.win.v === st.myV ? 'win' : 'lose';
+    if (!g.endShown) {
+      g.endShown = true;
+      profile.playedHex = (profile.playedHex || 0) + 1; save(LS_PROFILE, profile);
+      setTimeout(() => { if (mode === 'hex' && X === g) modal(g.result === 'win' ? 'Gewonnen!' : 'Verloren', '', '', 'Weiter'); }, 2300);
+    }
+    persist();
+  }
+  function hexSync() { if (mode === 'hex' && X) renderHex(); }
+  function hexRematch() {
+    const g = X;
+    clearTimeout(hxCpuTimer); hxCpuTimer = null;
+    let n = (g.gameNo || 1) + 1;
+    const o = Object.values(opponents).sort((a, b) => b.gameNo - a.gameNo)[0];
+    if (g.code && o && o.gameNo > n) n = o.gameNo;
+    X = freshHex(g.code, n, g.host);
+    if (!g.code) X.meStarts = !g.meStarts;
+    persist();
+    renderHex();
+  }
+  $('btnHxAgain').onclick = hexRematch;
+  $('btnHxMenu').onclick = () => { disconnect(); openMode('hex'); };
+  $('btnXMenu').onclick = () => openPause();
+
+  // ---------- Mini-Vorschau Route 6 ----------
+  const pvx = { running: false, timer: null };
+  function pvxLater(fn, ms) { pvx.timer = setTimeout(() => pvx.running && fn(), ms); }
+  function pvxStart() {
+    const seq = [];
+    const step = () => {
+      const b = hxBoard(seq), win = hxWinner(b);
+      $('pvxBoard').innerHTML = hxSVG(b, 'r', { win, last: seq[seq.length - 1] });
+      if (win || seq.length >= HX * HX) { pvxLater(pvxStart, 2600); return; }
+      seq.push(hxCpuPick(seq, 1.2));
+      pvxLater(step, 280);
+    };
+    step();
+  }
+
+  // =====================================================================
   //  Hauptmenü / Modus-Screen
   // =====================================================================
   const MODE_INFO = {
@@ -4321,6 +4615,11 @@
       title: 'Dumby Dices', playedKey: 'playedDice',
       desc: ['Schüttel den Becher und jag den Highscore! Fünf Würfel, bis zu drei Würfe pro Runde: Leg zur Seite, was du behalten willst, und würfle den Rest neu.',
         'Jede Runde trägst du eine Kategorie ein. Holst du oben mindestens 63 Punkte, gibt es +35 Bonus. Nach 13 Runden gewinnt die höchste Punktzahl.'],
+    },
+    hex: {
+      title: 'Route 6', playedKey: 'playedHex',
+      desc: ['Kein Glück, kein Würfel – nur Köpfchen. Ihr setzt abwechselnd eure Steine auf freie Waben. Rot will die beiden roten Seiten verbinden, Gelb die beiden gelben.',
+        'Weil jede Wabe sechs Nachbarn hat, entstehen verrückte Umwege und harte Blockaden. Ein Unentschieden gibt es nicht: Irgendwer kommt immer durch. Wer anfängt, spielt Rot.'],
     },
     mm: {
       title: 'Farbcodeknacker', playedKey: 'playedMm',
@@ -4358,16 +4657,17 @@
         'Bei einer eigenen Frage antwortet dein Gegner selbst und du klappst um. Wer zuerst richtig tippt, gewinnt – aber Vorsicht: Ein falscher Tipp und du hast verloren. Solo spielst du gegen den Computer.'],
     },
   };
-  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : freshGame(code, gameNo));
+  const freshFor = (m, code, gameNo) => (m === 'dice' ? freshDice(code, gameNo) : m === 'who' ? freshWho(code, gameNo, whoHost) : m === 'four' ? freshFour(code, gameNo, whoHost) : m === 'sea' ? freshSea(code, gameNo, whoHost) : m === 'cs' ? freshCs(code, gameNo, whoHost) : m === 'hang' ? freshHang(code, gameNo, whoHost) : m === 'sd' ? freshSd(code, gameNo, whoHost) : m === 'mm' ? freshMm(code, gameNo, whoHost) : m === 'hex' ? freshHex(code, gameNo, whoHost) : freshGame(code, gameNo));
   function setG(v) {
     if (mode === 'dice') D = v; else if (mode === 'who') W = v; else if (mode === 'four') { F = v; c4Shown = 0; }
     else if (mode === 'sea') { B = v; bsSel = null; bsLastTurn = null; bsRot = false; }
     else if (mode === 'cs') { C = v; csAnimating = false; clearTimeout(csCpuTimer); csCpuTimer = null; }
     else if (mode === 'hang') H = v;
     else if (mode === 'sd') { K = v; clearTimeout(sdCpuTimer); sdCpuTimer = null; }
-    else if (mode === 'mm') M = v; else S = v;
+    else if (mode === 'mm') M = v;
+    else if (mode === 'hex') { X = v; clearTimeout(hxCpuTimer); hxCpuTimer = null; } else S = v;
   }
-  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else renderGame(); }
+  function renderActive() { if (mode === 'dice') renderDice(); else if (mode === 'who') { guessMode = false; whoSync(); } else if (mode === 'four') renderFour(); else if (mode === 'sea') seaSync(); else if (mode === 'cs') renderCs(); else if (mode === 'hang') renderHang(); else if (mode === 'sd') renderSd(); else if (mode === 'mm') renderMm(); else if (mode === 'hex') renderHex(); else renderGame(); }
 
   function goHome() { stopPreview(); show('sHome'); }
   function openMode(m) {
@@ -4390,6 +4690,7 @@
     $('pvHangBox').style.display = mode === 'hang' ? '' : 'none';
     $('pvSdBox').style.display = mode === 'sd' ? '' : 'none';
     $('pvMmBox').style.display = mode === 'mm' ? '' : 'none';
+    $('pvHexBox').style.display = mode === 'hex' ? '' : 'none';
     const n = profile[info.playedKey] || 0;
     $('played').textContent = n === 1 ? '1 Mal gespielt' : `${n} Mal gespielt`;
     const v1 = profile.mode !== 'solo';
@@ -4399,14 +4700,14 @@
     const g = G(), r = $('btnResume');
     if (g && !g.finished) {
       r.style.display = '';
-      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm'].includes(mode)
+      r.textContent = ['four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex'].includes(mode)
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'}`
         : mode === 'who'
         ? `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · ${g.askN} Fragen`
         : `▶ Fortsetzen · ${g.code ? 'Raum ' + g.code : 'Solo'} · Runde ${g.round}`;
     } else if (g && g.finished) {
       r.style.display = '';
-      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
+      r.textContent = ['who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex'].includes(mode) ? 'Letztes Spiel ansehen' : `Letztes Ergebnis ansehen · ${g.total} Punkte`;
     } else r.style.display = 'none';
   }
   $('toyKlapp').onclick = () => openMode('klapp');
@@ -4418,6 +4719,7 @@
   $('toyHang').onclick = () => openMode('hang');
   $('toySd').onclick = () => openMode('sd');
   $('toyMm').onclick = () => openMode('mm');
+  $('toyHex').onclick = () => openMode('hex');
   $('btnBack').onclick = goHome;
   $('seg').querySelectorAll('button').forEach(b => b.onclick = () => {
     profile.mode = b.dataset.mode; save(LS_PROFILE, profile); renderMode();
@@ -4574,6 +4876,7 @@
     else if (mode === 'hang') { pvh.running = true; pvhStart(); }
     else if (mode === 'sd') { pvk.running = true; pvkStart(); }
     else if (mode === 'mm') { pvm.running = true; pvmStart(); }
+    else if (mode === 'hex') { pvx.running = true; pvxStart(); }
     else { pv.running = true; pvReset(); pvLater(pvStep, 600); }
   }
   function stopPreview() {
@@ -4586,6 +4889,7 @@
     pvh.running = false; clearTimeout(pvh.timer);
     pvk.running = false; clearTimeout(pvk.timer);
     pvm.running = false; clearTimeout(pvm.timer);
+    pvx.running = false; clearTimeout(pvx.timer);
   }
 
   // ---------- Spielstart / Fortsetzen ----------
@@ -4600,7 +4904,9 @@
     renderActive();
     publish();
     if (code) {
-      const txt = mode === 'mm'
+      const txt = mode === 'hex'
+        ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
+        : mode === 'mm'
         ? 'Teile diesen Code mit deinem Gegner. Leg schon mal deinen Geheimcode fest.'
         : mode === 'sd'
         ? 'Teile diesen Code mit deinem Gegner. Du spielst Rot und fängst an.'
@@ -4629,6 +4935,7 @@
     if (mode === 'hang') { show('sHang'); renderHang(); return; }
     if (mode === 'sd') { show('sSd'); renderSd(); return; }
     if (mode === 'mm') { show('sMm'); renderMm(); return; }
+    if (mode === 'hex') { show('sHex'); renderHex(); return; }
     if (mode === 'cs') { show('sCs'); csAnimating = false; if (g.cpu && g.cpu.live) g.cpu.live = null; renderCs(); return; }
     if (g.finished) { renderEnd(); return; }
     show(MODES[mode].screen);
@@ -4698,7 +5005,8 @@
     if (mode === 'cs') { csRematch(); return; }
     if (mode === 'hang') { hangRematch(); return; }
     if (mode === 'sd') { sdRematch(); return; }
-    if (mode === 'mm') { mmRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
+    if (mode === 'mm') { mmRematch(); return; }
+    if (mode === 'hex') { hexRematch(); return; } // neue Spielnummer, damit der Gegner sauber mitzieht
     const g = G();
     setG(freshFor(mode, g.code, g.gameNo));
     isRolling = false;
@@ -4716,7 +5024,7 @@
   const params = new URLSearchParams(location.search);
   const urlRoom = params.get('room');
   if (urlRoom) {
-    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
+    mode = ['dice', 'who', 'four', 'sea', 'cs', 'hang', 'sd', 'mm', 'hex'].includes(params.get('mode')) ? params.get('mode') : 'klapp';
     $('joinCode').value = urlRoom.toUpperCase();
     openMode(mode);
     ensureName(openJoin);
@@ -4729,6 +5037,7 @@
   else if (H && !H.finished) { mode = 'hang'; resumeGame(); }
   else if (K && !K.finished) { mode = 'sd'; resumeGame(); }
   else if (M && !M.finished) { mode = 'mm'; resumeGame(); }
+  else if (X && !X.finished) { mode = 'hex'; resumeGame(); }
   else goHome();
 
   // Re-publish when coming back to foreground (iOS suspends sockets)
